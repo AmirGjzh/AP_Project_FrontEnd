@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -15,6 +16,8 @@ class _informationState extends State<Information> {
   var _currentTerm = "بهار 1402 - 1403";
   var _units = "18";
   var _average = "18.41";
+
+  var _studentFullNameController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -342,7 +345,332 @@ class _informationState extends State<Information> {
                                 height: 40,
                                 child: ElevatedButton.icon(
                                   icon: const Icon(Icons.lock),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.pink.shade50,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: SingleChildScrollView(
+                                                child: Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      30,
+                                                      60,
+                                                      30,
+                                                      MediaQuery.of(context)
+                                                              .viewInsets
+                                                              .bottom +
+                                                          25),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const Text(
+                                                            "کلمه عبور فعلی",
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  "Vazir",
+                                                              shadows: [
+                                                                Shadow(
+                                                                  offset:
+                                                                      Offset(
+                                                                          1, 1),
+                                                                  blurRadius: 1,
+                                                                  color: Colors
+                                                                      .black12,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          new Spacer(),
+                                                          SizedBox(
+                                                            width: 200,
+                                                            height: 50,
+                                                            child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .withOpacity(0.5),
+                                                                          spreadRadius:
+                                                                              3,
+                                                                          blurRadius:
+                                                                              20,
+                                                                          offset:
+                                                                              Offset(
+                                                                            0,
+                                                                            1,
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  TextField(
+                                                                    decoration: InputDecoration(
+                                                                        hintStyle: TextStyle(
+                                                                          height:
+                                                                              50,
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              "Vazir",
+                                                                          color:
+                                                                              Colors.black54,
+                                                                          shadows: [
+                                                                            Shadow(
+                                                                              offset: Offset(1, 1),
+                                                                              blurRadius: 1,
+                                                                              color: Colors.black12,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
+                                                                        fillColor: Colors.white,
+                                                                        filled: true),
+                                                                  ),
+                                                                ]),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Divider(
+                                                        color: Colors.black38,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const Text(
+                                                            "کلمه عبور جدید",
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  "Vazir",
+                                                              shadows: [
+                                                                Shadow(
+                                                                  offset:
+                                                                      Offset(
+                                                                          1, 1),
+                                                                  blurRadius: 1,
+                                                                  color: Colors
+                                                                      .black12,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          new Spacer(),
+                                                          SizedBox(
+                                                            width: 200,
+                                                            height: 50,
+                                                            child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .withOpacity(0.5),
+                                                                          spreadRadius:
+                                                                              3,
+                                                                          blurRadius:
+                                                                              20,
+                                                                          offset:
+                                                                              Offset(
+                                                                            0,
+                                                                            1,
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  TextField(
+                                                                    decoration: InputDecoration(
+                                                                        hintStyle: TextStyle(
+                                                                          height:
+                                                                              50,
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              "Vazir",
+                                                                          color:
+                                                                              Colors.black54,
+                                                                          shadows: [
+                                                                            Shadow(
+                                                                              offset: Offset(1, 1),
+                                                                              blurRadius: 1,
+                                                                              color: Colors.black12,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
+                                                                        fillColor: Colors.white,
+                                                                        filled: true),
+                                                                  ),
+                                                                ]),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Divider(
+                                                        color: Colors.black38,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const Text(
+                                                            "تکرار کلمه عبور جدید",
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  "Vazir",
+                                                              shadows: [
+                                                                Shadow(
+                                                                  offset:
+                                                                      Offset(
+                                                                          1, 1),
+                                                                  blurRadius: 1,
+                                                                  color: Colors
+                                                                      .black12,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          new Spacer(),
+                                                          SizedBox(
+                                                            width: 200,
+                                                            height: 50,
+                                                            child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .withOpacity(0.5),
+                                                                          spreadRadius:
+                                                                              3,
+                                                                          blurRadius:
+                                                                              20,
+                                                                          offset:
+                                                                              Offset(
+                                                                            0,
+                                                                            1,
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  TextField(
+                                                                    decoration: InputDecoration(
+                                                                        hintStyle: TextStyle(
+                                                                          height:
+                                                                              50,
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              "Vazir",
+                                                                          color:
+                                                                              Colors.black54,
+                                                                          shadows: [
+                                                                            Shadow(
+                                                                              offset: Offset(1, 1),
+                                                                              blurRadius: 1,
+                                                                              color: Colors.black12,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
+                                                                        fillColor: Colors.white,
+                                                                        filled: true),
+                                                                  ),
+                                                                ]),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 25,
+                                                      ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                spreadRadius: 1,
+                                                                blurRadius: 20,
+                                                                offset: Offset(
+                                                                  0,
+                                                                  1,
+                                                                ),
+                                                              )
+                                                            ]),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {},
+                                                          style: ElevatedButton.styleFrom(
+                                                              shape:
+                                                                  const StadiumBorder(),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                      vertical:
+                                                                          16),
+                                                              backgroundColor:
+                                                                  Colors.pink,
+                                                              foregroundColor:
+                                                                  Colors.white),
+                                                          child: const Text(
+                                                            "ثبت تغییرات",
+                                                            style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontFamily:
+                                                                  "Vazir",
+                                                              shadows: [
+                                                                Shadow(
+                                                                  offset:
+                                                                      Offset(
+                                                                          3, 3),
+                                                                  blurRadius: 1,
+                                                                  color: Colors
+                                                                      .black12,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ));
+                                        });
+                                  },
                                   label: Text("تغییر کلمه عبور",
                                       style: TextStyle(
                                         fontSize: 16,

@@ -1,4 +1,3 @@
-import 'package:ap_project_frontend/information.dart';
 import 'package:ap_project_frontend/login_page.dart';
 import 'package:flutter/material.dart';
 
