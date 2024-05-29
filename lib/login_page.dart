@@ -103,41 +103,41 @@ class _LoginPageState extends State<LoginPage> {
                                 controller: _password,
 
                                 decoration: InputDecoration(
-                                  hintText: "کلمه عبور",
+                                    hintText: "کلمه عبور",
 
-                                  hintStyle: const TextStyle(
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "Vazir",
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(30, 30, 30, 0.8)
+                                    ),
+
+                                    errorText: _passEmpty ? "رمز عبور خود را وارد کنید!" : (_passValid ? null : "رمز عبور اشتباه است!"),
+
+                                    errorStyle: const TextStyle(
                                       fontFamily: "Vazir",
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(30, 30, 30, 0.8)
-                                  ),
+                                    ),
 
-                                  errorText: _passEmpty ? "رمز عبور خود را وارد کنید!" : (_passValid ? null : "رمز عبور اشتباه است!"),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none),
 
-                                  errorStyle: const TextStyle(
-                                    fontFamily: "Vazir",
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fillColor: Colors.pink.withOpacity(0.2),
 
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
+                                    filled: true,
 
-                                  fillColor: Colors.pink.withOpacity(0.2),
-
-                                  filled: true,
-
-                                  prefixIcon: const Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
 
                                     suffixIcon: Padding(
-                                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                    child: GestureDetector(
-                                      onTap: _toggleObscured,
-                                      child: Icon(
-                                          _obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded
-                                      ),
+                                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: GestureDetector(
+                                        onTap: _toggleObscured,
+                                        child: Icon(
+                                            _obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded
+                                        ),
 
-                                    ),
-                                  )
+                                      ),
+                                    )
                                 ),
                                 obscureText: _obscured,
                               ),
@@ -225,4 +225,3 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 }
-

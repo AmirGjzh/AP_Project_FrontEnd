@@ -104,30 +104,30 @@ class _SignupPageState extends State<SignupPage> {
                                 controller: _password1,
 
                                 decoration: InputDecoration(
-                                  hintText: "کلمه عبور",
+                                    hintText: "کلمه عبور",
 
-                                  hintStyle: const TextStyle(
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "Vazir",
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(30, 30, 30, 0.8)
+                                    ),
+
+                                    errorText: _pass1Empty ? "رمز عبور خود را وارد کنید!" : (_pass1Valid ? null : "رمز عبور بهتری انتخاب کنید!"),
+
+                                    errorStyle: const TextStyle(
                                       fontFamily: "Vazir",
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(30, 30, 30, 0.8)
-                                  ),
+                                    ),
 
-                                  errorText: _pass1Empty ? "رمز عبور خود را وارد کنید!" : (_pass1Valid ? null : "رمز عبور بهتری انتخاب کنید!"),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none),
 
-                                  errorStyle: const TextStyle(
-                                    fontFamily: "Vazir",
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fillColor: Colors.pink.withOpacity(0.2),
 
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
+                                    filled: true,
 
-                                  fillColor: Colors.pink.withOpacity(0.2),
-
-                                  filled: true,
-
-                                  prefixIcon: const Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
 
                                     suffixIcon: Padding(
                                       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -148,30 +148,30 @@ class _SignupPageState extends State<SignupPage> {
                                 controller: _password2,
 
                                 decoration: InputDecoration(
-                                  hintText: "تکرار کلمه عبور",
+                                    hintText: "تکرار کلمه عبور",
 
-                                  hintStyle: const TextStyle(
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "Vazir",
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(30, 30, 30, 0.8)
+                                    ),
+
+                                    errorText: _pass2Empty ? "رمز عبور خود را وارد کنید!" : (!_pass2Valid ? "مطابقت ندارد!" : null),
+
+                                    errorStyle: const TextStyle(
                                       fontFamily: "Vazir",
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(30, 30, 30, 0.8)
-                                  ),
+                                    ),
 
-                                  errorText: _pass2Empty ? "رمز عبور خود را وارد کنید!" : (!_pass2Valid ? "مطابقت ندارد!" : null),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none),
 
-                                  errorStyle: const TextStyle(
-                                    fontFamily: "Vazir",
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fillColor: Colors.pink.withOpacity(0.2),
 
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
+                                    filled: true,
 
-                                  fillColor: Colors.pink.withOpacity(0.2),
-
-                                  filled: true,
-
-                                  prefixIcon: const Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
 
                                     suffixIcon: Padding(
                                       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
