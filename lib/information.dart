@@ -18,7 +18,7 @@ class _informationState extends State<Information> {
   bool _idControllerEmpty = false;
   var _passController = TextEditingController();
   bool _passControllerEmpty = false;
-  bool _passValid = false;
+  bool _passValid = true;
   var _newPassController1 = TextEditingController();
   bool _newPassControllerEmpty1 = false;
   bool _newPassValid1 = true;
@@ -39,59 +39,57 @@ class _informationState extends State<Information> {
               appBar: AppBar(
                 title: Center(
                   child: Column(children: [
-                    Container(
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 75,
-                            backgroundColor: Colors.grey.shade200,
-                            child: CircleAvatar(
-                              radius: 70,
-                            ),
+                    Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 75,
+                          backgroundColor: Colors.grey.shade200,
+                          child: const CircleAvatar(
+                            radius: 70,
                           ),
-                          Positioned(
-                            bottom: 1,
-                            right: 1,
-                            child: Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: InkWell(
-                                  child: Icon(Icons.add_a_photo,
-                                      color: Colors.pink.shade800),
-                                  onTap: () {},
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.white,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(
-                                      50,
-                                    ),
-                                  ),
+                        ),
+                        Positioned(
+                          bottom: 1,
+                          right: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 3,
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(2, 4),
-                                      color: Colors.black.withOpacity(
-                                        0.3,
-                                      ),
-                                      blurRadius: 3,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(
+                                    50,
+                                  ),
+                                ),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(2, 4),
+                                    color: Colors.black.withOpacity(
+                                      0.3,
                                     ),
-                                  ]),
+                                    blurRadius: 3,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: InkWell(
+                                child: Icon(Icons.add_a_photo,
+                                    color: Colors.pink.shade800),
+                                onTap: () {},
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Text(
                       _studentFullName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Vazir",
                         fontSize: 18,
                         color: Colors.white,
@@ -108,7 +106,7 @@ class _informationState extends State<Information> {
                 ),
                 toolbarHeight: 230,
                 backgroundColor: Colors.pink,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(30))),
@@ -124,7 +122,7 @@ class _informationState extends State<Information> {
                     ),
                     _changeInfo(context),
                     const SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
                     _deleteAccountButton(context)
                   ],
@@ -162,7 +160,7 @@ class _informationState extends State<Information> {
                   ],
                 ),
               ),
-              new Spacer(),
+              const Spacer(),
               Text(
                 _id,
                 style: const TextStyle(
@@ -205,7 +203,7 @@ class _informationState extends State<Information> {
                   ],
                 ),
               ),
-              new Spacer(),
+              const Spacer(),
               Text(
                 _currentTerm,
                 style: const TextStyle(
@@ -234,7 +232,7 @@ class _informationState extends State<Information> {
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 "تعداد واحد",
                 style: TextStyle(
                   fontSize: 16,
@@ -248,7 +246,7 @@ class _informationState extends State<Information> {
                   ],
                 ),
               ),
-              new Spacer(),
+              const Spacer(),
               Text(
                 _units,
                 style: const TextStyle(
@@ -277,7 +275,7 @@ class _informationState extends State<Information> {
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 "معدل کل",
                 style: TextStyle(
                   fontSize: 16,
@@ -291,7 +289,7 @@ class _informationState extends State<Information> {
                   ],
                 ),
               ),
-              new Spacer(),
+              const Spacer(),
               Text(
                 _average,
                 style: const TextStyle(
@@ -352,9 +350,9 @@ class _informationState extends State<Information> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "شماره دانشجویی جدید",
+                                            "شماره دانشجویی جدید :",
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 11,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -430,8 +428,8 @@ class _informationState extends State<Information> {
                                         height: 25,
                                       ),
                                       Container(
-                                        width:
-                                        MediaQuery.of(context).size.width,
+                                        width: 300,
+                                        height: 60,
                                         decoration: BoxDecoration(boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.5),
@@ -459,13 +457,13 @@ class _informationState extends State<Information> {
                                               shape: const StadiumBorder(),
                                               padding:
                                               const EdgeInsets.symmetric(
-                                                  vertical: 16),
+                                                  vertical: 10),
                                               backgroundColor: Colors.pink,
                                               foregroundColor: Colors.white),
                                           child: const Text(
                                             "ثبت تغییرات",
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 17,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -484,7 +482,7 @@ class _informationState extends State<Information> {
                               ));
                         });
                   },
-                  label: Text("ویرایش مشخصات",
+                  label: const Text("ویرایش مشخصات",
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Vazir",
@@ -536,9 +534,9 @@ class _informationState extends State<Information> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "کلمه عبور فعلی",
+                                            "کلمه عبور فعلی :",
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 11,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -549,7 +547,7 @@ class _informationState extends State<Information> {
                                               ],
                                             ),
                                           ),
-                                          new Spacer(),
+                                          const Spacer(),
                                           SizedBox(
                                             width: 200,
                                             height: 70,
@@ -562,7 +560,7 @@ class _informationState extends State<Information> {
                                                           .withOpacity(0.5),
                                                       spreadRadius: 3,
                                                       blurRadius: 20,
-                                                      offset: Offset(
+                                                      offset: const Offset(
                                                         0,
                                                         1,
                                                       ),
@@ -583,7 +581,7 @@ class _informationState extends State<Information> {
                                                         fontWeight:
                                                         FontWeight.bold,
                                                         fontSize: 8),
-                                                    hintStyle: TextStyle(
+                                                    hintStyle: const TextStyle(
                                                       height: 50,
                                                       fontSize: 13,
                                                       fontFamily: "Vazir",
@@ -609,21 +607,21 @@ class _informationState extends State<Information> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 8,
                                       ),
-                                      Divider(
+                                      const Divider(
                                         color: Colors.black38,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 8,
                                       ),
                                       Row(
                                         children: [
                                           const Text(
-                                            "کلمه عبور جدید",
+                                            "کلمه عبور جدید :",
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 11,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -634,7 +632,7 @@ class _informationState extends State<Information> {
                                               ],
                                             ),
                                           ),
-                                          new Spacer(),
+                                          const Spacer(),
                                           SizedBox(
                                             width: 200,
                                             height: 70,
@@ -647,7 +645,7 @@ class _informationState extends State<Information> {
                                                           .withOpacity(0.5),
                                                       spreadRadius: 3,
                                                       blurRadius: 20,
-                                                      offset: Offset(
+                                                      offset: const Offset(
                                                         0,
                                                         1,
                                                       ),
@@ -668,7 +666,7 @@ class _informationState extends State<Information> {
                                                         fontWeight:
                                                         FontWeight.bold,
                                                         fontSize: 8),
-                                                    hintStyle: TextStyle(
+                                                    hintStyle: const TextStyle(
                                                       height: 50,
                                                       fontSize: 13,
                                                       fontFamily: "Vazir",
@@ -694,21 +692,21 @@ class _informationState extends State<Information> {
                                           )
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 8,
                                       ),
-                                      Divider(
+                                      const Divider(
                                         color: Colors.black38,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 8,
                                       ),
                                       Row(
                                         children: [
                                           const Text(
-                                            "تکرار کلمه عبور جدید",
+                                            "تکرار کلمه عبور جدید :",
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 11,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -719,7 +717,7 @@ class _informationState extends State<Information> {
                                               ],
                                             ),
                                           ),
-                                          new Spacer(),
+                                          const Spacer(),
                                           SizedBox(
                                             width: 200,
                                             height: 70,
@@ -732,7 +730,7 @@ class _informationState extends State<Information> {
                                                           .withOpacity(0.5),
                                                       spreadRadius: 3,
                                                       blurRadius: 20,
-                                                      offset: Offset(
+                                                      offset: const Offset(
                                                         0,
                                                         1,
                                                       ),
@@ -753,7 +751,7 @@ class _informationState extends State<Information> {
                                                         fontWeight:
                                                         FontWeight.bold,
                                                         fontSize: 8),
-                                                    hintStyle: TextStyle(
+                                                    hintStyle: const TextStyle(
                                                       height: 50,
                                                       fontSize: 13,
                                                       fontFamily: "Vazir",
@@ -779,18 +777,18 @@ class _informationState extends State<Information> {
                                           )
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 25,
                                       ),
                                       Container(
-                                        width:
-                                        MediaQuery.of(context).size.width,
+                                        width: 300,
+                                        height: 60,
                                         decoration: BoxDecoration(boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.5),
                                             spreadRadius: 1,
                                             blurRadius: 20,
-                                            offset: Offset(
+                                            offset: const Offset(
                                               0,
                                               1,
                                             ),
@@ -835,13 +833,13 @@ class _informationState extends State<Information> {
                                               shape: const StadiumBorder(),
                                               padding:
                                               const EdgeInsets.symmetric(
-                                                  vertical: 16),
+                                                  vertical: 10),
                                               backgroundColor: Colors.pink,
                                               foregroundColor: Colors.white),
                                           child: const Text(
                                             "ثبت تغییرات",
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 17,
                                               fontFamily: "Vazir",
                                               shadows: [
                                                 Shadow(
@@ -860,7 +858,7 @@ class _informationState extends State<Information> {
                               ));
                         });
                   },
-                  label: Text("تغییر کلمه عبور",
+                  label: const Text("تغییر کلمه عبور",
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Vazir",
@@ -887,20 +885,21 @@ class _informationState extends State<Information> {
 
   _deleteAccountButton(context) {
     return SizedBox(
-      width: 355,
+      width: 300,
+      height: 70,
       child: ElevatedButton(
         onPressed: () {
           setState(() {});
         },
         style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
-            padding: const EdgeInsets.symmetric(vertical: 18),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             backgroundColor: Colors.pink,
             foregroundColor: Colors.white),
         child: const Text(
           "حذف حساب کاربری",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 17,
             fontFamily: "Vazir",
             shadows: [
               Shadow(
