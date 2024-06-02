@@ -1,3 +1,4 @@
+import 'package:ap_project_frontend/information.dart';
 import 'package:ap_project_frontend/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginPage();
+    return const Information();
   }
 }
