@@ -10,29 +10,38 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _id = TextEditingController();
-  final _password = TextEditingController();
-  bool _idEmpty = false;
-  bool _passEmpty = false;
+  final _idController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   bool _obscured = true;
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          textTheme: const TextTheme(
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+      scaffoldMessengerKey: _messengerKey,
+
       home: Directionality(
         textDirection: TextDirection.rtl,
+
         child: Builder(builder: (context) {
           return Scaffold(
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),
+
                 child: Container(
                   height: MediaQuery.of(context).size.height - 50,
                   margin: const EdgeInsets.all(25),
+
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+
                     children: [
                       _header(context),
                       _inputPart(context),
@@ -61,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
               shadows: [
                 Shadow(
                   offset: Offset(4, 4),
-                  blurRadius: 1,
+                  blurRadius: 3,
                   color: Colors.black12,
                 ),
               ],
@@ -77,21 +86,20 @@ class _LoginPageState extends State<LoginPage> {
   _inputPart(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+
       children: [
-        Stack(children: [
-          TextField(
-            controller: _id,
+        Material(
+          elevation: 4,
+          borderRadius: BorderRadius.circular(20),
+
+          child: TextField(
+            controller: _idController,
             decoration: InputDecoration(
                 hintText: "شماره دانشجویی",
                 hintStyle: const TextStyle(
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.bold,
                   color: Color.fromRGBO(30, 30, 30, 0.8),
-                ),
-                errorText: _idEmpty ? "شماره دانشجویی خود را وارد کنید!" : null,
-                errorStyle: const TextStyle(
-                  fontFamily: "Vazir",
-                  fontWeight: FontWeight.bold,
                 ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -100,48 +108,20 @@ class _LoginPageState extends State<LoginPage> {
                 filled: true,
                 prefixIcon: const Icon(Icons.person)),
           ),
-          Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 20,
-                offset: Offset(
-                  0,
-                  1,
-                ),
-              )
-            ], color: Colors.cyan),
-          ),
-        ]),
+        ),
         const SizedBox(height: 20),
-        Stack(children: [
-          Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 20,
-                offset: Offset(
-                  0,
-                  1,
-                ),
-              )
-            ], color: Colors.cyan),
-          ),
-          TextField(
-            controller: _password,
+        Material(
+          elevation: 4,
+          borderRadius: BorderRadius.circular(20),
+
+          child: TextField(
+            controller: _passwordController,
             decoration: InputDecoration(
                 hintText: "کلمه عبور",
                 hintStyle: const TextStyle(
                     fontFamily: "Vazir",
                     fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(30, 30, 30, 0.8)),
-                errorText: _passEmpty ? "کلمه عبور خود را وارد کنید!" : null,
-                errorStyle: const TextStyle(
-                  fontFamily: "Vazir",
-                  fontWeight: FontWeight.bold,
-                ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide.none),
@@ -159,36 +139,30 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             obscureText: _obscured,
           ),
-        ]),
+        ),
         const SizedBox(height: 20),
-        Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 20,
-              offset: Offset(
-                0,
-                1,
-              ),
-            )
-          ]),
+        Material(
+          elevation: 10,
+          borderRadius: BorderRadius.circular(35),
+
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                _id.text.isEmpty ? _idEmpty = true : _idEmpty = false;
-
-                _password.text.isEmpty ? _passEmpty = true : _passEmpty = false;
-
-                if (!_idEmpty && !_passEmpty) {
-                  switch (_loginState(_id.text, _password.text)) {
+                if (_idController.text.isEmpty) {
+                  _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
+                } else if (_passwordController.text.isEmpty) {
+                  _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
+                } else {
+                  switch (_loginState(_idController.text, _passwordController.text)) {
                     case 1:
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const Information()));
                       break;
                     case 2:
+                      _showSnackBar(context, "کلمه عبور اشتباه است!");
                       break;
                     case 3:
+                      _showSnackBar(context, "شماره دانشجویی یافت نشد!");
                       break;
                   }
                 }
@@ -207,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                 shadows: [
                   Shadow(
                     offset: Offset(3, 3),
-                    blurRadius: 1,
+                    blurRadius: 3,
                     color: Colors.black12,
                   ),
                 ],
@@ -220,50 +194,55 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _signupSwitch(context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
+    return Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(20),
+
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.pink.shade50,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 0,
-              blurRadius: 20,
-              offset: Offset(0, 1),
-            )
-          ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "حساب کاربری ندارید؟ ",
-            style: TextStyle(shadows: [
-              Shadow(
-                offset: Offset(2, 2),
-                blurRadius: 1,
-                color: Colors.black12,
-              ),
-            ], fontFamily: "Vazir", fontWeight: FontWeight.w600, fontSize: 17),
-          ),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SignupPage()));
-              },
-              child: const Text("ثبت نام",
-                  style: TextStyle(
-                      shadows: [
-                        Shadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 1,
-                          color: Colors.black12,
-                        ),
-                      ],
-                      color: Colors.pink,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17)))
-        ],
+        ),
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: [
+            const Text(
+              "حساب کاربری ندارید؟ ",
+              style: TextStyle(
+                  shadows: [
+                    Shadow(
+                      offset: Offset(2, 2),
+                      blurRadius: 3,
+                      color: Colors.black12,
+                    ),
+                  ],
+                  fontFamily: "Vazir",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SignupPage()));
+                },
+
+                child: const Text("ثبت نام",
+                    style: TextStyle(
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2, 2),
+                            blurRadius: 3,
+                            color: Colors.black12,
+                          ),
+                        ],
+                        color: Colors.pink,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 17)))
+          ],
+        ),
       ),
     );
   }
@@ -274,7 +253,31 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  void _showSnackBar(BuildContext context, String message) {
+    _messengerKey.currentState!.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+
+        content: Text(
+          message, style: const TextStyle(fontFamily: "Vazir", fontSize: 15),),
+
+        duration: const Duration(seconds: 2),
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+
+        action: SnackBarAction(
+          onPressed: (){},
+          label: "تایید",
+          textColor: Colors.pink,
+        ),
+      ),
+    );
+  }
+
   int _loginState(String username, String password) {
+    // TODO
     return 1;
   }
 }
