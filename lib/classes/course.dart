@@ -12,13 +12,25 @@ class Course {
 
   final Map<Student, double> _students = {};
 
-  bool _isActive = false;
+  bool isActive = false;
 
   final List<Assignment> _exercises = [];
 
-  Assignment? _project;
+  Assignment? project;
 
-  final String _examDate;
+  final int _examDate;
 
   Course(this._name, this._units, this._examDate);
+
+  int get examDate => _examDate;
+
+  List<Assignment> get exercises => _exercises;
+
+  Map<Student, double> get students => _students;
+
+  Teacher? get teacher => _teacher;
+
+  int get units => _units;
+
+  String get name => _name;
 }

@@ -1,3 +1,4 @@
+import 'package:ap_project_frontend/login_page.dart';
 import 'package:flutter/material.dart';
 
 class Information extends StatefulWidget {
@@ -147,287 +148,296 @@ class _InformationState extends State<Information> {
   }
 
   _info(context) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.pink.shade50,
-      ),
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(20),
 
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Text(
-                "شماره دانشجویی",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Vazir",
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.pink.shade50,
+        ),
+
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "شماره دانشجویی",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Vazir",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                _id,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: "Vazir",
-                  color: Colors.black54,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+                const Spacer(),
+                Text(
+                  _id,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: "Vazir",
+                    color: Colors.black54,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Divider(
+              color: Colors.black38,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Row(
+              children: [
+                Text(
+                  "ترم جاری",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Vazir",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Divider(
-            color: Colors.black38,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Row(
-            children: [
-              Text(
-                "ترم جاری",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Vazir",
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+                Spacer(),
+                Text(
+                  "بهار 1402 - 1403",
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: "Vazir",
+                    color: Colors.black54,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Divider(
+              color: Colors.black38,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                const Text(
+                  "تعداد واحد",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Vazir",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Spacer(),
-              Text(
-                "بهار 1402 - 1403",
-                style: TextStyle(
-                  fontSize: 13,
-                  fontFamily: "Vazir",
-                  color: Colors.black54,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+                const Spacer(),
+                Text(
+                  _units,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: "Vazir",
+                    color: Colors.black54,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Divider(
+              color: Colors.black38,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                const Text(
+                  "معدل کل",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Vazir",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Divider(
-            color: Colors.black38,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: [
-              const Text(
-                "تعداد واحد",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Vazir",
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Text(
-                _units,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: "Vazir",
-                  color: Colors.black54,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Divider(
-            color: Colors.black38,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: [
-              const Text(
-                "معدل کل",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Vazir",
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Text(
-                _average,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: "Vazir",
-                  color: Colors.black54,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ],
+                const Spacer(),
+                Text(
+                  _average,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: "Vazir",
+                    color: Colors.black54,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2, 2),
+                        blurRadius: 3,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 
   _changeInfo(context) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.pink.shade50,
-      ),
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.pink.shade50,
+        ),
 
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(20),
 
-                child: SizedBox(
-                  height: 40,
+                  child: SizedBox(
+                    height: 40,
 
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.edit),
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.edit),
 
-                    onPressed: () {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.pink.shade50,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _changeInfo2(context);
-                          });
-                    },
+                      onPressed: () {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.pink.shade50,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _changeInfo2(context);
+                            });
+                      },
 
-                    label: const Text("ویرایش مشخصات",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Vazir",
-                          shadows: [
-                            Shadow(
-                              offset: Offset(2, 2),
-                              blurRadius: 3,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        )),
+                      label: const Text("ویرایش مشخصات",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Vazir",
+                            shadows: [
+                              Shadow(
+                                offset: Offset(2, 2),
+                                blurRadius: 3,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          )),
 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade100,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink.shade100,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Spacer(),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(20),
+                const Spacer(),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(20),
 
-                child: SizedBox(
-                  height: 40,
+                  child: SizedBox(
+                    height: 40,
 
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.lock),
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.lock),
 
-                    onPressed: () {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.pink.shade50,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _changeInfo3(context);
-                          });
-                    },
+                      onPressed: () {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.pink.shade50,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _changeInfo3(context);
+                            });
+                      },
 
-                    label: const Text("تغییر کلمه عبور",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Vazir",
-                          shadows: [
-                            Shadow(
-                              offset: Offset(2, 2),
-                              blurRadius: 3,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        )),
+                      label: const Text("تغییر کلمه عبور",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Vazir",
+                            shadows: [
+                              Shadow(
+                                offset: Offset(2, 2),
+                                blurRadius: 3,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          )),
 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade100,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink.shade100,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Spacer(),
-            ],
-          ),
-        ],
+                const Spacer(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -475,7 +485,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -516,7 +526,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -557,7 +567,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -672,7 +682,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
@@ -725,7 +735,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
@@ -777,7 +787,7 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
@@ -878,7 +888,105 @@ class _InformationState extends State<Information> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              _removeStudent(_id);
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        content: const SizedBox(
+                          height: 50,
+                          child: Center(
+                            child: Text(
+                              "آیا از حذف حساب خود اطمینان دارید؟",
+                              style: TextStyle(fontFamily: "Vazir",
+                                  fontSize: 12,
+                                shadows: [
+                                  Shadow(
+                                    offset: Offset(2, 2),
+                                    blurRadius: 3,
+                                    color: Colors.black12,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        actions: [
+                          Row(
+                            children: [
+                              Material(
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(20),
+
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+
+                                  child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Center(
+                                        child: Text("خیر",
+                                            style: TextStyle(
+                                                fontFamily: "Vazir",
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                              shadows: [
+                                                Shadow(
+                                                  offset: Offset(2, 2),
+                                                  blurRadius: 3,
+                                                  color: Colors.black12,
+                                                ),
+                                              ],
+                                            ))),
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              Material(
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(20),
+
+                                child: TextButton(
+                                  onPressed: () {
+                                    _removeStudent(_id);
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                        builder: (context) => const LoginPage()));
+                                  },
+
+                                  child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Center(
+                                        child: Text("بله",
+                                            style: TextStyle(
+                                                fontFamily: "Vazir",
+                                                color: Colors.pink,
+                                                fontSize: 12,
+                                              shadows: [
+                                                Shadow(
+                                                  offset: Offset(2, 2),
+                                                  blurRadius: 3,
+                                                  color: Colors.black12,
+                                                ),
+                                              ],
+                                            ))),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ));
             });
           },
 

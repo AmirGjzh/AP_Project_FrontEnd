@@ -1,5 +1,5 @@
 import 'package:ap_project_frontend/login_page.dart';
-import 'package:ap_project_frontend/information.dart';
+import 'package:ap_project_frontend/information_page.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -270,7 +270,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const LoginPage()));
                 },
 
@@ -410,7 +410,7 @@ class _SignupPageState extends State<SignupPage> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -452,7 +452,7 @@ class _SignupPageState extends State<SignupPage> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none),
+                                    borderSide: const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -480,7 +480,7 @@ class _SignupPageState extends State<SignupPage> {
                           } else {
                             _signup(_idController.text, _passwordController1.text, _nameController.text,
                                 _lastnameController.text);
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const Information()));
                           }
                         });

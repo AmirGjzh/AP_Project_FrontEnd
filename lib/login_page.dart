@@ -1,4 +1,4 @@
-import 'package:ap_project_frontend/information.dart';
+import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                 } else {
                   switch (_loginState(_idController.text, _passwordController.text)) {
                     case 1:
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const Information()));
                       break;
                     case 2:
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const SignupPage()));
                 },
 

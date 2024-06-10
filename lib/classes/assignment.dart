@@ -6,9 +6,13 @@ class Assignment {
 
   final Course _course;
 
-  int _deadLine;
+  int deadLine;
 
-  bool _isActive = false;
+  bool isActive = true;
 
-  Assignment(this._title, this._course, this._deadLine);
+  Assignment(this._title, this._course, this.deadLine);
+
+  Course get course => _course;
+
+  String get title => _title;
 }
