@@ -6,11 +6,23 @@ class Teacher {
 
   final String _lastname;
 
-  final String _sername;
+  final String _username;
 
-  String? _password;
+  final String? _password;
 
-  List<Course> _courses = [];
+  final List<Course> _courses = [];
 
-  Teacher(this._name, this._lastname, this._sername, this._password);
+  Teacher(this._name, this._lastname, this._username, this._password);
+
+  List<Course> get courses => _courses;
+
+  String? get password => _password;
+
+  String get username => _username;
+
+  String get lastname => _lastname;
+
+  String get name => _name;
+
+
 }

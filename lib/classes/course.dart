@@ -33,4 +33,8 @@ class Course {
   int get units => _units;
 
   String get name => _name;
+
+  set teacher(Teacher? value) {
+    _teacher = value;
+  }
 }

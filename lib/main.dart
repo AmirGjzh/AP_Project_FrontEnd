@@ -1,6 +1,8 @@
+import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/login_page.dart';
+import 'package:ap_project_frontend/signup_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,6 +14,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HomePage();
+    return const ClassesPage();
   }
 }
