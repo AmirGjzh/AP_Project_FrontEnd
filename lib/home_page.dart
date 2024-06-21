@@ -1,6 +1,7 @@
 import 'package:ap_project_frontend/classes/course.dart';
 import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
+import 'package:ap_project_frontend/todo_page.dart';
 import 'package:flutter/material.dart';
 
 import 'classes/assignment.dart';
@@ -40,188 +41,99 @@ class _HomePageState extends State<HomePage> {
           builder: (context) {
             return Scaffold(
               bottomNavigationBar: Container(
-                height: 75,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  color: Colors.pink,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  color: Colors.pink.withOpacity(0.2),
                 ),
 
                 child: Row(
                   children: [
                     const Spacer(),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Container(
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white54,
-                                      borderRadius: BorderRadius.circular(30)),
-                                  child: const Icon(
-                                    Icons.home,
-                                    color: Colors.deepPurple,
-                                    size: 33,
-                                  ))),
-                          const Text(
-                            "سرا",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(2, 2),
-                                  blurRadius: 3,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.home,
+                            color: Colors.pink,
+                            size: 33,
+                          )),
                     ),
                     const Spacer(),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.ballot,
-                                color: Colors.deepPurple,
-                                size: 33,
-                              )),
-                          const Text(
-                            "تسکا",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(2, 2),
-                                  blurRadius: 3,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Todo()));
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.dashboard_customize_outlined,
+                            color: Colors.pink,
+                            size: 33,
+                          )),
                     ),
                     const Spacer(),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const ClassesPage()));
-                                });
-                              },
-                              icon: const Icon(
-                                Icons.school,
-                                color: Colors.deepPurple,
-                                size: 33,
-                              )),
-                          const Text(
-                            "کلاسا",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(2, 2),
-                                  blurRadius: 3,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ClassesPage()));
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.school_outlined,
+                            color: Colors.pink,
+                            size: 33,
+                          )),
                     ),
                     const Spacer(),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.sensors_outlined,
-                                  color: Colors.deepPurple, size: 33)),
-                          const Text(
-                            "خبرا",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(2, 2),
-                                  blurRadius: 3,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.sensors,
+                              color: Colors.pink, size: 33)),
                     ),
                     const Spacer(),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.work_history,
-                                color: Colors.deepPurple,
-                                size: 33,
-                              )),
-                          const Text(
-                            "کارا",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(2, 2),
-                                  blurRadius: 3,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.work_history_outlined,
+                            color: Colors.pink,
+                            size: 33,
+                          )),
                     ),
                     const Spacer(),
+
                   ],
                 ),
               ),
 
               body: Container(
-                color: Colors.white,
+                color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
 
                 child: Column(
@@ -256,13 +168,6 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontFamily: "Vazir",
-                                        shadows: [
-                                          Shadow(
-                                            offset: Offset(2, 2),
-                                            blurRadius: 3,
-                                            color: Colors.black12,
-                                          ),
-                                        ],
                                       )),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.pink,
@@ -284,13 +189,7 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         ),
                       ],
@@ -313,13 +212,7 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         ),
                         const Spacer(),
@@ -329,14 +222,8 @@ class _HomePageState extends State<HomePage> {
                             fontFamily: "Vazir",
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+                            color: Colors.black54,
+
                           ),
                         ),
                       ],
@@ -359,13 +246,7 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         ),
                         const Spacer(),
@@ -375,14 +256,8 @@ class _HomePageState extends State<HomePage> {
                             fontFamily: "Vazir",
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+                            color: Colors.black54,
+
                           ),
                         ),
                       ],
@@ -405,7 +280,6 @@ class _HomePageState extends State<HomePage> {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
         ),
 
         child: Column(
@@ -421,13 +295,13 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.pink),
+                        color: Colors.white),
 
                     child: Column(
                       children: [
                         const Icon(
                           Icons.timelapse,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         const SizedBox(
                           height: 6,
@@ -435,16 +309,10 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "$_exersiceCount تا تمرین داری",
                           style: const TextStyle(
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         )
                       ],
@@ -462,13 +330,13 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.pink),
+                        color: Colors.white),
 
                     child: Column(
                       children: [
                         const Icon(
                           Icons.heart_broken,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         const SizedBox(
                           height: 6,
@@ -476,16 +344,10 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "$_examCount تا امتحان داری",
                           style: const TextStyle(
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         )
                       ],
@@ -503,13 +365,13 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.pink),
+                        color: Colors.white),
 
                     child: Column(
                       children: [
                         const Icon(
                           Icons.access_alarms_sharp,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         const SizedBox(
                           height: 6,
@@ -517,16 +379,10 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "$_notDoneExersices تا تمرین پرید",
                           style: const TextStyle(
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         )
                       ],
@@ -551,12 +407,12 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
 
-                        color: Colors.pink),
+                        color: Colors.white),
                     child: Column(
                       children: [
                         const Icon(
                           Icons.add_task,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         const SizedBox(
                           height: 6,
@@ -564,16 +420,10 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "بهترین نمرت $_bestScore عه",
                           style: const TextStyle(
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         )
                       ],
@@ -592,12 +442,12 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
 
-                        color: Colors.pink),
+                        color: Colors.white),
                     child: Column(
                       children: [
                         const Icon(
                           Icons.mood_bad,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         const SizedBox(
                           height: 6,
@@ -605,16 +455,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "بدترین نمرت $_worstScore عه",
                           style: const TextStyle(
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
                           ),
                         )
                       ],
@@ -630,12 +473,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   _exercisesPart(BuildContext context) {
+    if (_exercises.where((e) => e.isActive == true).isEmpty) {
+      return Container(
+        height: 184,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
+
+        child: const Center(
+          child: Text(
+            "هیچ تمرینی وجود ندارد!",
+            style: TextStyle(
+              fontFamily: "Vazir",
+              fontSize: 12,
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+              // shadows: [
+              //   Shadow(
+              //     offset: Offset(2, 2),
+              //     blurRadius: 3,
+              //     color: Colors.black12,
+              //   ),
+              // ],
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
-      height: 175,
+      height: 184,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
       ),
       child: ListView.builder(
           itemCount: _exercises.where((e) => e.isActive == true).length,
@@ -646,11 +516,11 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 5, right: 5),
                   child: Material(
                     elevation: 6,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.pink,
+                        color: Colors.white,
                       ),
                       child: ListTile(
                         title: Row(
@@ -664,15 +534,9 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                color: Colors.white,
+                                //color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                shadows: [
-                                  Shadow(
-                                    offset: Offset(2, 2),
-                                    blurRadius: 3,
-                                    color: Colors.black12,
-                                  ),
-                                ],
+
                               ),
                             ),
                             const Spacer(),
@@ -690,13 +554,7 @@ class _HomePageState extends State<HomePage> {
                                                   style: TextStyle(
                                                     fontFamily: "Vazir",
                                                     fontSize: 12,
-                                                    shadows: [
-                                                      Shadow(
-                                                        offset: Offset(2, 2),
-                                                        blurRadius: 3,
-                                                        color: Colors.black12,
-                                                      ),
-                                                    ],
+
                                                   ),
                                                 ),
                                               ),
@@ -708,7 +566,7 @@ class _HomePageState extends State<HomePage> {
                                                     elevation: 4,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20),
+                                                            10),
                                                     child: TextButton(
                                                       onPressed: () {
                                                         Navigator.of(context)
@@ -736,18 +594,7 @@ class _HomePageState extends State<HomePage> {
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 12,
-                                                                  shadows: [
-                                                                    Shadow(
-                                                                      offset:
-                                                                          Offset(
-                                                                              2,
-                                                                              2),
-                                                                      blurRadius:
-                                                                          3,
-                                                                      color: Colors
-                                                                          .black12,
-                                                                    ),
-                                                                  ],
+
                                                                 ))),
                                                       ),
                                                     ),
@@ -757,7 +604,7 @@ class _HomePageState extends State<HomePage> {
                                                     elevation: 4,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20),
+                                                            10),
                                                     child: TextButton(
                                                       onPressed: () {
                                                         setState(() {
@@ -793,18 +640,7 @@ class _HomePageState extends State<HomePage> {
                                                                   color: Colors
                                                                       .pink,
                                                                   fontSize: 12,
-                                                                  shadows: [
-                                                                    Shadow(
-                                                                      offset:
-                                                                          Offset(
-                                                                              2,
-                                                                              2),
-                                                                      blurRadius:
-                                                                          3,
-                                                                      color: Colors
-                                                                          .black12,
-                                                                    ),
-                                                                  ],
+
                                                                 ))),
                                                       ),
                                                     ),
@@ -822,7 +658,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Icon(
                                     Icons.check_box_outlined,
-                                    color: Colors.white,
+                                    color: Colors.pink,
                                   ),
                                 ],
                               ),
@@ -836,15 +672,9 @@ class _HomePageState extends State<HomePage> {
                               .title,
                           style: const TextStyle(
                             fontFamily: "Vazir",
-                            color: Colors.white,
+                            //color: Colors.white,
                             fontSize: 11,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           ),
                         ),
                       ),
@@ -861,12 +691,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   _doneExercises(BuildContext context) {
+    if (_exercises.where((e) => e.isActive == false).isEmpty) {
+      return Container(
+        height: 184,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
+
+        child: const Center(
+          child: Text(
+            "هیچ تمرینی انجام نشده!",
+            style: TextStyle(
+              fontFamily: "Vazir",
+              fontSize: 12,
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
-      height: 175,
+      height: 184,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
       ),
       child: ListView.builder(
           itemCount: _exercises.where((e) => e.isActive == false).length,
@@ -877,11 +727,11 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 5, right: 5),
                   child: Material(
                     elevation: 6,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.pink,
+                        color: Colors.white,
                       ),
                       child: ListTile(
                         title: Row(
@@ -895,15 +745,9 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                color: Colors.white,
+                                //color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                shadows: [
-                                  Shadow(
-                                    offset: Offset(2, 2),
-                                    blurRadius: 3,
-                                    color: Colors.black12,
-                                  ),
-                                ],
+
                               ),
                             ),
                             const Spacer(),
@@ -916,7 +760,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Icon(
                                     Icons.check_box,
-                                    color: Colors.white,
+                                    color: Colors.pink,
                                   ),
                                 ],
                               ),
@@ -931,14 +775,8 @@ class _HomePageState extends State<HomePage> {
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 11,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+                            //color: Colors.white,
+
                           ),
                         ),
                       ),

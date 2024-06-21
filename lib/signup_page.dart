@@ -71,13 +71,7 @@ class _SignupPageState extends State<SignupPage> {
         const Text(
           "ثبت نام",
           style: TextStyle(
-              shadows: [
-                Shadow(
-                  offset: Offset(4, 4),
-                  blurRadius: 3,
-                  color: Colors.black12,
-                ),
-              ],
+
               fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "Vazir",
@@ -222,13 +216,7 @@ class _SignupPageState extends State<SignupPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: "Vazir",
-                shadows: [
-                  Shadow(
-                    offset: Offset(3, 3),
-                    blurRadius: 3,
-                    color: Colors.black12,
-                  ),
-                ],
+
               ),
             ),
           ),
@@ -257,13 +245,7 @@ class _SignupPageState extends State<SignupPage> {
             const Text(
               "حساب کاربری دارید؟ ",
               style: TextStyle(
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.w600,
                   fontSize: 17),
@@ -276,13 +258,7 @@ class _SignupPageState extends State<SignupPage> {
 
                 child: const Text("ورود",
                     style: TextStyle(
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                         color: Colors.pink,
                         fontWeight: FontWeight.w600,
                         fontSize: 17)))
@@ -373,7 +349,7 @@ class _SignupPageState extends State<SignupPage> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
-                30, 60, 30, MediaQuery.of(context).viewInsets.bottom + 25),
+                30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
 
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -386,13 +362,7 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -427,13 +397,7 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -467,7 +431,7 @@ class _SignupPageState extends State<SignupPage> {
                   borderRadius: BorderRadius.circular(35),
 
                   child: SizedBox(
-                    width: 300,
+                    width: 350,
 
                     child: ElevatedButton(
                       onPressed: () {
@@ -495,15 +459,9 @@ class _SignupPageState extends State<SignupPage> {
                       child: const Text(
                         "ثبت نام",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: "Vazir",
-                          shadows: [
-                            Shadow(
-                              offset: Offset(3, 3),
-                              blurRadius: 3,
-                              color: Colors.black12,
-                            ),
-                          ],
+
                         ),
                       ),
                     ),

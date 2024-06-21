@@ -67,13 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         const Text(
           "ورود به پنل کاربری",
           style: TextStyle(
-              shadows: [
-                Shadow(
-                  offset: Offset(4, 4),
-                  blurRadius: 3,
-                  color: Colors.black12,
-                ),
-              ],
+
               fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "Vazir",
@@ -178,13 +172,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: "Vazir",
-                shadows: [
-                  Shadow(
-                    offset: Offset(3, 3),
-                    blurRadius: 3,
-                    color: Colors.black12,
-                  ),
-                ],
+
               ),
             ),
           ),
@@ -212,13 +200,7 @@ class _LoginPageState extends State<LoginPage> {
             const Text(
               "حساب کاربری ندارید؟ ",
               style: TextStyle(
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 3,
-                      color: Colors.black12,
-                    ),
-                  ],
+
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.w600,
                   fontSize: 17),
@@ -231,13 +213,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 child: const Text("ثبت نام",
                     style: TextStyle(
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                         color: Colors.pink,
                         fontWeight: FontWeight.w600,
                         fontSize: 17)))

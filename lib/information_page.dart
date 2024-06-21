@@ -61,7 +61,7 @@ class _InformationState extends State<Information> {
                   children: [
                     _info(context),
                     const SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
                     _changeInfo(context),
                     const SizedBox(
@@ -134,13 +134,7 @@ class _InformationState extends State<Information> {
             fontFamily: "Vazir",
             fontSize: 18,
             color: Colors.white,
-            shadows: [
-              Shadow(
-                offset: Offset(2, 2),
-                blurRadius: 3,
-                color: Colors.black12,
-              ),
-            ],
+
           ),
         )
       ]),
@@ -168,13 +162,7 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 ),
                 const Spacer(),
@@ -184,13 +172,7 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 )
               ],
@@ -211,13 +193,7 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 ),
                 Spacer(),
@@ -227,13 +203,7 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 )
               ],
@@ -254,13 +224,7 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 ),
                 const Spacer(),
@@ -270,13 +234,7 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 )
               ],
@@ -297,13 +255,7 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 ),
                 const Spacer(),
@@ -313,13 +265,7 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 3,
-                        color: Colors.black12,
-                      ),
-                    ],
+
                   ),
                 )
               ],
@@ -370,13 +316,7 @@ class _InformationState extends State<Information> {
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           )),
 
                       style: ElevatedButton.styleFrom(
@@ -418,13 +358,7 @@ class _InformationState extends State<Information> {
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: "Vazir",
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 3,
-                                color: Colors.black12,
-                              ),
-                            ],
+
                           )),
 
                       style: ElevatedButton.styleFrom(
@@ -448,7 +382,7 @@ class _InformationState extends State<Information> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
-                30, 60, 30, MediaQuery.of(context).viewInsets.bottom + 25),
+                30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
 
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -460,16 +394,10 @@ class _InformationState extends State<Information> {
                       "نام جدید :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -501,16 +429,10 @@ class _InformationState extends State<Information> {
                       "نام خانوادگی جدید :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -542,16 +464,10 @@ class _InformationState extends State<Information> {
                       "شماره دانشجویی جدید :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -582,7 +498,7 @@ class _InformationState extends State<Information> {
                   borderRadius: BorderRadius.circular(35),
 
                   child: SizedBox(
-                    width: 300,
+                    width: 350,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -618,15 +534,9 @@ class _InformationState extends State<Information> {
                       child: const Text(
                         "ثبت تغییرات",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: "Vazir",
-                          shadows: [
-                            Shadow(
-                              offset: Offset(3, 3),
-                              blurRadius: 3,
-                              color: Colors.black12,
-                            ),
-                          ],
+
                         ),
                       ),
                     ),
@@ -644,7 +554,7 @@ class _InformationState extends State<Information> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
-                30, 60, 30, MediaQuery.of(context).viewInsets.bottom + 25),
+                30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
 
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -656,16 +566,10 @@ class _InformationState extends State<Information> {
                       "کلمه عبور فعلی :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -709,16 +613,10 @@ class _InformationState extends State<Information> {
                       "کلمه عبور جدید :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -761,16 +659,10 @@ class _InformationState extends State<Information> {
                       "تکرار کلمه عبور جدید :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 3,
-                            color: Colors.black12,
-                          ),
-                        ],
+
                       ),
                     ),
                     const Spacer(),
@@ -812,7 +704,7 @@ class _InformationState extends State<Information> {
                   borderRadius: BorderRadius.circular(35),
 
                   child: SizedBox(
-                    width: 300,
+                    width: 350,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -857,15 +749,9 @@ class _InformationState extends State<Information> {
                       child: const Text(
                         "ثبت تغییرات",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: "Vazir",
-                          shadows: [
-                            Shadow(
-                              offset: Offset(3, 3),
-                              blurRadius: 3,
-                              color: Colors.black12,
-                            ),
-                          ],
+
                         ),
                       ),
                     ),
@@ -883,8 +769,8 @@ class _InformationState extends State<Information> {
       borderRadius: BorderRadius.circular(35),
 
       child: SizedBox(
-        width: 300,
-        height: 70,
+        width: 350,
+        height: 60,
         child: ElevatedButton(
           onPressed: () {
             setState(() {
@@ -898,13 +784,7 @@ class _InformationState extends State<Information> {
                               "آیا از حذف حساب خود اطمینان دارید؟",
                               style: TextStyle(fontFamily: "Vazir",
                                   fontSize: 12,
-                                shadows: [
-                                  Shadow(
-                                    offset: Offset(2, 2),
-                                    blurRadius: 3,
-                                    color: Colors.black12,
-                                  ),
-                                ],
+
                               ),
                             ),
                           ),
@@ -914,7 +794,7 @@ class _InformationState extends State<Information> {
                             children: [
                               Material(
                                 elevation: 4,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(10),
 
                                 child: TextButton(
                                   onPressed: () {
@@ -935,13 +815,7 @@ class _InformationState extends State<Information> {
                                                 fontFamily: "Vazir",
                                                 color: Colors.black,
                                                 fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  offset: Offset(2, 2),
-                                                  blurRadius: 3,
-                                                  color: Colors.black12,
-                                                ),
-                                              ],
+
                                             ))),
                                   ),
                                 ),
@@ -949,7 +823,7 @@ class _InformationState extends State<Information> {
                               const Spacer(),
                               Material(
                                 elevation: 4,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(10),
 
                                 child: TextButton(
                                   onPressed: () {
@@ -972,13 +846,7 @@ class _InformationState extends State<Information> {
                                                 fontFamily: "Vazir",
                                                 color: Colors.pink,
                                                 fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  offset: Offset(2, 2),
-                                                  blurRadius: 3,
-                                                  color: Colors.black12,
-                                                ),
-                                              ],
+
                                             ))),
                                   ),
                                 ),
@@ -999,15 +867,9 @@ class _InformationState extends State<Information> {
           child: const Text(
             "حذف حساب کاربری",
             style: TextStyle(
-              fontSize: 17,
+              fontSize: 15,
               fontFamily: "Vazir",
-              shadows: [
-                Shadow(
-                  offset: Offset(3, 3),
-                  blurRadius: 3,
-                  color: Colors.black12,
-                ),
-              ],
+
             ),
           ),
         ),
@@ -1058,7 +920,7 @@ class _InformationState extends State<Information> {
           borderRadius: BorderRadius.circular(15),
         ),
 
-        margin: const EdgeInsets.only(bottom: 445, right: 20, left: 20),
+        margin: const EdgeInsets.only(bottom: 410, right: 20, left: 20),
 
         action: SnackBarAction(
           onPressed: () {},
