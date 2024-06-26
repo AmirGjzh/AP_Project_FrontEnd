@@ -1,4 +1,5 @@
 import 'package:ap_project_frontend/classes_page.dart';
+import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/login_page.dart';
@@ -15,6 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Todo();
+    return const ExercisesPage();
   }
 }

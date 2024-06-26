@@ -1,5 +1,6 @@
 import 'package:ap_project_frontend/classes/course.dart';
 import 'package:ap_project_frontend/classes/teacher.dart';
+import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +125,12 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ExercisesPage()));
+                            });
+                          },
                           icon: const Icon(
                             Icons.work_history_outlined,
                             color: Colors.pink,
