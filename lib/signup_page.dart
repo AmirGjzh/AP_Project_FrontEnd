@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ap_project_frontend/login_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:flutter/material.dart';
@@ -178,15 +180,14 @@ class _SignupPageState extends State<SignupPage> {
           borderRadius: BorderRadius.circular(35),
 
           child: ElevatedButton(
-            onPressed: () {
-              setState(() {
+            onPressed: () async {
                 if (_idController.text.isEmpty) {
                   _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
                 } else if (_passwordController1.text.isEmpty) {
                   _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
                 } else if (_passwordController2.text.isEmpty) {
                   _showSnackBar(context, "تکرار کلمه عبور خود را وارد کنید!");
-                } else if (!_idValidation(_idController.text)) {
+                } else if (_idValidation(_idController.text).toString() == "false") {
                   _showSnackBar(
                       context, "این شماره دانشجویی قبلا ثبت شده است!");
                 } else if (!_passValidation(_passwordController1.text, _idController.text)) {
@@ -202,7 +203,6 @@ class _SignupPageState extends State<SignupPage> {
                         return _nameLastnameInput(context);
                       });
                 }
-              });
             },
 
             style: ElevatedButton.styleFrom(
@@ -332,9 +332,18 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  bool _idValidation(String id) {
-    // TODO
-    return true;
+  Future<String> _idValidation(String id) async {
+    String validation = "";
+    await Socket.connect("host", 1384).then((serverSocket) {
+      serverSocket.write("newId-$id");
+      serverSocket.flush();
+      serverSocket.listen((answer) {
+        setState(() {
+          validation = (String.fromCharCode(answer as int) == "valid") ? "true" : "false";
+        });
+      });
+    });
+    return validation;
   }
 
   bool _passValidation(String password, String id) {
@@ -434,8 +443,7 @@ class _SignupPageState extends State<SignupPage> {
                     width: 350,
 
                     child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
+                      onPressed: () async {
                           if (_nameController.text.isEmpty) {
                             _showTopSnackBar(context, "نام خود را وارد کنید!");
                           } else if (_lastnameController.text.isEmpty) {
@@ -447,7 +455,6 @@ class _SignupPageState extends State<SignupPage> {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const Information()));
                           }
-                        });
                       },
 
                       style: ElevatedButton.styleFrom(
@@ -473,7 +480,10 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
-  void _signup(String id, String password, String name, String lastname) {
-    // TODO
+  void _signup(String id, String password, String name, String lastname) async {
+    await Socket.connect("host", 1384).then((serverSocket) {
+      serverSocket.write("signup-$id-$password-$name-$lastname");
+      serverSocket.flush();
+    });
   }
 }
