@@ -3,6 +3,7 @@ import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 import 'classes/assignment.dart';
@@ -15,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _exersiceCount = "0";
   String _examCount = "0";
   String _notDoneExersices = "0";
   String _bestScore = "20.00";
@@ -36,8 +36,10 @@ class _HomePageState extends State<HomePage> {
       theme: ThemeData(
           textTheme: const TextTheme(
               button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+
       home: Directionality(
         textDirection: TextDirection.rtl,
+
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -51,7 +53,6 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -65,7 +66,6 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -84,7 +84,6 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -103,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -114,7 +112,6 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.pink, size: 33)),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -133,7 +130,6 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ),
                     const Spacer(),
-
                   ],
                 ),
               ),
@@ -155,39 +151,46 @@ class _HomePageState extends State<HomePage> {
                           child: Material(
                             elevation: 4,
                             borderRadius: BorderRadius.circular(35),
-
                             child: SizedBox(
                               height: 40,
                               child: ElevatedButton.icon(
-                                  icon: const Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => const Information()));
-                                    });
-                                  },
-                                  label: const Text("اطلاعات کاربری",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontFamily: "Vazir",
-                                      )),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.pink,
-                                  ),
+                                icon: const Icon(
+                                  Icons.person,
+                                  color: Colors.white,
                                 ),
+                                onPressed: () {
+                                  setState(() {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Information()));
+                                  });
+                                },
+                                label: const Text("اطلاعات کاربری",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontFamily: "Vazir",
+                                    )),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.pink,
+                                ),
+                              ),
                             ),
                           ),
-                          ),
+                        ),
                       ],
                     ),
                     const Row(
                       children: [
-                        Icon(Icons.circle, color: Colors.pink, size: 15,),
-                        SizedBox(width: 10,),
+                        Icon(
+                          Icons.circle,
+                          color: Colors.pink,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           "خلاصه",
                           style: TextStyle(
@@ -195,7 +198,6 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-
                           ),
                         ),
                       ],
@@ -209,8 +211,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       children: [
-                        const Icon(Icons.circle, color: Colors.pink, size: 15,),
-                        const SizedBox(width: 10,),
+                        const Icon(
+                          Icons.circle,
+                          color: Colors.pink,
+                          size: 15,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         const Text(
                           "تمرین های جاری",
                           style: TextStyle(
@@ -218,7 +226,6 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-
                           ),
                         ),
                         const Spacer(),
@@ -229,7 +236,6 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: Colors.black54,
-
                           ),
                         ),
                       ],
@@ -243,8 +249,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       children: [
-                        const Icon(Icons.circle, color: Colors.pink, size: 15,),
-                        const SizedBox(width: 10,),
+                        const Icon(
+                          Icons.circle,
+                          color: Colors.pink,
+                          size: 15,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         const Text(
                           "تمرین های انجام شده",
                           style: TextStyle(
@@ -252,7 +264,6 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-
                           ),
                         ),
                         const Spacer(),
@@ -263,7 +274,6 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: Colors.black54,
-
                           ),
                         ),
                       ],
@@ -313,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                           height: 6,
                         ),
                         Text(
-                          "$_exersiceCount تا تمرین داری",
+                          "${User.numberOfExercises} تا تمرین داری",
                           style: const TextStyle(
                             //color: Colors.white,
                             fontSize: 11,
@@ -424,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                           height: 6,
                         ),
                         Text(
-                          "بهترین نمرت $_bestScore عه",
+                          "بهترین نمرت ${User.bestScore} عه",
                           style: const TextStyle(
                             //color: Colors.white,
                             fontSize: 11,
@@ -459,7 +469,7 @@ class _HomePageState extends State<HomePage> {
                           height: 6,
                         ),
                         Text(
-                          "بدترین نمرت $_worstScore عه",
+                          "بدترین نمرت ${User.worstScore} عه",
                           style: const TextStyle(
                             //color: Colors.white,
                             fontSize: 11,
@@ -513,6 +523,7 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
+
       child: ListView.builder(
           itemCount: _exercises.where((e) => e.isActive == true).length,
           itemBuilder: (context, index) {
@@ -724,6 +735,7 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
+
       child: ListView.builder(
           itemCount: _exercises.where((e) => e.isActive == false).length,
           itemBuilder: (context, index) {

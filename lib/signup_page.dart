@@ -181,30 +181,31 @@ class _SignupPageState extends State<SignupPage> {
 
           child: ElevatedButton(
             onPressed: () async {
-                if (_idController.text.isEmpty) {
-                  _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
-                } else if (_passwordController1.text.isEmpty) {
-                  _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
-                } else if (_passwordController2.text.isEmpty) {
-                  _showSnackBar(context, "تکرار کلمه عبور خود را وارد کنید!");
-                } else if (_idValidation(_idController.text).toString() == "false") {
-                  _showSnackBar(
-                      context, "این شماره دانشجویی قبلا ثبت شده است!");
-                } else if (!_passValidation(_passwordController1.text, _idController.text)) {
-                  _showSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
-                } else if (_passwordController1.text != _passwordController2.text) {
-                  _showSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
-                } else {
-                  showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.pink.shade50,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return _nameLastnameInput(context);
-                      });
-                }
+              if (_idController.text.isEmpty) {
+                _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
+              } else if (_passwordController1.text.isEmpty) {
+                _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
+              } else if (_passwordController2.text.isEmpty) {
+                _showSnackBar(context, "تکرار کلمه عبور خود را وارد کنید!");
+              } else if (_idValidation(_idController.text).toString() ==
+                  "false") {
+                _showSnackBar(context, "این شماره دانشجویی قبلا ثبت شده است!");
+              } else if (!_passValidation(
+                  _passwordController1.text, _idController.text)) {
+                _showSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
+              } else if (_passwordController1.text !=
+                  _passwordController2.text) {
+                _showSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
+              } else {
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.pink.shade50,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return _nameLastnameInput(context);
+                    });
+              }
             },
-
             style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -444,19 +445,19 @@ class _SignupPageState extends State<SignupPage> {
 
                     child: ElevatedButton(
                       onPressed: () async {
-                          if (_nameController.text.isEmpty) {
-                            _showTopSnackBar(context, "نام خود را وارد کنید!");
-                          } else if (_lastnameController.text.isEmpty) {
-                            _showTopSnackBar(
-                                context, "نام خانوادگی خود را وارد کنید!");
-                          } else {
-                            _signup(_idController.text, _passwordController1.text, _nameController.text,
-                                _lastnameController.text);
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                builder: (context) => const Information()));
-                          }
+                        if (_nameController.text.isEmpty) {
+                          _showTopSnackBar(context, "نام خود را وارد کنید!");
+                        } else if (_lastnameController.text.isEmpty) {
+                          _showTopSnackBar(
+                              context, "نام خانوادگی خود را وارد کنید!");
+                        } else {
+                          _signup(_idController.text, _passwordController1.text,
+                              _nameController.text, _lastnameController.text);
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const Information()));
+                        }
                       },
-
                       style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
                           padding: const EdgeInsets.symmetric(vertical: 16),

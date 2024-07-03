@@ -1,4 +1,5 @@
 import 'package:ap_project_frontend/login_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 class Information extends StatefulWidget {
@@ -9,13 +10,6 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
-  String _name = "نام";
-  String _lastname = "نام خانوادگی";
-  String _id = "402000000";
-  String _units = "0";
-  String _average = "00.00";
-
-  final _idController = TextEditingController();
   final _nameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _passController = TextEditingController();
@@ -129,7 +123,7 @@ class _InformationState extends State<Information> {
           height: 30,
         ),
         Text(
-          "$_name $_lastname",
+          "${User.user?.name} ${User.user?.lastname}",
           style: const TextStyle(
             fontFamily: "Vazir",
             fontSize: 18,
@@ -167,7 +161,7 @@ class _InformationState extends State<Information> {
                 ),
                 const Spacer(),
                 Text(
-                  _id,
+                  User.user!.id,
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: "Vazir",
@@ -229,7 +223,7 @@ class _InformationState extends State<Information> {
                 ),
                 const Spacer(),
                 Text(
-                  _units,
+                  User.user!.units.toString(),
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: "Vazir",
@@ -260,7 +254,7 @@ class _InformationState extends State<Information> {
                 ),
                 const Spacer(),
                 Text(
-                  _average,
+                  User.average,
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: "Vazir",
@@ -458,41 +452,6 @@ class _InformationState extends State<Information> {
                   ],
                 ),
                 const SizedBox(height: 25),
-                Row(
-                  children: [
-                    const Text(
-                      "شماره دانشجویی جدید :",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 11,
-                        fontFamily: "Vazir",
-
-                      ),
-                    ),
-                    const Spacer(),
-                    Material(
-                      elevation: 4,
-                      borderRadius: BorderRadius.circular(20),
-                      child: SizedBox(
-                        width: 200,
-                        height: 70,
-                        child: Stack(children: [
-                          TextField(
-                            controller: _idController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
-                                fillColor: Colors.white,
-                                filled: true),
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 25),
                 Material(
                   elevation: 10,
                   borderRadius: BorderRadius.circular(35),
@@ -503,24 +462,14 @@ class _InformationState extends State<Information> {
                       onPressed: () {
                         setState(() {
                           if (_nameController.text.isNotEmpty) {
-                            _name = _nameController.text;
+                            User.user!.name = _nameController.text;
+                            User.updateName();
                             _nameController.text = "";
                           }
                           if (_lastnameController.text.isNotEmpty) {
-                            _lastname = _lastnameController.text;
+                            User.user!.lastname = _lastnameController.text;
+                            User.updateLastname();
                             _lastnameController.text = "";
-                          }
-                          if (_idController.text.isNotEmpty) {
-                            if (!_isNumeric(_idController.text)) {
-                              _showTopSnackBar(context, "شماره دانشجویی متشکل از فقد اعداد است!");
-                            }
-                            else if (_idValidation(_idController.text)) {
-                              _id = _idController.text;
-                            }
-                            else {
-                              _showTopSnackBar(context, "این شماره دانشجویی قبلا ثبت شده است!");
-                            }
-                            _idController.text = "";
                           }
                         });
                       },
@@ -721,7 +670,7 @@ class _InformationState extends State<Information> {
                             _showTopSnackBar(context, "کلمه عبور فعلی اشتباه است!");
                             _passController.text = "";
                           }
-                          else if (!_passValidation(_newPassController1.text, _id)) {
+                          else if (!_passValidation(_newPassController1.text, User.user!.id)) {
                             _showTopSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
                             _newPassController1.text = "";
                             _newPassController2.text = "";
@@ -731,7 +680,8 @@ class _InformationState extends State<Information> {
                             _newPassController2.text = "";
                           }
                           else {
-                            _changePassword(_newPassController1.text);
+                            User.user!.password = _newPassController1.text;
+                            User.updatePassword();
                             _passController.text = "";
                             _newPassController1.text = "";
                             _newPassController2.text = "";
@@ -827,7 +777,7 @@ class _InformationState extends State<Information> {
 
                                 child: TextButton(
                                   onPressed: () {
-                                    _removeStudent(_id);
+                                    User.removeStudent();
                                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                                         builder: (context) => const LoginPage()));
                                   },
@@ -895,10 +845,6 @@ class _InformationState extends State<Information> {
     });
   }
 
-  bool _isNumeric(String id) {
-    return double.tryParse(id) != null;
-  }
-
   bool _passValidation(String password, String id) {
     var pattern = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     return pattern.hasMatch(password) && !password.contains(id);
@@ -931,21 +877,7 @@ class _InformationState extends State<Information> {
     );
   }
 
-  bool _idValidation(String id) {
-    // TODO
-    return true;
-  }
-
   bool _currentPassValid(String pass) {
-    // TODO
-    return true;
-  }
-
-  void _changePassword(String newPass) {
-    // TODO
-  }
-
-  void _removeStudent(String id) {
-    // TODO
+    return pass == User.user!.password;
   }
 }

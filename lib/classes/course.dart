@@ -4,37 +4,22 @@ import 'package:ap_project_frontend/classes/assignment.dart';
 
 class Course {
 
-  final String _name;
+  final String name;
 
-  final int _units;
+  final int units;
 
-  Teacher? _teacher;
+  Teacher? teacher;
 
-  final Map<Student, double> _students = {};
+  final Map<Student, double> students = {};
 
   bool isActive = false;
 
-  final List<Assignment> _exercises = [];
+  final List<Assignment> exercises = [];
 
   Assignment? project;
 
-  final int _examDate;
+  final int examDate;
 
-  Course(this._name, this._units, this._examDate);
+  Course(this.name, this.units, this.examDate);
 
-  int get examDate => _examDate;
-
-  List<Assignment> get exercises => _exercises;
-
-  Map<Student, double> get students => _students;
-
-  Teacher? get teacher => _teacher;
-
-  int get units => _units;
-
-  String get name => _name;
-
-  set teacher(Teacher? value) {
-    _teacher = value;
-  }
 }

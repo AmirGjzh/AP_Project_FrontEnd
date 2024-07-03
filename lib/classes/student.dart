@@ -1,17 +1,19 @@
 import 'package:ap_project_frontend/classes/course.dart';
 
 class Student {
-  final String _name;
+  String name;
 
-  final String _lastname;
+  String lastname;
 
-  String _id;
+  String id;
 
-  String _password;
+  String password;
 
-  int _units = 0;
+  int units = 0;
 
   final List<Course> courses = [];
 
-  Student(this._name, this._lastname, this._id, this._password);
+  Student(this.name, this.lastname, this.id, this.password);
+
+
 }

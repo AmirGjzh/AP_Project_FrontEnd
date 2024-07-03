@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/signup_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String state = "";
   final _idController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -144,26 +147,31 @@ class _LoginPageState extends State<LoginPage> {
 
           child: ElevatedButton(
             onPressed: () async {
-              if (_idController.text.isEmpty) {
-                _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
-              } else if (_passwordController.text.isEmpty) {
-                _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
-              } else {
-                switch (
-                    _loginState(_idController.text, _passwordController.text)
-                        .toString()) {
-                  case "1":
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const Information()));
-                    break;
-                  case "2":
-                    _showSnackBar(context, "کلمه عبور اشتباه است!");
-                    break;
-                  case "3":
-                    _showSnackBar(context, "شماره دانشجویی یافت نشد!");
-                    break;
+              setState(() {
+                if (_idController.text.isEmpty) {
+                  _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
+                } else if (_passwordController.text.isEmpty) {
+                  _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
+                } else {
+                  _loginState(_idController.text, _passwordController.text);
+                  switch (state.split("-")[0]) {
+                    case "1":
+                      User.setUser(state.split("-")[1], state.split("-")[2], _idController.text, _passwordController.text);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Information()));
+                      break;
+                    case "2":
+                      _showSnackBar(context, "کلمه عبور اشتباه است!");
+                      break;
+                    case "3":
+                      _showSnackBar(context, "شماره دانشجویی یافت نشد!");
+                      break;
+                    case "":
+                      print("default");
+                      break;
+                  }
                 }
-              }
+              });
             },
             style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
@@ -255,17 +263,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<String> _loginState(String id, String password) async {
-    String state = "";
-    await Socket.connect("host", 1384).then((serverSocket) {
-      serverSocket.write("login-$id-$password");
+  _loginState(String id, String password) async {
+    await Socket.connect("192.168.208.115", 1384).then((serverSocket) {
+      serverSocket.write("login-$id-$password\u0000");
       serverSocket.flush();
       serverSocket.listen((answer) {
         setState(() {
-          state = String.fromCharCode(answer as int);
+          state = const Utf8Decoder().convert(answer);
         });
       });
     });
-    return state;
   }
 }
