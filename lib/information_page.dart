@@ -1,3 +1,4 @@
+import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/login_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
@@ -29,18 +30,15 @@ class _InformationState extends State<Information> {
           textTheme: const TextTheme(
               button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
       scaffoldMessengerKey: _messengerKey,
-
       home: Directionality(
         textDirection: TextDirection.rtl,
-
         child: Builder(
           builder: (context) {
             return Scaffold(
               backgroundColor: Colors.white,
-
               appBar: AppBar(
                 title: _appBar(context),
-                toolbarHeight: 230,
+                toolbarHeight: 235,
                 backgroundColor: Colors.pink,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -50,7 +48,6 @@ class _InformationState extends State<Information> {
               body: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(25),
-
                 child: Column(
                   children: [
                     _info(context),
@@ -74,14 +71,30 @@ class _InformationState extends State<Information> {
 
   _appBar(context) {
     return Center(
-      child: Column(children: [
+      child: Column(
+          children: [
+        Row(
+          children: [
+            const Spacer(),
+            InkWell(
+              child: const Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 30,),
+              onTap: () async {
+                await User.homePageReady();
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const HomePage()));
+              },
+            )
+          ],
+        ),
         Stack(
           children: [
             CircleAvatar(
-              radius: 75,
+              radius: 70,
               backgroundColor: Colors.grey.shade200,
               child: const CircleAvatar(
-                radius: 70,
+                radius: 65,
               ),
             ),
             Positioned(
@@ -119,16 +132,13 @@ class _InformationState extends State<Information> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 30,
-        ),
+        const SizedBox(height: 20,),
         Text(
-          "${User.user?.name} ${User.user?.lastname}",
+          "${User.user!.name} ${User.user!.lastname}",
           style: const TextStyle(
             fontFamily: "Vazir",
-            fontSize: 18,
+            fontSize: 16,
             color: Colors.white,
-
           ),
         )
       ]),
@@ -139,14 +149,12 @@ class _InformationState extends State<Information> {
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(20),
-
       child: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.pink.shade50,
         ),
-
         child: Column(
           children: [
             Row(
@@ -156,7 +164,6 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-
                   ),
                 ),
                 const Spacer(),
@@ -166,7 +173,6 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-
                   ),
                 )
               ],
@@ -187,7 +193,6 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-
                   ),
                 ),
                 Spacer(),
@@ -197,7 +202,6 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-
                   ),
                 )
               ],
@@ -218,17 +222,15 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  User.user!.units.toString(),
+                  User.user!.units,
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-
                   ),
                 )
               ],
@@ -249,7 +251,6 @@ class _InformationState extends State<Information> {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Vazir",
-
                   ),
                 ),
                 const Spacer(),
@@ -259,7 +260,6 @@ class _InformationState extends State<Information> {
                     fontSize: 13,
                     fontFamily: "Vazir",
                     color: Colors.black54,
-
                   ),
                 )
               ],
@@ -280,7 +280,6 @@ class _InformationState extends State<Information> {
           borderRadius: BorderRadius.circular(20),
           color: Colors.pink.shade50,
         ),
-
         child: Column(
           children: [
             Row(
@@ -289,13 +288,10 @@ class _InformationState extends State<Information> {
                 Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(20),
-
                   child: SizedBox(
                     height: 40,
-
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.edit),
-
                       onPressed: () {
                         showModalBottomSheet(
                             isScrollControlled: true,
@@ -305,14 +301,11 @@ class _InformationState extends State<Information> {
                               return _changeInfo2(context);
                             });
                       },
-
                       label: const Text("ویرایش مشخصات",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: "Vazir",
-
                           )),
-
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade100,
                       ),
@@ -331,13 +324,10 @@ class _InformationState extends State<Information> {
                 Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(20),
-
                   child: SizedBox(
                     height: 40,
-
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.lock),
-
                       onPressed: () {
                         showModalBottomSheet(
                             isScrollControlled: true,
@@ -347,14 +337,11 @@ class _InformationState extends State<Information> {
                               return _changeInfo3(context);
                             });
                       },
-
                       label: const Text("تغییر کلمه عبور",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: "Vazir",
-
                           )),
-
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade100,
                       ),
@@ -377,10 +364,8 @@ class _InformationState extends State<Information> {
           child: Container(
             padding: EdgeInsets.fromLTRB(
                 30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
-
             child: Column(
               mainAxisSize: MainAxisSize.min,
-
               children: [
                 Row(
                   children: [
@@ -391,7 +376,6 @@ class _InformationState extends State<Information> {
                         color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
@@ -407,7 +391,8 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -426,7 +411,6 @@ class _InformationState extends State<Information> {
                         color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
@@ -442,7 +426,8 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -455,37 +440,31 @@ class _InformationState extends State<Information> {
                 Material(
                   elevation: 10,
                   borderRadius: BorderRadius.circular(35),
-
                   child: SizedBox(
                     width: 350,
                     child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_nameController.text.isNotEmpty) {
-                            User.user!.name = _nameController.text;
-                            User.updateName();
-                            _nameController.text = "";
-                          }
-                          if (_lastnameController.text.isNotEmpty) {
-                            User.user!.lastname = _lastnameController.text;
-                            User.updateLastname();
-                            _lastnameController.text = "";
-                          }
-                        });
+                      onPressed: () async {
+                        if (_nameController.text.isNotEmpty) {
+                          User.user!.name = _nameController.text;
+                          _nameController.text = "";
+                          await User.updateName();
+                        }
+                        if (_lastnameController.text.isNotEmpty) {
+                          User.user!.lastname = _lastnameController.text;
+                          _lastnameController.text = "";
+                          await User.updateLastname();
+                        }
                       },
-
                       style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
-
                       child: const Text(
                         "ثبت تغییرات",
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Vazir",
-
                         ),
                       ),
                     ),
@@ -504,10 +483,8 @@ class _InformationState extends State<Information> {
           child: Container(
             padding: EdgeInsets.fromLTRB(
                 30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
-
             child: Column(
               mainAxisSize: MainAxisSize.min,
-
               children: [
                 Row(
                   children: [
@@ -518,14 +495,12 @@ class _InformationState extends State<Information> {
                         color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
                     Material(
                       elevation: 4,
                       borderRadius: BorderRadius.circular(20),
-
                       child: SizedBox(
                         width: 200,
                         height: 70,
@@ -535,11 +510,13 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
-                                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured1,
                                     child: Icon(_obscured1
@@ -547,7 +524,6 @@ class _InformationState extends State<Information> {
                                         : Icons.visibility_off_rounded),
                                   ),
                                 )),
-
                             obscureText: _obscured1,
                           ),
                         ]),
@@ -565,14 +541,12 @@ class _InformationState extends State<Information> {
                         color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
                     Material(
                       elevation: 4,
                       borderRadius: BorderRadius.circular(20),
-
                       child: SizedBox(
                         width: 200,
                         height: 70,
@@ -582,11 +556,13 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
-                                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured2,
                                     child: Icon(_obscured2
@@ -611,14 +587,12 @@ class _InformationState extends State<Information> {
                         color: Colors.black,
                         fontSize: 11,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
                     Material(
                       elevation: 4,
                       borderRadius: BorderRadius.circular(20),
-
                       child: SizedBox(
                         width: 200,
                         height: 70,
@@ -628,11 +602,13 @@ class _InformationState extends State<Information> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true,
                                 suffixIcon: Padding(
-                                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured3,
                                     child: Icon(_obscured3
@@ -651,57 +627,54 @@ class _InformationState extends State<Information> {
                 Material(
                   elevation: 10,
                   borderRadius: BorderRadius.circular(35),
-
                   child: SizedBox(
                     width: 350,
                     child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_passController.text.isEmpty) {
-                            _showTopSnackBar(context, "کلمه عبور فعلی را وارد کنید!");
-                          }
-                          else if (_newPassController1.text.isEmpty) {
-                            _showTopSnackBar(context, "کلمه عبور جدید را وارد کنید!");
-                          }
-                          else if (_newPassController2.text.isEmpty) {
-                            _showTopSnackBar(context, "تکرار کلمه عبور جدید را وارد کنید!");
-                          }
-                          else if (!_currentPassValid(_passController.text)) {
-                            _showTopSnackBar(context, "کلمه عبور فعلی اشتباه است!");
-                            _passController.text = "";
-                          }
-                          else if (!_passValidation(_newPassController1.text, User.user!.id)) {
-                            _showTopSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
-                            _newPassController1.text = "";
-                            _newPassController2.text = "";
-                          }
-                          else if (_newPassController1.text != _newPassController2.text) {
-                            _showTopSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
-                            _newPassController2.text = "";
-                          }
-                          else {
-                            User.user!.password = _newPassController1.text;
-                            User.updatePassword();
-                            _passController.text = "";
-                            _newPassController1.text = "";
-                            _newPassController2.text = "";
-                            _showTopSnackBar(context, "کلمه عبور با موفقیت تغییر یافت!");
-                          }
-                        });
+                      onPressed: () async {
+                        if (_passController.text.isEmpty) {
+                          _showTopSnackBar(
+                              context, "کلمه عبور فعلی را وارد کنید!");
+                        } else if (_newPassController1.text.isEmpty) {
+                          _showTopSnackBar(
+                              context, "کلمه عبور جدید را وارد کنید!");
+                        } else if (_newPassController2.text.isEmpty) {
+                          _showTopSnackBar(
+                              context, "تکرار کلمه عبور جدید را وارد کنید!");
+                        } else if (!_currentPassValid(_passController.text)) {
+                          _showTopSnackBar(
+                              context, "کلمه عبور فعلی اشتباه است!");
+                          _passController.text = "";
+                        } else if (!_passValidation(
+                            _newPassController1.text, User.user!.id)) {
+                          _showTopSnackBar(
+                              context, "کلمه عبور بهتری انتخاب کنید!");
+                          _newPassController1.text = "";
+                          _newPassController2.text = "";
+                        } else if (_newPassController1.text !=
+                            _newPassController2.text) {
+                          _showTopSnackBar(
+                              context, "کلمه عبور ها مطابقت ندارند!");
+                          _newPassController2.text = "";
+                        } else {
+                          User.user!.password = _newPassController1.text;
+                          await User.updatePassword();
+                          _passController.text = "";
+                          _newPassController1.text = "";
+                          _newPassController2.text = "";
+                          _showTopSnackBar(
+                              context, "کلمه عبور با موفقیت تغییر یافت!");
+                        }
                       },
-
                       style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
-
                       child: const Text(
                         "ثبت تغییرات",
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Vazir",
-
                         ),
                       ),
                     ),
@@ -717,7 +690,6 @@ class _InformationState extends State<Information> {
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(35),
-
       child: SizedBox(
         width: 350,
         height: 60,
@@ -732,9 +704,9 @@ class _InformationState extends State<Information> {
                           child: Center(
                             child: Text(
                               "آیا از حذف حساب خود اطمینان دارید؟",
-                              style: TextStyle(fontFamily: "Vazir",
-                                  fontSize: 12,
-
+                              style: TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
                               ),
                             ),
                           ),
@@ -745,12 +717,10 @@ class _InformationState extends State<Information> {
                               Material(
                                 elevation: 4,
                                 borderRadius: BorderRadius.circular(10),
-
                                 child: TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-
                                   child: Container(
                                     height: 40,
                                     width: 80,
@@ -762,10 +732,9 @@ class _InformationState extends State<Information> {
                                     child: const Center(
                                         child: Text("خیر",
                                             style: TextStyle(
-                                                fontFamily: "Vazir",
-                                                color: Colors.black,
-                                                fontSize: 12,
-
+                                              fontFamily: "Vazir",
+                                              color: Colors.black,
+                                              fontSize: 12,
                                             ))),
                                   ),
                                 ),
@@ -774,14 +743,16 @@ class _InformationState extends State<Information> {
                               Material(
                                 elevation: 4,
                                 borderRadius: BorderRadius.circular(10),
-
                                 child: TextButton(
-                                  onPressed: () {
-                                    User.removeStudent();
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                        builder: (context) => const LoginPage()));
-                                  },
+                                  onPressed: () async {
+                                    await User.removeStudent();
 
+                                    User.removeStudent();
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage()));
+                                  },
                                   child: Container(
                                     height: 40,
                                     width: 80,
@@ -793,10 +764,9 @@ class _InformationState extends State<Information> {
                                     child: const Center(
                                         child: Text("بله",
                                             style: TextStyle(
-                                                fontFamily: "Vazir",
-                                                color: Colors.pink,
-                                                fontSize: 12,
-
+                                              fontFamily: "Vazir",
+                                              color: Colors.pink,
+                                              fontSize: 12,
                                             ))),
                                   ),
                                 ),
@@ -807,19 +777,16 @@ class _InformationState extends State<Information> {
                       ));
             });
           },
-
           style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(vertical: 10),
               backgroundColor: Colors.pink,
               foregroundColor: Colors.white),
-
           child: const Text(
             "حذف حساب کاربری",
             style: TextStyle(
               fontSize: 15,
               fontFamily: "Vazir",
-
             ),
           ),
         ),

@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ap_project_frontend/login_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -24,30 +27,31 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
               button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
       scaffoldMessengerKey: _messengerKey,
-
       home: Directionality(
         textDirection: TextDirection.rtl,
-
         child: Builder(builder: (context) {
           return Scaffold(
             body: SingleChildScrollView(
-              child: Padding(
+              child: Container(
+                color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(10),
-
                 child: Container(
-                  height: MediaQuery.of(context).size.height - 50,
+                  height: MediaQuery.of(context).size.height - 100,
                   margin: const EdgeInsets.all(25),
-
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-
                     children: [
                       _header(context),
                       _inputPart(context),
@@ -73,7 +77,6 @@ class _SignupPageState extends State<SignupPage> {
         const Text(
           "ثبت نام",
           style: TextStyle(
-
               fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "Vazir",
@@ -86,15 +89,12 @@ class _SignupPageState extends State<SignupPage> {
   _inputPart(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-
       children: [
         Material(
           elevation: 4,
           borderRadius: BorderRadius.circular(20),
-
           child: TextField(
             controller: _idController,
-
             decoration: InputDecoration(
                 hintText: "شماره دانشجویی",
                 hintStyle: const TextStyle(
@@ -114,10 +114,8 @@ class _SignupPageState extends State<SignupPage> {
         Material(
           elevation: 4,
           borderRadius: BorderRadius.circular(20),
-
           child: TextField(
             controller: _passwordController1,
-
             decoration: InputDecoration(
                 hintText: "کلمه عبور",
                 hintStyle: const TextStyle(
@@ -146,10 +144,8 @@ class _SignupPageState extends State<SignupPage> {
         Material(
           elevation: 4,
           borderRadius: BorderRadius.circular(20),
-
           child: TextField(
             controller: _passwordController2,
-
             decoration: InputDecoration(
                 hintText: "تکرار کلمه عبور",
                 hintStyle: const TextStyle(
@@ -178,7 +174,6 @@ class _SignupPageState extends State<SignupPage> {
         Material(
           elevation: 10,
           borderRadius: BorderRadius.circular(35),
-
           child: ElevatedButton(
             onPressed: () async {
               if (_idController.text.isEmpty) {
@@ -187,23 +182,26 @@ class _SignupPageState extends State<SignupPage> {
                 _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
               } else if (_passwordController2.text.isEmpty) {
                 _showSnackBar(context, "تکرار کلمه عبور خود را وارد کنید!");
-              } else if (_idValidation(_idController.text).toString() ==
-                  "false") {
-                _showSnackBar(context, "این شماره دانشجویی قبلا ثبت شده است!");
-              } else if (!_passValidation(
-                  _passwordController1.text, _idController.text)) {
-                _showSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
-              } else if (_passwordController1.text !=
-                  _passwordController2.text) {
-                _showSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
               } else {
-                showModalBottomSheet(
-                    isScrollControlled: true,
-                    backgroundColor: Colors.pink.shade50,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return _nameLastnameInput(context);
-                    });
+                String validation = await _idValidation(_idController.text);
+                if (validation == "invalid" || validation == "nvalid") {
+                  _showSnackBar(
+                      context, "این شماره دانشجویی قبلا ثبت شده است!");
+                } else if (!_passValidation(
+                    _passwordController1.text, _idController.text)) {
+                  _showSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
+                } else if (_passwordController1.text !=
+                    _passwordController2.text) {
+                  _showSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
+                } else {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Colors.pink.shade50,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _nameLastnameInput(context);
+                      });
+                }
               }
             },
             style: ElevatedButton.styleFrom(
@@ -211,13 +209,11 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 backgroundColor: Colors.pink,
                 foregroundColor: Colors.white),
-
             child: const Text(
               "ثبت نام",
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: "Vazir",
-
               ),
             ),
           ),
@@ -230,23 +226,18 @@ class _SignupPageState extends State<SignupPage> {
     return Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(20),
-
       child: Container(
         padding: const EdgeInsets.all(10),
-
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.pink.shade50,
         ),
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
             const Text(
               "حساب کاربری دارید؟ ",
               style: TextStyle(
-
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.w600,
                   fontSize: 17),
@@ -256,10 +247,8 @@ class _SignupPageState extends State<SignupPage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const LoginPage()));
                 },
-
                 child: const Text("ورود",
                     style: TextStyle(
-
                         color: Colors.pink,
                         fontWeight: FontWeight.w600,
                         fontSize: 17)))
@@ -285,18 +274,14 @@ class _SignupPageState extends State<SignupPage> {
     _messengerKey.currentState!.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-
         content: Text(
           message,
           style: const TextStyle(fontFamily: "Vazir", fontSize: 15),
         ),
-
         duration: const Duration(seconds: 2),
-
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-
         action: SnackBarAction(
           onPressed: () {},
           label: "تایید",
@@ -310,20 +295,15 @@ class _SignupPageState extends State<SignupPage> {
     _messengerKey.currentState!.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-
         content: Text(
           message,
           style: const TextStyle(fontFamily: "Vazir", fontSize: 15),
         ),
-
         duration: const Duration(seconds: 2),
-
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-
-        margin: const EdgeInsets.only(bottom: 330, right: 20, left: 20),
-
+        margin: const EdgeInsets.only(bottom: 300, right: 20, left: 20),
         action: SnackBarAction(
           onPressed: () {},
           label: "تایید",
@@ -335,15 +315,14 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<String> _idValidation(String id) async {
     String validation = "";
-    await Socket.connect("host", 1384).then((serverSocket) {
-      serverSocket.write("newId-$id");
-      serverSocket.flush();
-      serverSocket.listen((answer) {
-        setState(() {
-          validation = (String.fromCharCode(answer as int) == "valid") ? "true" : "false";
-        });
+    Socket socket = await Socket.connect(User.IP, 1384);
+    socket.write("newId-$id\u0000");
+    socket.flush();
+    await socket.listen((answer) async {
+      setState(() {
+        validation = const Utf8Decoder().convert(answer);
       });
-    });
+    }).asFuture();
     return validation;
   }
 
@@ -355,15 +334,12 @@ class _SignupPageState extends State<SignupPage> {
   _nameLastnameInput(BuildContext context) {
     return Directionality(
         textDirection: TextDirection.rtl,
-
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
                 30, 30, 30, MediaQuery.of(context).viewInsets.bottom + 25),
-
             child: Column(
               mainAxisSize: MainAxisSize.min,
-
               children: [
                 Row(
                   children: [
@@ -372,25 +348,23 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
                     Material(
                       elevation: 4,
                       borderRadius: BorderRadius.circular(20),
-
                       child: SizedBox(
                         width: 200,
                         height: 60,
                         child: Stack(children: [
                           TextField(
                             controller: _nameController,
-
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -407,26 +381,23 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Vazir",
-
                       ),
                     ),
                     const Spacer(),
                     Material(
                       elevation: 4,
                       borderRadius: BorderRadius.circular(20),
-
                       child: SizedBox(
                         width: 200,
                         height: 60,
-
                         child: Stack(children: [
                           TextField(
                             controller: _lastnameController,
-
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: Colors.teal)),
+                                    borderSide:
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -439,10 +410,8 @@ class _SignupPageState extends State<SignupPage> {
                 Material(
                   elevation: 10,
                   borderRadius: BorderRadius.circular(35),
-
                   child: SizedBox(
                     width: 350,
-
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_nameController.text.isEmpty) {
@@ -451,11 +420,20 @@ class _SignupPageState extends State<SignupPage> {
                           _showTopSnackBar(
                               context, "نام خانوادگی خود را وارد کنید!");
                         } else {
-                          _signup(_idController.text, _passwordController1.text,
-                              _nameController.text, _lastnameController.text);
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const Information()));
+                          String info = await _signup(
+                              _idController.text,
+                              _passwordController1.text,
+                              _nameController.text,
+                              _lastnameController.text);
+
+                          await User.setUser(
+                              info.split("-")[0],
+                              info.split("-")[1],
+                              _idController.text,
+                              _passwordController1.text);
+
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (context) => const Information()));
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -463,13 +441,11 @@ class _SignupPageState extends State<SignupPage> {
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
-
                       child: const Text(
                         "ثبت نام",
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Vazir",
-
                         ),
                       ),
                     ),
@@ -481,10 +457,17 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
-  void _signup(String id, String password, String name, String lastname) async {
-    await Socket.connect("host", 1384).then((serverSocket) {
-      serverSocket.write("signup-$id-$password-$name-$lastname");
-      serverSocket.flush();
-    });
+  Future<String> _signup(
+      String id, String password, String name, String lastname) async {
+    String info = "";
+    Socket socket = await Socket.connect(User.IP, 1384);
+    socket.write("signup-$id-$password-$name-$lastname\u0000");
+    socket.flush();
+    await socket.listen((answer) async {
+      setState(() {
+        info = const Utf8Decoder().convert(answer);
+      });
+    }).asFuture();
+    return info;
   }
 }

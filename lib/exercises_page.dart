@@ -3,6 +3,7 @@ import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 import 'classes/assignment.dart';
@@ -15,21 +16,19 @@ class ExercisesPage extends StatefulWidget {
 }
 
 class _ExercisesPageState extends State<ExercisesPage> {
+  final _hourLeft = TextEditingController(text: "");
+  final _description = TextEditingController(text: "");
+  final _tDescription = TextEditingController(text: "");
 
-  final _hourLeft = TextEditingController();
-  final _discription = TextEditingController();
-  final _tDiscription = TextEditingController();
-
-
-  final List<Assignment> _exercises = [
-    Assignment("تمرین 1", Course("گسسته", 3, 100), 1),
-    Assignment("تمرین 2", Course("گسسته", 3, 100), 4),
-    Assignment("تمرین 2", Course("برنامه نویسی پیشرفته", 3, 100), 1)
-  ];
+  @override
+  void initState() {
+    super.initState();
+    User.exercises.sort((a, b) => (!a.isActive && b.isActive) ? 1 : -1);
+  }
 
   @override
   Widget build(BuildContext context) {
-    _exercises[2].isActive = false;
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -203,7 +202,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
   }
 
   _exercise(BuildContext context) {
-    if (_exercises.isEmpty) {
+    if (User.exercises.isEmpty) {
       return Container(
         height: 640,
         padding: const EdgeInsets.all(10),
@@ -229,7 +228,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: _exercises.length,
+          itemCount: User.exercises.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -251,7 +250,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
   }
 
   _exe(BuildContext context, int index) {
-    if (_exercises[index].isActive) {
+    if (User.exercises[index].isActive) {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -261,7 +260,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
           title: Row(
             children: [
               Text(
-                _exercises
+                User.exercises
                     .toList()[index]
                     .title,
                 style: const TextStyle(
@@ -281,213 +280,215 @@ class _ExercisesPageState extends State<ExercisesPage> {
                             AlertDialog(
                               content: Directionality(
                                 textDirection: TextDirection.rtl,
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  height: 500,
-                                  width: 700,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                            child: const Icon(
-                                              Icons.close, color: Colors.pink,),
-                                            onTap: () {
-                                              setState(() {
-                                                Navigator.of(context)
-                                                    .pop();
-                                              });
-                                            },
-                                          ),
-                                          const SizedBox(width: 37,),
-                                          const Text(
-                                            "آیا کار را انجام داده اید؟",
-                                            style: TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 12,
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    height: 500,
+                                    width: 700,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            InkWell(
+                                              child: const Icon(
+                                                Icons.close, color: Colors.pink,),
+                                              onTap: () {
+                                                setState(() {
+                                                  Navigator.of(context)
+                                                      .pop();
+                                                });
+                                              },
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 30,),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Text("عنوان : ",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                              const Spacer(),
-                                              Text(_exercises[index].title,
-                                                style: const TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12,
-                                                    color: Colors.black54),),
-                                              const SizedBox(width: 5,)
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          Row(
-                                            children: [
-                                              const Text("ددلاین : ",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                              const Spacer(),
-                                              Text("${_exercises[index]
-                                                  .deadLine} روز دیگر",
-                                                style: const TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12,
-                                                    color: Colors.black54),),
-                                              const SizedBox(width: 5,)
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "زمان تخمینی باقی مانده : ",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                              const Spacer(),
-                                              Material(
-                                                elevation: 4,
-                                                borderRadius: BorderRadius
-                                                    .circular(20),
-                                                child: SizedBox(
-                                                  height: 40,
-                                                  width: 80,
-
-                                                  child: TextField(
-                                                    controller: _hourLeft,
-
-                                                    decoration: InputDecoration(
-                                                        hintText: "${_hourLeft
-                                                            .text} ساعت",
-                                                        hintStyle: const TextStyle(
-                                                            fontFamily: "Vazir",
-                                                            fontSize: 12,
-                                                            color: Colors
-                                                                .black54),
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius
-                                                              .circular(10),
-                                                          //borderSide: BorderSide.none
-                                                        ),
-                                                        fillColor: Colors.white,
-                                                        filled: true),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          const Row(
-                                            children: [
-                                              Text("توضیحات : ",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          Material(
-                                            elevation: 4,
-                                            borderRadius: BorderRadius.circular(
-                                                10),
-                                            child: SizedBox(
-                                              height: 150,
-                                              width: 300,
-
-                                              child: TextField(
-                                                controller: _discription,
-                                                maxLines: 4,
-
-                                                decoration: InputDecoration(
-                                                    hintText: _discription.text,
-                                                    hintStyle: const TextStyle(
-                                                        fontFamily: "Vazir",
-                                                        fontSize: 12,
-                                                        color: Colors.black54),
-                                                    border: OutlineInputBorder(
-                                                      borderRadius: BorderRadius
-                                                          .circular(10),
-                                                      //borderSide: BorderSide.none
+                                            const SizedBox(width: 37,),
+                                            const Text(
+                                              "آیا کار را انجام داده اید؟",
+                                              style: TextStyle(
+                                                fontFamily: "Vazir",
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 30,),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Text("عنوان : ",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12),),
+                                                const Spacer(),
+                                                Text(User.exercises[index].title,
+                                                  style: const TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12,
+                                                      color: Colors.black54),),
+                                                const SizedBox(width: 5,)
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            Row(
+                                              children: [
+                                                const Text("ددلاین : ",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12),),
+                                                const Spacer(),
+                                                Text("${User.exercises[index]
+                                                    .deadLine} روز دیگر",
+                                                  style: const TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12,
+                                                      color: Colors.black54),),
+                                                const SizedBox(width: 5,)
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  "زمان تخمینی باقی مانده : ",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12),),
+                                                const Spacer(),
+                                                Material(
+                                                  elevation: 4,
+                                                  borderRadius: BorderRadius
+                                                      .circular(20),
+                                                  child: SizedBox(
+                                                    height: 40,
+                                                    width: 80,
+                                  
+                                                    child: TextField(
+                                                      controller: _hourLeft,
+                                  
+                                                      decoration: InputDecoration(
+                                                          hintText: "${User.exercises[index].hourLeft
+                                                              } ساعت",
+                                                          hintStyle: const TextStyle(
+                                                              fontFamily: "Vazir",
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .black54),
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius
+                                                                .circular(10),
+                                                            //borderSide: BorderSide.none
+                                                          ),
+                                                          fillColor: Colors.white,
+                                                          filled: true),
                                                     ),
-                                                    fillColor: Colors.white,
-                                                    filled: true),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          const Row(
-                                            children: [
-                                              Text("نمره : ", style: TextStyle(
-                                                  fontFamily: "Vazir",
-                                                  fontSize: 12),),
-                                              Spacer(),
-                                              Text("ثبت نشده!",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12,
-                                                    color: Colors.black54),),
-                                              SizedBox(width: 5,)
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          const Row(
-                                            children: [
-                                              Text("بارگذاری تمرین : ",
-                                                style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                              Spacer(),
-
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          Row(
-                                            children: [
-                                              Material(
-                                                elevation: 4,
-                                                borderRadius: BorderRadius
-                                                    .circular(20),
-                                                child: SizedBox(
-                                                  height: 40,
-                                                  width: 230,
-
-                                                  child: TextField(
-                                                    controller: _tDiscription,
-
-                                                    decoration: InputDecoration(
-                                                        hintText: "توضیحات تحویل",
-                                                        hintStyle: const TextStyle(
-                                                            fontFamily: "Vazir",
-                                                            fontSize: 12,
-                                                            color: Colors
-                                                                .black54),
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius
-                                                              .circular(10),
-                                                          //borderSide: BorderSide.none
-                                                        ),
-                                                        fillColor: Colors.white,
-                                                        filled: true),
                                                   ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            const Row(
+                                              children: [
+                                                Text("توضیحات : ",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12),),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            Material(
+                                              elevation: 4,
+                                              borderRadius: BorderRadius.circular(
+                                                  10),
+                                              child: SizedBox(
+                                                height: 150,
+                                                width: 300,
+                                  
+                                                child: TextField(
+                                                  controller: _description,
+                                                  maxLines: 4,
+                                  
+                                                  decoration: InputDecoration(
+                                                      hintText: User.exercises[index].description,
+                                                      hintStyle: const TextStyle(
+                                                          fontFamily: "Vazir",
+                                                          fontSize: 12,
+                                                          color: Colors.black54),
+                                                      border: OutlineInputBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(10),
+                                                        //borderSide: BorderSide.none
+                                                      ),
+                                                      fillColor: Colors.white,
+                                                      filled: true),
                                                 ),
                                               ),
-                                              const Spacer(),
-                                              const Icon(
-                                                Icons.file_upload_outlined,
-                                                size: 35,)
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            const Row(
+                                              children: [
+                                                Text("نمره : ", style: TextStyle(
+                                                    fontFamily: "Vazir",
+                                                    fontSize: 12),),
+                                                Spacer(),
+                                                Text("ثبت نشده!",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12,
+                                                      color: Colors.black54),),
+                                                SizedBox(width: 5,)
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            const Row(
+                                              children: [
+                                                Text("بارگذاری تمرین : ",
+                                                  style: TextStyle(
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12),),
+                                                Spacer(),
+                                  
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            Row(
+                                              children: [
+                                                Material(
+                                                  elevation: 4,
+                                                  borderRadius: BorderRadius
+                                                      .circular(20),
+                                                  child: SizedBox(
+                                                    height: 40,
+                                                    width: 230,
+                                  
+                                                    child: TextField(
+                                                      controller: _tDescription,
+                                  
+                                                      decoration: InputDecoration(
+                                                          hintText: User.exercises[index].tDescription.isEmpty ? "توضیحات تحویل" : User.exercises[index].tDescription,
+                                                          hintStyle: const TextStyle(
+                                                              fontFamily: "Vazir",
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .black54),
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius
+                                                                .circular(10),
+                                                            //borderSide: BorderSide.none
+                                                          ),
+                                                          fillColor: Colors.white,
+                                                          filled: true),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                const Icon(
+                                                  Icons.file_upload_outlined,
+                                                  size: 35,)
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -512,6 +513,13 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                         ),
                                         child: TextButton(
                                           onPressed: () {
+                                            User.exercises[index].hourLeft = _hourLeft.text;
+                                            User.exercises[index].description = _description.text;
+                                            User.exercises[index].tDescription = _tDescription.text;
+                                            _hourLeft.text = "";
+                                            _description.text = "";
+                                            _tDescription.text = "";
+
                                             Navigator.of(context)
                                                 .pop();
                                           },
@@ -562,7 +570,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
             ],
           ),
           subtitle: Text(
-            _exercises[index].deadLine.toString(),
+            User.exercises[index].deadLine.toString(),                          
             style: const TextStyle(
                 fontFamily: "Vazir",
                 fontSize: 11,
@@ -581,7 +589,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
         title: Row(
           children: [
             Text(
-              _exercises
+              User.exercises
                   .toList()[index]
                   .title,
               style: const TextStyle(
@@ -610,7 +618,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
           ],
         ),
         subtitle: Text(
-          _exercises[index].deadLine.toString(),
+          User.exercises[index].deadLine.toString(),
           style: const TextStyle(
               fontFamily: "Vazir",
               fontSize: 11,

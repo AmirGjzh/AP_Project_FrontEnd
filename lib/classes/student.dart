@@ -9,7 +9,7 @@ class Student {
 
   String password;
 
-  int units = 0;
+  late String units;
 
   final List<Course> courses = [];
 

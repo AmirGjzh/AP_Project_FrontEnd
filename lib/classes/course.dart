@@ -20,6 +20,10 @@ class Course {
 
   final int examDate;
 
+  String exeLeft = "";
+
+  String topName = "";
+
   Course(this.name, this.units, this.examDate);
 
 }

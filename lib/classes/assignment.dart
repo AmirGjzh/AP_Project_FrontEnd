@@ -10,6 +10,12 @@ class Assignment {
 
   bool isActive = true;
 
+  String hourLeft = "";
+
+  String description = "";
+
+  String tDescription = "";
+
   Assignment(this.title, this.course, this.deadLine);
 
 }

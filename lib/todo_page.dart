@@ -4,6 +4,7 @@ import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 import 'classes/assignment.dart';
@@ -17,7 +18,6 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State<Todo> {
-  final List<Task> _tasks = [];
   final _title = TextEditingController();
   int _minute = 0;
   int _hour = 12;
@@ -514,9 +514,8 @@ class _TodoState extends State<Todo> {
                                                         child: SizedBox(
                                                           width: 350,
                                                           child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                _tasks.add(Task(
+                                                            onPressed: () async {
+                                                                await User.addTask(Task(
                                                                     _title.text,
                                                                     _hour
                                                                         .toString(),
@@ -526,7 +525,10 @@ class _TodoState extends State<Todo> {
                                                                         1)
                                                                         ? true
                                                                         : false));
-                                                              });
+                                                                _title.text = "";
+                                                                _minute = 0;
+                                                                _hour = 12;
+                                                                _isMorning = 0;
                                                             },
                                                             style: ElevatedButton.styleFrom(
                                                                 shape:
@@ -620,7 +622,7 @@ class _TodoState extends State<Todo> {
   }
 
   _newTasks(BuildContext context) {
-    if (_tasks.where((t) => t.isDone == false).isEmpty) {
+    if (User.tasks.where((t) => t.isDone == false).isEmpty) {
       return Container(
         height: 295,
         padding: const EdgeInsets.all(10),
@@ -647,7 +649,7 @@ class _TodoState extends State<Todo> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: _tasks.where((t) => t.isDone == false).length,
+          itemCount: User.tasks.where((t) => t.isDone == false).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -665,7 +667,7 @@ class _TodoState extends State<Todo> {
                         title: Row(
                           children: [
                             Text(
-                              _tasks
+                              User.tasks
                                   .where((t) => t.isDone == false)
                                   .toList()[index]
                                   .title,
@@ -741,9 +743,13 @@ class _TodoState extends State<Todo> {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: TextButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _tasks
+                                                      onPressed: () async {
+                                                        await User.taskDone(User.tasks
+                                                            .where((t) =>
+                                                        t.isDone ==
+                                                            false)
+                                                            .toList()[index]);
+                                                          User.tasks
                                                               .where((t) =>
                                                                   t.isDone ==
                                                                   false)
@@ -751,7 +757,6 @@ class _TodoState extends State<Todo> {
                                                               .isDone = true;
                                                           Navigator.of(context)
                                                               .pop();
-                                                        });
                                                       },
                                                       child: Container(
                                                         height: 40,
@@ -800,7 +805,7 @@ class _TodoState extends State<Todo> {
                           ],
                         ),
                         subtitle: Text(
-                          "${_tasks.where((t) => t.isDone == false).toList()[index].hour}:${_tasks.where((t) => t.isDone == false).toList()[index].minute} ${(_tasks.where((t) => t.isDone == false).toList()[index].isMorning) ? "صبح" : "عصر"}",
+                          "${User.tasks.where((t) => t.isDone == false).toList()[index].hour}:${User.tasks.where((t) => t.isDone == false).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == false).toList()[index].isMorning) ? "صبح" : "عصر"}",
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 11,
@@ -820,7 +825,7 @@ class _TodoState extends State<Todo> {
   }
 
   _doneTasks(BuildContext context) {
-    if (_tasks.where((t) => t.isDone == true).isEmpty) {
+    if (User.tasks.where((t) => t.isDone == true).isEmpty) {
       return Container(
         height: 295,
         padding: const EdgeInsets.all(10),
@@ -847,7 +852,7 @@ class _TodoState extends State<Todo> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: _tasks.where((t) => t.isDone == true).length,
+          itemCount: User.tasks.where((t) => t.isDone == true).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -865,7 +870,7 @@ class _TodoState extends State<Todo> {
                         title: Row(
                           children: [
                             Text(
-                              _tasks
+                              User.tasks
                                   .where((t) => t.isDone == true)
                                   .toList()[index]
                                   .title,
@@ -894,7 +899,7 @@ class _TodoState extends State<Todo> {
                           ],
                         ),
                         subtitle: Text(
-                          "${_tasks.where((t) => t.isDone == true).toList()[index].hour}:${_tasks.where((t) => t.isDone == true).toList()[index].minute} ${(_tasks.where((t) => t.isDone == true).toList()[index].isMorning) ? "صبح" : "عصر"}",
+                          "${User.tasks.where((t) => t.isDone == true).toList()[index].hour}:${User.tasks.where((t) => t.isDone == true).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == true).toList()[index].isMorning) ? "صبح" : "عصر"}",
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 11,

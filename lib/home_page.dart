@@ -16,18 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _examCount = "0";
-  String _notDoneExersices = "0";
-  String _bestScore = "20.00";
-  String _worstScore = "00.00";
-
-  String _today = "20 خرداد 1402";
-
-  final List<Assignment> _exercises = [
-    Assignment("تمرین 1", Course("گسسته", 3, 100), 1),
-    Assignment("تمرین 2", Course("گسسته", 3, 100), 4),
-    Assignment("تمرین 2", Course("برنامه نویسی پیشرفته", 3, 100), 1)
-  ];
+  final String _today = "20 خرداد 1402";
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +25,19 @@ class _HomePageState extends State<HomePage> {
       theme: ThemeData(
           textTheme: const TextTheme(
               button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
-
       home: Directionality(
         textDirection: TextDirection.rtl,
-
         child: Builder(
           builder: (context) {
             return Scaffold(
               bottomNavigationBar: Container(
                 height: 60,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   color: Colors.pink.withOpacity(0.2),
                 ),
-
                 child: Row(
                   children: [
                     const Spacer(),
@@ -71,11 +59,10 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getTasks();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const Todo()));
-                            });
                           },
                           icon: const Icon(
                             Icons.dashboard_customize_outlined,
@@ -89,11 +76,10 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getClasses();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ClassesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.school_outlined,
@@ -117,11 +103,9 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ExercisesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -133,11 +117,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-
               body: Container(
                 color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
-
                 child: Column(
                   children: [
                     const SizedBox(
@@ -158,13 +140,11 @@ class _HomePageState extends State<HomePage> {
                                   Icons.person,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Information()));
-                                  });
+                                onPressed: () async {
+                                  await User.infoPageReady();
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Information()));
                                 },
                                 label: const Text("اطلاعات کاربری",
                                     style: TextStyle(
@@ -294,209 +274,193 @@ class _HomePageState extends State<HomePage> {
 
   _summery(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
-
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Spacer(),
-                Material(
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(10),
-
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.timelapse,
-                          color: Colors.black,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const Spacer(),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.timelapse,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        "${User.exercises.where((e) => e.isActive == true).length} تا تمرین داری",
+                        style: const TextStyle(
+                          //color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: "Vazir",
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "${User.numberOfExercises} تا تمرین داری",
-                          style: const TextStyle(
-                            //color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: "Vazir",
-
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Material(
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(10),
-
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.heart_broken,
-                          color: Colors.black,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: const Column(
+                    children: [
+                      Icon(
+                        Icons.heart_broken,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        "0 تا امتحان داری",
+                        style: TextStyle(
+                          //color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: "Vazir",
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "$_examCount تا امتحان داری",
-                          style: const TextStyle(
-                            //color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: "Vazir",
-
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Material(
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(10),
-
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.access_alarms_sharp,
-                          color: Colors.black,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: const Column(
+                    children: [
+                      Icon(
+                        Icons.access_alarms_sharp,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        "0 تا تمرین پرید",
+                        style: TextStyle(
+                          //color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: "Vazir",
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "$_notDoneExersices تا تمرین پرید",
-                          style: const TextStyle(
-                            //color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: "Vazir",
-
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                const Spacer(),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                const Spacer(),
-                Material(
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(10),
-
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-
-                        color: Colors.white),
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.add_task,
-                          color: Colors.black,
+              ),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              const Spacer(),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.add_task,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        "بهترین نمرت ${User.bestScore} عه",
+                        style: const TextStyle(
+                          //color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: "Vazir",
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "بهترین نمرت ${User.bestScore} عه",
-                          style: const TextStyle(
-                            //color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: "Vazir",
-
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Material(
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(10),
-
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-
-                        color: Colors.white),
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.mood_bad,
-                          color: Colors.black,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.mood_bad,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        "بدترین نمرت ${User.worstScore} عه",
+                        style: const TextStyle(
+                          //color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: "Vazir",
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "بدترین نمرت ${User.worstScore} عه",
-                          style: const TextStyle(
-                            //color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: "Vazir",
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                const Spacer(),
-              ],
-            )
-          ],
-        ),
-      );
+              ),
+              const Spacer(),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   _exercisesPart(BuildContext context) {
-    if (_exercises.where((e) => e.isActive == true).isEmpty) {
+    if (User.exercises.where((e) => e.isActive == true).isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
         ),
-
         child: const Center(
           child: Text(
             "هیچ تمرینی وجود ندارد!",
@@ -505,13 +469,6 @@ class _HomePageState extends State<HomePage> {
               fontSize: 12,
               color: Colors.pink,
               fontWeight: FontWeight.bold,
-              // shadows: [
-              //   Shadow(
-              //     offset: Offset(2, 2),
-              //     blurRadius: 3,
-              //     color: Colors.black12,
-              //   ),
-              // ],
             ),
           ),
         ),
@@ -523,9 +480,8 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-
       child: ListView.builder(
-          itemCount: _exercises.where((e) => e.isActive == true).length,
+          itemCount: User.exercises.where((e) => e.isActive == true).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -543,7 +499,7 @@ class _HomePageState extends State<HomePage> {
                         title: Row(
                           children: [
                             Text(
-                              _exercises
+                              User.exercises
                                   .where((e) => e.isActive == true)
                                   .toList()[index]
                                   .course
@@ -553,7 +509,6 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 13,
                                 //color: Colors.white,
                                 fontWeight: FontWeight.bold,
-
                               ),
                             ),
                             const Spacer(),
@@ -571,7 +526,6 @@ class _HomePageState extends State<HomePage> {
                                                   style: TextStyle(
                                                     fontFamily: "Vazir",
                                                     fontSize: 12,
-
                                                   ),
                                                 ),
                                               ),
@@ -611,7 +565,6 @@ class _HomePageState extends State<HomePage> {
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 12,
-
                                                                 ))),
                                                       ),
                                                     ),
@@ -623,17 +576,23 @@ class _HomePageState extends State<HomePage> {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: TextButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _exercises
-                                                              .where((e) =>
-                                                                  e.isActive ==
-                                                                  true)
-                                                              .toList()[index]
-                                                              .isActive = false;
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        });
+                                                      onPressed: () async {
+                                                        await User.exeDone(User
+                                                            .exercises
+                                                            .where((e) =>
+                                                                e.isActive ==
+                                                                true)
+                                                            .toList()[index]);
+
+                                                        User.exercises
+                                                            .where((e) =>
+                                                                e.isActive ==
+                                                                true)
+                                                            .toList()[index]
+                                                            .isActive = false;
+
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                       child: Container(
                                                         height: 40,
@@ -657,7 +616,6 @@ class _HomePageState extends State<HomePage> {
                                                                   color: Colors
                                                                       .pink,
                                                                   fontSize: 12,
-
                                                                 ))),
                                                       ),
                                                     ),
@@ -683,7 +641,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         subtitle: Text(
-                          _exercises
+                          User.exercises
                               .where((e) => e.isActive == true)
                               .toList()[index]
                               .title,
@@ -691,7 +649,6 @@ class _HomePageState extends State<HomePage> {
                             fontFamily: "Vazir",
                             //color: Colors.white,
                             fontSize: 11,
-
                           ),
                         ),
                       ),
@@ -708,14 +665,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   _doneExercises(BuildContext context) {
-    if (_exercises.where((e) => e.isActive == false).isEmpty) {
+    if (User.exercises.where((e) => e.isActive == false).isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
         ),
-
         child: const Center(
           child: Text(
             "هیچ تمرینی انجام نشده!",
@@ -735,9 +691,8 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-
       child: ListView.builder(
-          itemCount: _exercises.where((e) => e.isActive == false).length,
+          itemCount: User.exercises.where((e) => e.isActive == false).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -755,7 +710,7 @@ class _HomePageState extends State<HomePage> {
                         title: Row(
                           children: [
                             Text(
-                              _exercises
+                              User.exercises
                                   .where((e) => e.isActive == false)
                                   .toList()[index]
                                   .course
@@ -765,7 +720,6 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 13,
                                 //color: Colors.white,
                                 fontWeight: FontWeight.bold,
-
                               ),
                             ),
                             const Spacer(),
@@ -786,7 +740,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         subtitle: Text(
-                          _exercises
+                          User.exercises
                               .where((e) => e.isActive == false)
                               .toList()[index]
                               .title,
@@ -794,7 +748,6 @@ class _HomePageState extends State<HomePage> {
                             fontFamily: "Vazir",
                             fontSize: 11,
                             //color: Colors.white,
-
                           ),
                         ),
                       ),

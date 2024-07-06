@@ -3,6 +3,7 @@ import 'package:ap_project_frontend/classes/teacher.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
+import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
 class ClassesPage extends StatefulWidget {
@@ -14,31 +15,16 @@ class ClassesPage extends StatefulWidget {
 
 class _ClassesPageState extends State<ClassesPage> {
   final _classCodeController = TextEditingController();
-
-  Teacher teacher1 = Teacher("حمید رضا", "مهدیانی", "", "");
-  Teacher teacher2 = Teacher("اسمائیل", "زیبایی", "", "");
-  Teacher teacher3 = Teacher("میترا", "ابولحسنی", "", "");
-
-  Course course1 = Course("مدار منطقی", 3, 100);
-  Course course2 = Course("فیزیک 2", 3, 100);
-  Course course3 = Course("دیفرانسیل", 3, 100);
-
-  final List<Course> courses = [];
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
-    course1.teacher = teacher1;
-    course2.teacher = teacher2;
-    course3.teacher = teacher3;
-    courses.add(course1);
-    courses.add(course2);
-    courses.add(course3);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
               button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+      scaffoldMessengerKey: _messengerKey,
       home: Directionality(
         textDirection: TextDirection.rtl,
         child: Builder(
@@ -46,16 +32,15 @@ class _ClassesPageState extends State<ClassesPage> {
             return Scaffold(
               bottomNavigationBar: Container(
                 height: 60,
-
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   color: Colors.pink.withOpacity(0.2),
                 ),
-
                 child: Row(
                   children: [
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -74,7 +59,6 @@ class _ClassesPageState extends State<ClassesPage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -93,14 +77,12 @@ class _ClassesPageState extends State<ClassesPage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           icon: const Icon(
                             Icons.school,
                             color: Colors.pink,
@@ -108,7 +90,6 @@ class _ClassesPageState extends State<ClassesPage> {
                           )),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -119,7 +100,6 @@ class _ClassesPageState extends State<ClassesPage> {
                               color: Colors.pink, size: 33)),
                     ),
                     const Spacer(),
-
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -138,14 +118,12 @@ class _ClassesPageState extends State<ClassesPage> {
                           )),
                     ),
                     const Spacer(),
-
                   ],
                 ),
               ),
               body: Container(
                 color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
-
                 child: Column(children: [
                   const SizedBox(
                     height: 15,
@@ -190,7 +168,8 @@ class _ClassesPageState extends State<ClassesPage> {
                                             textDirection: TextDirection.rtl,
                                             child: SingleChildScrollView(
                                               child: Container(
-                                                color: Colors.pink.withOpacity(0.03),
+                                                color: Colors.pink
+                                                    .withOpacity(0.03),
                                                 padding: EdgeInsets.fromLTRB(
                                                     30,
                                                     30,
@@ -206,11 +185,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                                     Row(
                                                       children: [
                                                         const Text(
-                                                          "کد درس :",
+                                                          "نام درس :",
                                                           style: TextStyle(
                                                             fontSize: 15,
                                                             fontFamily: "Vazir",
-
                                                           ),
                                                         ),
                                                         const Spacer(),
@@ -247,20 +225,42 @@ class _ClassesPageState extends State<ClassesPage> {
                                                         Material(
                                                           elevation: 4,
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(20),
-
+                                                              BorderRadius
+                                                                  .circular(20),
                                                           child: Container(
                                                             height: 60,
                                                             width: 60,
                                                             decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(20),
-                                                              color: Colors.pink
-                                                            ),
-
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                                color: Colors
+                                                                    .pink),
                                                             child: InkWell(
-                                                              onTap: () {},
-                                                              child: const Icon(Icons.add, color: Colors.white, size: 40,),
+                                                              onTap: () async {
+                                                                String state =
+                                                                    await User.addCourse(
+                                                                        _classCodeController
+                                                                            .text);
+
+                                                                if (state ==
+                                                                    "invalid") {
+                                                                  _showTopSnackBar(
+                                                                      context,
+                                                                      "کلاسی با این نام وجود ندارد!");
+                                                                } else {
+                                                                  _showTopSnackBar(
+                                                                      context,
+                                                                      "با موفقیت اضافه شد!");
+                                                                }
+                                                              },
+                                                              child: const Icon(
+                                                                Icons.add,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 40,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -278,7 +278,6 @@ class _ClassesPageState extends State<ClassesPage> {
                                     color: Colors.white,
                                     fontSize: 12,
                                     fontFamily: "Vazir",
-
                                   )),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.pink,
@@ -292,129 +291,150 @@ class _ClassesPageState extends State<ClassesPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
-                    height: 665,
-                    child: ListView.builder(
-                        itemCount: courses.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.all(10),
-                            child: Material(
-                              elevation: 10,
-                              borderRadius: BorderRadius.circular(35),
-                              child: Container(
-                                height: 170,
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.school,
-                                          color: Colors.black,
-                                          size: 35,
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(courses[index].name,
-                                            style: const TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-
-                                            )),
-                                        const Spacer(),
-                                        Text(
-                                            "استاد : ${courses[index].teacher!.name} ${courses[index].teacher!.lastname}",
-                                            style: const TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 12,
-                                              color: Colors.black,
-
-                                            )),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 6,
-                                    ),
-                                    const Divider(
-                                      color: Colors.black,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.numbers,
-                                          color: Colors.black,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                            " تعداد واحد : ${courses[index].units}",
-                                            style: const TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 12,
-                                              color: Colors.black,
-
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.task_outlined,
-                                          color: Colors.black,
-                                          size: 20,
-                                        ),
-                                        Text(" تکالیف باقی مانده : ${4}",
-                                            style: const TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 12,
-                                              color: Colors.black,
-
-                                            ))
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.add_reaction_outlined,
-                                          color: Colors.black,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                            " دانشجوی ممتاز : ${"امیرمحمد گنحی زاده"}",
-                                            style: const TextStyle(
-                                              fontFamily: "Vazir",
-                                              fontSize: 12,
-                                              color: Colors.black,
-
-                                            ))
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
-                  )
+                  _classes(context)
                 ]),
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  _classes(BuildContext context) {
+    return SizedBox(
+      height: 665,
+      child: ListView.builder(
+          itemCount: User.classes.length,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(10),
+              child: Material(
+                elevation: 10,
+                borderRadius: BorderRadius.circular(35),
+                child: Container(
+                  height: 170,
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.school,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Text(User.classes[index].name,
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          const Spacer(),
+                          Text(
+                              "استاد : ${User.classes[index].teacher!.name} ${User.classes[index].teacher!.lastname}",
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                color: Colors.black,
+                              )),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.numbers,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(" تعداد واحد : ${User.classes[index].units}",
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                color: Colors.black,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.task_outlined,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                              " تکالیف باقی مانده : ${User.classes[index].exeLeft}",
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                color: Colors.black,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.add_reaction_outlined,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                              " دانشجوی ممتاز : ${User.classes[index].topName}",
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                color: Colors.black,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  void _showTopSnackBar(BuildContext context, String message) {
+    _messengerKey.currentState!.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          message,
+          style: const TextStyle(fontFamily: "Vazir", fontSize: 15),
+        ),
+        duration: const Duration(seconds: 2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: const EdgeInsets.only(bottom: 70, right: 20, left: 20),
+        action: SnackBarAction(
+          onPressed: () {},
+          label: "تایید",
+          textColor: Colors.pink,
         ),
       ),
     );
