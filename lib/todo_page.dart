@@ -22,6 +22,7 @@ class _TodoState extends State<Todo> {
   int _minute = 0;
   int _hour = 12;
   int _isMorning = 0;
+  String _today = User.today;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,9 @@ class _TodoState extends State<Todo> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -51,11 +52,10 @@ class _TodoState extends State<Todo> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.homePageReady();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const HomePage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.home_outlined,
@@ -82,11 +82,10 @@ class _TodoState extends State<Todo> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getClasses();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ClassesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.school_outlined,
@@ -110,11 +109,10 @@ class _TodoState extends State<Todo> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getExercises();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ExercisesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -144,16 +142,16 @@ class _TodoState extends State<Todo> {
                         const SizedBox(
                           width: 10,
                         ),
-                        const Text("کار ها",
+                        const Text("Tasks",
                             style: TextStyle(
                               fontFamily: "Vazir",
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             )),
                         const Spacer(),
                         Directionality(
-                          textDirection: TextDirection.ltr,
+                          textDirection: TextDirection.rtl,
                           child: Material(
                             elevation: 4,
                             borderRadius: BorderRadius.circular(35),
@@ -172,7 +170,7 @@ class _TodoState extends State<Todo> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return Directionality(
-                                              textDirection: TextDirection.rtl,
+                                              textDirection: TextDirection.ltr,
                                               child: SingleChildScrollView(
                                                 child: Container(
                                                   padding: EdgeInsets.fromLTRB(
@@ -189,9 +187,10 @@ class _TodoState extends State<Todo> {
                                                       Row(
                                                         children: [
                                                           const Text(
-                                                            "عنوان :",
+                                                            "Title :",
                                                             style: TextStyle(
                                                               fontSize: 15,
+                                                              fontWeight: FontWeight.bold,
                                                               fontFamily: "Vazir",
                                                             ),
                                                           ),
@@ -241,7 +240,7 @@ class _TodoState extends State<Todo> {
                                                                       35),
                                                                   child: Container(
                                                                     height: 40,
-                                                                    width: 60,
+                                                                    width: 80,
                                                                     decoration: BoxDecoration(
                                                                         color: (_isMorning ==
                                                                             1)
@@ -256,10 +255,11 @@ class _TodoState extends State<Todo> {
                                                                     child:
                                                                     const Center(
                                                                       child: Text(
-                                                                        "صبح",
+                                                                        "AM",
                                                                         style: TextStyle(
                                                                             fontFamily:
                                                                             "Vazir",
+                                                                            fontWeight: FontWeight.bold,
                                                                             fontSize:
                                                                             13,
                                                                             color: Colors
@@ -286,7 +286,7 @@ class _TodoState extends State<Todo> {
                                                                       35),
                                                                   child: Container(
                                                                     height: 40,
-                                                                    width: 60,
+                                                                    width: 80,
                                                                     decoration: BoxDecoration(
                                                                         color: (_isMorning ==
                                                                             2)
@@ -301,10 +301,11 @@ class _TodoState extends State<Todo> {
                                                                     child:
                                                                     const Center(
                                                                       child: Text(
-                                                                        "عصر",
+                                                                        "PM",
                                                                         style: TextStyle(
                                                                             fontFamily:
                                                                             "Vazir",
+                                                                            fontWeight: FontWeight.bold,
                                                                             fontSize:
                                                                             13,
                                                                             color: Colors
@@ -322,105 +323,6 @@ class _TodoState extends State<Todo> {
                                                             ],
                                                           ),
                                                           const Spacer(),
-                                                          Column(
-                                                            children: [
-                                                              InkWell(
-                                                                child: const Icon(
-                                                                  Icons
-                                                                      .keyboard_arrow_up,
-                                                                  color:
-                                                                  Colors.pink,
-                                                                  size: 35,
-                                                                ),
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    if (_minute ==
-                                                                        59) {
-                                                                      _minute = 0;
-                                                                    } else {
-                                                                      _minute++;
-                                                                    }
-                                                                  });
-                                                                },
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Material(
-                                                                elevation: 10,
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                    35),
-                                                                child: Container(
-                                                                  height: 50,
-                                                                  width: 70,
-                                                                  decoration: BoxDecoration(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                          10)),
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                      (_minute.toString().length ==
-                                                                          2)
-                                                                          ? _minute
-                                                                          .toString()
-                                                                          : "0$_minute",
-                                                                      style:
-                                                                      const TextStyle(
-                                                                        fontFamily:
-                                                                        "Vazir",
-                                                                        fontSize:
-                                                                        16,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              InkWell(
-                                                                child: const Icon(
-                                                                  Icons
-                                                                      .keyboard_arrow_down,
-                                                                  color:
-                                                                  Colors.pink,
-                                                                  size: 35,
-                                                                ),
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    if (_minute ==
-                                                                        0) {
-                                                                      _minute = 59;
-                                                                    } else {
-                                                                      _minute--;
-                                                                    }
-                                                                  });
-                                                                },
-                                                              )
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          const Column(
-                                                            children: [
-                                                              Text(
-                                                                ":",
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                    "Vazir",
-                                                                    fontSize: 18),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
                                                           Column(
                                                             children: [
                                                               InkWell(
@@ -472,6 +374,7 @@ class _TodoState extends State<Todo> {
                                                                       const TextStyle(
                                                                         fontFamily:
                                                                         "Vazir",
+                                                                        fontWeight: FontWeight.bold,
                                                                         fontSize:
                                                                         16,
                                                                       ),
@@ -497,6 +400,106 @@ class _TodoState extends State<Todo> {
                                                                       _hour = 12;
                                                                     } else {
                                                                       _hour--;
+                                                                    }
+                                                                  });
+                                                                },
+                                                              )
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          const Column(
+                                                            children: [
+                                                              Text(
+                                                                ":",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                    "Vazir",
+                                                                    fontSize: 18),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Column(
+                                                            children: [
+                                                              InkWell(
+                                                                child: const Icon(
+                                                                  Icons
+                                                                      .keyboard_arrow_up,
+                                                                  color:
+                                                                  Colors.pink,
+                                                                  size: 35,
+                                                                ),
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    if (_minute ==
+                                                                        59) {
+                                                                      _minute = 0;
+                                                                    } else {
+                                                                      _minute++;
+                                                                    }
+                                                                  });
+                                                                },
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Material(
+                                                                elevation: 10,
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    35),
+                                                                child: Container(
+                                                                  height: 50,
+                                                                  width: 70,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                          10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      (_minute.toString().length ==
+                                                                          2)
+                                                                          ? _minute
+                                                                          .toString()
+                                                                          : "0$_minute",
+                                                                      style:
+                                                                      const TextStyle(
+                                                                        fontFamily:
+                                                                        "Vazir",
+                                                                        fontWeight: FontWeight.bold,
+                                                                        fontSize:
+                                                                        16,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              InkWell(
+                                                                child: const Icon(
+                                                                  Icons
+                                                                      .keyboard_arrow_down,
+                                                                  color:
+                                                                  Colors.pink,
+                                                                  size: 35,
+                                                                ),
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    if (_minute ==
+                                                                        0) {
+                                                                      _minute = 59;
+                                                                    } else {
+                                                                      _minute--;
                                                                     }
                                                                   });
                                                                 },
@@ -543,9 +546,10 @@ class _TodoState extends State<Todo> {
                                                                 foregroundColor:
                                                                 Colors.white),
                                                             child: const Text(
-                                                              "افزودن",
+                                                              "Add",
                                                               style: TextStyle(
                                                                 fontSize: 15,
+                                                                fontWeight: FontWeight.bold,
                                                                 fontFamily: "Vazir",
                                                               ),
                                                             ),
@@ -559,10 +563,11 @@ class _TodoState extends State<Todo> {
                                         });
                                   });
                                 },
-                                label: const Text("کار جدید",
+                                label: const Text("New Task",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
+                                      fontWeight: FontWeight.bold,
                                       fontFamily: "Vazir",
 
                                     )),
@@ -582,26 +587,33 @@ class _TodoState extends State<Todo> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Row(
+                    Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.circle,
                           color: Colors.pink,
                           size: 15,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "کار های انجام شده",
+                        const Text(
+                          "Done tasks",
                           style: TextStyle(
                             fontFamily: "Vazir",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
+                        Text(_today,
+                            style: const TextStyle(
+                              fontFamily: "Vazir",
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54,
+                            )),
                       ],
                     ),
                     const SizedBox(
@@ -631,7 +643,7 @@ class _TodoState extends State<Todo> {
         ),
         child: const Center(
           child: Text(
-            "هیج کاری تعریف نشده!",
+            "There is no task!",
             style: TextStyle(
               fontFamily: "Vazir",
               fontSize: 12,
@@ -674,7 +686,7 @@ class _TodoState extends State<Todo> {
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                //color: Colors.white,
+                                color: Colors.pink,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -689,9 +701,10 @@ class _TodoState extends State<Todo> {
                                               height: 50,
                                               child: Center(
                                                 child: Text(
-                                                  "آیا کار را انجام داده اید؟",
+                                                  "Did you finish the task?",
                                                   style: TextStyle(
                                                     fontFamily: "Vazir",
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 12,
                                                   ),
                                                 ),
@@ -724,11 +737,12 @@ class _TodoState extends State<Todo> {
                                                             const EdgeInsets
                                                                 .all(10),
                                                         child: const Center(
-                                                            child: Text("خیر",
+                                                            child: Text("No",
                                                                 style:
                                                                     TextStyle(
                                                                   fontFamily:
                                                                       "Vazir",
+                                                                  fontWeight: FontWeight.bold,
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 12,
@@ -772,13 +786,14 @@ class _TodoState extends State<Todo> {
                                                             const EdgeInsets
                                                                 .all(10),
                                                         child: const Center(
-                                                            child: Text("بله",
+                                                            child: Text("Yes",
                                                                 style:
                                                                     TextStyle(
                                                                   fontFamily:
                                                                       "Vazir",
                                                                   color: Colors
                                                                       .pink,
+                                                                  fontWeight: FontWeight.bold,
                                                                   fontSize: 12,
                                                                 ))),
                                                       ),
@@ -805,10 +820,11 @@ class _TodoState extends State<Todo> {
                           ],
                         ),
                         subtitle: Text(
-                          "${User.tasks.where((t) => t.isDone == false).toList()[index].hour}:${User.tasks.where((t) => t.isDone == false).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == false).toList()[index].isMorning) ? "صبح" : "عصر"}",
+                          "${User.tasks.where((t) => t.isDone == false).toList()[index].hour}:${User.tasks.where((t) => t.isDone == false).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == false).toList()[index].isMorning) ? "AM" : "PM"}",
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 11,
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -834,7 +850,7 @@ class _TodoState extends State<Todo> {
         ),
         child: const Center(
           child: Text(
-            "هیچ کاری انحام نشده!",
+            "No task finished!",
             style: TextStyle(
               fontFamily: "Vazir",
               fontSize: 12,
@@ -877,7 +893,7 @@ class _TodoState extends State<Todo> {
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                //color: Colors.white,
+                                color: Colors.pink,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -899,10 +915,11 @@ class _TodoState extends State<Todo> {
                           ],
                         ),
                         subtitle: Text(
-                          "${User.tasks.where((t) => t.isDone == true).toList()[index].hour}:${User.tasks.where((t) => t.isDone == true).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == true).toList()[index].isMorning) ? "صبح" : "عصر"}",
+                          "${User.tasks.where((t) => t.isDone == true).toList()[index].hour}:${User.tasks.where((t) => t.isDone == true).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == true).toList()[index].isMorning) ? "AM" : "PM"}",
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 11,
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                       ),

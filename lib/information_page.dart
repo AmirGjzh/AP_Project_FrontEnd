@@ -28,10 +28,10 @@ class _InformationState extends State<Information> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -71,21 +71,22 @@ class _InformationState extends State<Information> {
 
   _appBar(context) {
     return Center(
-      child: Column(
-          children: [
+      child: Column(children: [
         Row(
           children: [
-            const Spacer(),
             InkWell(
-              child: const Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 30,),
+              child: const Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 30,
+              ),
               onTap: () async {
                 await User.homePageReady();
                 Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const HomePage()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
-            )
+            ),
+            const Spacer(),
           ],
         ),
         Stack(
@@ -132,7 +133,9 @@ class _InformationState extends State<Information> {
             ),
           ],
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         Text(
           "${User.user!.name} ${User.user!.lastname}",
           style: const TextStyle(
@@ -160,20 +163,20 @@ class _InformationState extends State<Information> {
             Row(
               children: [
                 const Text(
-                  "شماره دانشجویی",
+                  "Student ID",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: "Vazir",
-                  ),
+                      fontSize: 15,
+                      fontFamily: "Vazir",
+                      fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 Text(
                   User.user!.id,
                   style: const TextStyle(
-                    fontSize: 13,
-                    fontFamily: "Vazir",
-                    color: Colors.black54,
-                  ),
+                      fontSize: 13,
+                      fontFamily: "Vazir",
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -189,20 +192,21 @@ class _InformationState extends State<Information> {
             const Row(
               children: [
                 Text(
-                  "ترم جاری",
+                  "Semester",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                     fontFamily: "Vazir",
                   ),
                 ),
                 Spacer(),
                 Text(
-                  "بهار 1402 - 1403",
+                  "Spring 1402 - 1403",
                   style: TextStyle(
-                    fontSize: 13,
-                    fontFamily: "Vazir",
-                    color: Colors.black54,
-                  ),
+                      fontSize: 13,
+                      fontFamily: "Vazir",
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -218,11 +222,11 @@ class _InformationState extends State<Information> {
             Row(
               children: [
                 const Text(
-                  "تعداد واحد",
+                  "Units",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: "Vazir",
-                  ),
+                      fontSize: 15,
+                      fontFamily: "Vazir",
+                      fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 Text(
@@ -230,6 +234,7 @@ class _InformationState extends State<Information> {
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: "Vazir",
+                    fontWeight: FontWeight.bold,
                     color: Colors.black54,
                   ),
                 )
@@ -247,20 +252,20 @@ class _InformationState extends State<Information> {
             Row(
               children: [
                 const Text(
-                  "معدل کل",
+                  "Average",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: "Vazir",
-                  ),
+                      fontSize: 15,
+                      fontFamily: "Vazir",
+                      fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 Text(
                   User.average,
                   style: const TextStyle(
-                    fontSize: 13,
-                    fontFamily: "Vazir",
-                    color: Colors.black54,
-                  ),
+                      fontSize: 13,
+                      fontFamily: "Vazir",
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             )
@@ -301,11 +306,11 @@ class _InformationState extends State<Information> {
                               return _changeInfo2(context);
                             });
                       },
-                      label: const Text("ویرایش مشخصات",
+                      label: const Text("Edit information",
                           style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Vazir",
-                          )),
+                              fontSize: 14,
+                              fontFamily: "Vazir",
+                              fontWeight: FontWeight.bold)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade100,
                       ),
@@ -337,11 +342,11 @@ class _InformationState extends State<Information> {
                               return _changeInfo3(context);
                             });
                       },
-                      label: const Text("تغییر کلمه عبور",
+                      label: const Text("Change password",
                           style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Vazir",
-                          )),
+                              fontSize: 14,
+                              fontFamily: "Vazir",
+                              fontWeight: FontWeight.bold)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade100,
                       ),
@@ -359,7 +364,7 @@ class _InformationState extends State<Information> {
 
   _changeInfo2(context) {
     return Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
@@ -370,11 +375,11 @@ class _InformationState extends State<Information> {
                 Row(
                   children: [
                     const Text(
-                      "نام جدید :",
+                      "New name :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: 14,
                         fontFamily: "Vazir",
                       ),
                     ),
@@ -405,11 +410,11 @@ class _InformationState extends State<Information> {
                 Row(
                   children: [
                     const Text(
-                      "نام خانوادگی جدید :",
+                      "New lastname :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: 14,
                         fontFamily: "Vazir",
                       ),
                     ),
@@ -461,11 +466,11 @@ class _InformationState extends State<Information> {
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
                       child: const Text(
-                        "ثبت تغییرات",
+                        "Record changes",
                         style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: "Vazir",
-                        ),
+                            fontSize: 14,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -478,7 +483,7 @@ class _InformationState extends State<Information> {
 
   _changeInfo3(context) {
     return Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
@@ -489,11 +494,11 @@ class _InformationState extends State<Information> {
                 Row(
                   children: [
                     const Text(
-                      "کلمه عبور فعلی :",
+                      "Current password :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: 12,
                         fontFamily: "Vazir",
                       ),
                     ),
@@ -516,7 +521,7 @@ class _InformationState extends State<Information> {
                                 filled: true,
                                 suffixIcon: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured1,
                                     child: Icon(_obscured1
@@ -535,11 +540,11 @@ class _InformationState extends State<Information> {
                 Row(
                   children: [
                     const Text(
-                      "کلمه عبور جدید :",
+                      "New password :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: 12,
                         fontFamily: "Vazir",
                       ),
                     ),
@@ -562,7 +567,7 @@ class _InformationState extends State<Information> {
                                 filled: true,
                                 suffixIcon: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured2,
                                     child: Icon(_obscured2
@@ -581,11 +586,11 @@ class _InformationState extends State<Information> {
                 Row(
                   children: [
                     const Text(
-                      "تکرار کلمه عبور جدید :",
+                      "Confirm password :",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: 12,
                         fontFamily: "Vazir",
                       ),
                     ),
@@ -608,7 +613,7 @@ class _InformationState extends State<Information> {
                                 filled: true,
                                 suffixIcon: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                   child: GestureDetector(
                                     onTap: _toggleObscured3,
                                     child: Icon(_obscured3
@@ -633,27 +638,25 @@ class _InformationState extends State<Information> {
                       onPressed: () async {
                         if (_passController.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "کلمه عبور فعلی را وارد کنید!");
+                              context, "Please enter current password!");
                         } else if (_newPassController1.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "کلمه عبور جدید را وارد کنید!");
+                              context, "Please enter new password!");
                         } else if (_newPassController2.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "تکرار کلمه عبور جدید را وارد کنید!");
+                              context, "Please confirm new password!");
                         } else if (!_currentPassValid(_passController.text)) {
-                          _showTopSnackBar(
-                              context, "کلمه عبور فعلی اشتباه است!");
+                          _showTopSnackBar(context, "Wrong current password!");
                           _passController.text = "";
                         } else if (!_passValidation(
                             _newPassController1.text, User.user!.id)) {
                           _showTopSnackBar(
-                              context, "کلمه عبور بهتری انتخاب کنید!");
+                              context, "Choose a better password!");
                           _newPassController1.text = "";
                           _newPassController2.text = "";
                         } else if (_newPassController1.text !=
                             _newPassController2.text) {
-                          _showTopSnackBar(
-                              context, "کلمه عبور ها مطابقت ندارند!");
+                          _showTopSnackBar(context, "Passwords don't match!");
                           _newPassController2.text = "";
                         } else {
                           User.user!.password = _newPassController1.text;
@@ -662,7 +665,7 @@ class _InformationState extends State<Information> {
                           _newPassController1.text = "";
                           _newPassController2.text = "";
                           _showTopSnackBar(
-                              context, "کلمه عبور با موفقیت تغییر یافت!");
+                              context, "Password changed successfully!");
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -671,11 +674,11 @@ class _InformationState extends State<Information> {
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
                       child: const Text(
-                        "ثبت تغییرات",
+                        "Record changes",
                         style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: "Vazir",
-                        ),
+                            fontSize: 14,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -702,12 +705,23 @@ class _InformationState extends State<Information> {
                         content: const SizedBox(
                           height: 50,
                           child: Center(
-                            child: Text(
-                              "آیا از حذف حساب خود اطمینان دارید؟",
-                              style: TextStyle(
-                                fontFamily: "Vazir",
-                                fontSize: 12,
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Are you sure you want to delete your",
+                                  style: TextStyle(
+                                      fontFamily: "Vazir",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "account?",
+                                  style: TextStyle(
+                                      fontFamily: "Vazir",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -730,12 +744,12 @@ class _InformationState extends State<Information> {
                                     ),
                                     padding: const EdgeInsets.all(10),
                                     child: const Center(
-                                        child: Text("خیر",
+                                        child: Text("No",
                                             style: TextStyle(
-                                              fontFamily: "Vazir",
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ))),
+                                                fontFamily: "Vazir",
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold))),
                                   ),
                                 ),
                               ),
@@ -762,12 +776,12 @@ class _InformationState extends State<Information> {
                                     ),
                                     padding: const EdgeInsets.all(10),
                                     child: const Center(
-                                        child: Text("بله",
+                                        child: Text("Yes",
                                             style: TextStyle(
-                                              fontFamily: "Vazir",
-                                              color: Colors.pink,
-                                              fontSize: 12,
-                                            ))),
+                                                fontFamily: "Vazir",
+                                                color: Colors.pink,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold))),
                                   ),
                                 ),
                               ),
@@ -783,11 +797,9 @@ class _InformationState extends State<Information> {
               backgroundColor: Colors.pink,
               foregroundColor: Colors.white),
           child: const Text(
-            "حذف حساب کاربری",
+            "Delete account",
             style: TextStyle(
-              fontSize: 15,
-              fontFamily: "Vazir",
-            ),
+                fontSize: 15, fontFamily: "Vazir", fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -821,23 +833,18 @@ class _InformationState extends State<Information> {
     _messengerKey.currentState!.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-
         content: Text(
           message,
           style: const TextStyle(fontFamily: "Vazir", fontSize: 15),
         ),
-
         duration: const Duration(seconds: 2),
-
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-
         margin: const EdgeInsets.only(bottom: 410, right: 20, left: 20),
-
         action: SnackBarAction(
           onPressed: () {},
-          label: "تایید",
+          label: "Ok",
           textColor: Colors.pink,
         ),
       ),

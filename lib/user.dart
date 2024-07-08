@@ -9,11 +9,15 @@ import 'package:ap_project_frontend/classes/teacher.dart';
 import 'package:ap_project_frontend/classes_page.dart';
 
 class User {
+  static var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  static DateTime now = DateTime.now();
+  static String today = "${now.day}  ${MONTHS[now.month-1]}  ${now.year}";
   static const String IP = "192.168.1.208";
   static Student? user;
   static late String average;
   static late String bestScore;
   static late String worstScore;
+  static late String exams;
   static List<Assignment> exercises = [];
   static List<Course> classes = [];
   static List<Task> tasks = [];
@@ -34,7 +38,7 @@ class User {
     socket.write("getUnitsUser-${user!.id}\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      user?.units = const Utf8Decoder().convert(answer);
+      user?.units = utf8.decode(answer.sublist(2));
     }).asFuture();
   }
 
@@ -43,7 +47,7 @@ class User {
     socket.write("getAverage-${user!.id}\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      average = const Utf8Decoder().convert(answer);
+      average = utf8.decode(answer.sublist(2));
     }).asFuture();
   }
 
@@ -76,6 +80,7 @@ class User {
   static homePageReady() async {
     await getScores();
     await getExercises();
+    await getExams();
   }
 
   static getExercises() async {
@@ -84,19 +89,29 @@ class User {
     socket.write("getExercises-${user!.id}\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      temp = const Utf8Decoder().convert(answer);
+      temp = utf8.decode(answer.sublist(2));
       exercises.clear();
       if (temp != "Empty" && temp != "mpty") {
-        for (String parts in temp.split(" ")) {
+        for (String parts in temp.split("  ")) {
           print(parts);
           exercises.add(Assignment(
               parts.split("*")[0], Course(parts.split("*")[1], 0, 0),
               int.parse(parts.split("*")[2])));
-          if (parts.split("*")[3] == "true") {
+          if (parts.split("*")[3] == "true" || parts.split("*")[3] == "true ") {
             exercises[exercises.length - 1].isActive = false;
+          }
+          if (parts.split("*").length >= 5) {
+            exercises[exercises.length - 1].hourLeft = parts.split("*")[4];
+          }
+          if (parts.split("*").length >= 6) {
+            exercises[exercises.length - 1].description = parts.split("*")[5];
+          }
+          if (parts.split("*").length >= 7) {
+            exercises[exercises.length - 1].tDescription = parts.split("*")[6];
           }
         }
       }
+      exercises.sort((a, b) => a.deadLine - b.deadLine);
     }).asFuture();
   }
 
@@ -106,16 +121,31 @@ class User {
     socket.flush();
     await socket.listen((answer) async {
       String temp;
-      temp = const Utf8Decoder().convert(answer);
-      print(temp);
+      temp = utf8.decode(answer.sublist(2));
       bestScore = temp.split("-")[0];
       worstScore = temp.split("-")[1];
+    }).asFuture();
+  }
+
+  static getExams() async {
+    Socket socket = await Socket.connect(IP, 1384);
+    socket.write("getExams-${user!.id}\u0000");
+    socket.flush();
+    await socket.listen((answer) async {
+      exams = utf8.decode(answer.sublist(2));
     }).asFuture();
   }
 
   static exeDone(Assignment e) async {
     Socket socket = await Socket.connect(IP, 1384);
     socket.write("exeDone-${user!.id}-${e.course.name}-${e.title}\u0000");
+    socket.flush();
+  }
+
+  static exeRecord(Assignment e) async {
+    Socket socket = await Socket.connect(IP, 1384);
+    socket.write(
+        "exeRecord-${user!.id}-${e.course.name}-${e.title}-${e.hourLeft}-${e.description}-${e.tDescription}\u0000");
     socket.flush();
   }
 
@@ -127,7 +157,7 @@ class User {
     socket.write("getClasses-${user!.id}\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      temp = const Utf8Decoder().convert(answer);
+      temp = utf8.decode(answer.sublist(2));
       classes.clear();
       if (temp != "Empty" && temp != "mpty") {
         for (String parts in temp.split(" ")) {
@@ -146,7 +176,7 @@ class User {
     socket.write("addCourse-${user!.id}-$name\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      temp = const Utf8Decoder().convert(answer);
+      temp = utf8.decode(answer.sublist(2));
       print(temp);
       if (temp != "Empty" && temp != "mpty") {
         classes
@@ -172,7 +202,7 @@ class User {
     socket.write("getTasks-${user!.id}\u0000");
     socket.flush();
     await socket.listen((answer) async {
-      temp = const Utf8Decoder().convert(answer);
+      temp = utf8.decode(answer.sublist(2));
       tasks.clear();
       if (temp != "Empty" && temp != "mpty") {
         for (String parts in temp.split("\$\$")) {

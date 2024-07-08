@@ -28,15 +28,13 @@ class _ExercisesPageState extends State<ExercisesPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -56,11 +54,10 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.homePageReady();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const HomePage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.home_outlined,
@@ -75,11 +72,10 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getTasks();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const Todo()));
-                            });
                           },
                           icon: const Icon(
                             Icons.dashboard_customize_outlined,
@@ -94,11 +90,10 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getClasses();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ClassesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.school_outlined,
@@ -144,7 +139,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 15,
+                      height: 20,
                     ),
                     const Row(
                       children: [
@@ -156,30 +151,12 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text("تمرین ها",
+                        Text("Exercises",
                             style: TextStyle(
                               fontFamily: "Vazir",
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                            )),
-                        Spacer(),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("4 تیر 1403",
-                            style: TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
                             )),
                         Spacer(),
                       ],
@@ -211,7 +188,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
         ),
         child: const Center(
           child: Text(
-            "هیج تمرینی نداری!",
+            "There is no exercises!",
             style: TextStyle(
               fontFamily: "Vazir",
               fontSize: 12,
@@ -254,7 +231,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.pink,
+          color: Colors.white,
         ),
         child: ListTile(
           title: Row(
@@ -266,7 +243,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                 style: const TextStyle(
                   fontFamily: "Vazir",
                   fontSize: 13,
-                  color: Colors.white,
+                  color: Colors.pink,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -279,7 +256,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         builder: (context) =>
                             AlertDialog(
                               content: Directionality(
-                                textDirection: TextDirection.rtl,
+                                textDirection: TextDirection.ltr,
                                 child: SingleChildScrollView(
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
@@ -301,10 +278,11 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                             ),
                                             const SizedBox(width: 37,),
                                             const Text(
-                                              "آیا کار را انجام داده اید؟",
+                                              "Exercise Information",
                                               style: TextStyle(
                                                 fontFamily: "Vazir",
                                                 fontSize: 12,
+                                                fontWeight: FontWeight.bold
                                               ),
                                             ),
                                           ],
@@ -314,33 +292,35 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                           children: [
                                             Row(
                                               children: [
-                                                const Text("عنوان : ",
+                                                const Text("title : ",
                                                   style: TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12),),
-                                                const Spacer(),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 11),),
                                                 Text(User.exercises[index].title,
                                                   style: const TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12,
-                                                      color: Colors.black54),),
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.pink),),
                                                 const SizedBox(width: 5,)
                                               ],
                                             ),
                                             const SizedBox(height: 10,),
                                             Row(
                                               children: [
-                                                const Text("ددلاین : ",
+                                                const Text("Deadline : ",
                                                   style: TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12),),
-                                                const Spacer(),
-                                                Text("${User.exercises[index]
-                                                    .deadLine} روز دیگر",
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 11),),
+                                                Text(User.exercises[index]
+                                                    .deadLine2,
                                                   style: const TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12,
-                                                      color: Colors.black54),),
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.pink),),
                                                 const SizedBox(width: 5,)
                                               ],
                                             ),
@@ -348,10 +328,11 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                             Row(
                                               children: [
                                                 const Text(
-                                                  "زمان تخمینی باقی مانده : ",
+                                                  "Estimated time remaining :",
                                                   style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12),),
+                                                      fontSize: 11),),
                                                 const Spacer(),
                                                 Material(
                                                   elevation: 4,
@@ -366,10 +347,11 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                   
                                                       decoration: InputDecoration(
                                                           hintText: "${User.exercises[index].hourLeft
-                                                              } ساعت",
+                                                              } hours",
                                                           hintStyle: const TextStyle(
                                                               fontFamily: "Vazir",
-                                                              fontSize: 12,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 11,
                                                               color: Colors
                                                                   .black54),
                                                           border: OutlineInputBorder(
@@ -387,10 +369,11 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                             const SizedBox(height: 10,),
                                             const Row(
                                               children: [
-                                                Text("توضیحات : ",
+                                                Text("Description :",
                                                   style: TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12),),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 11),),
                                               ],
                                             ),
                                             const SizedBox(height: 10,),
@@ -407,11 +390,13 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                                   maxLines: 4,
                                   
                                                   decoration: InputDecoration(
-                                                      hintText: User.exercises[index].description,
+                                                      hintText: User.exercises[index].description.isEmpty ? "Description..." : User.exercises[index].description,
                                                       hintStyle: const TextStyle(
                                                           fontFamily: "Vazir",
-                                                          fontSize: 12,
-                                                          color: Colors.black54),
+                                                          fontSize: 11,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors
+                                                              .black54),
                                                       border: OutlineInputBorder(
                                                         borderRadius: BorderRadius
                                                             .circular(10),
@@ -425,25 +410,27 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                             const SizedBox(height: 20,),
                                             const Row(
                                               children: [
-                                                Text("نمره : ", style: TextStyle(
+                                                Text("Score : ", style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
                                                     fontFamily: "Vazir",
-                                                    fontSize: 12),),
-                                                Spacer(),
-                                                Text("ثبت نشده!",
+                                                    fontSize: 11),),
+                                                Text("00.00",
                                                   style: TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12,
-                                                      color: Colors.black54),),
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.pink),),
                                                 SizedBox(width: 5,)
                                               ],
                                             ),
                                             const SizedBox(height: 10,),
                                             const Row(
                                               children: [
-                                                Text("بارگذاری تمرین : ",
+                                                Text("Upload :",
                                                   style: TextStyle(
                                                       fontFamily: "Vazir",
-                                                      fontSize: 12),),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 11),),
                                                 Spacer(),
                                   
                                               ],
@@ -463,10 +450,11 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                                       controller: _tDescription,
                                   
                                                       decoration: InputDecoration(
-                                                          hintText: User.exercises[index].tDescription.isEmpty ? "توضیحات تحویل" : User.exercises[index].tDescription,
+                                                          hintText: User.exercises[index].tDescription.isEmpty ? "Details..." : User.exercises[index].tDescription,
                                                           hintStyle: const TextStyle(
                                                               fontFamily: "Vazir",
-                                                              fontSize: 12,
+                                                              fontSize: 11,
+                                                              fontWeight: FontWeight.bold,
                                                               color: Colors
                                                                   .black54),
                                                           border: OutlineInputBorder(
@@ -512,13 +500,21 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                           color: Colors.pink,
                                         ),
                                         child: TextButton(
-                                          onPressed: () {
-                                            User.exercises[index].hourLeft = _hourLeft.text;
-                                            User.exercises[index].description = _description.text;
-                                            User.exercises[index].tDescription = _tDescription.text;
+                                          onPressed: () async {
+                                            if (_hourLeft.text.isNotEmpty) {
+                                              User.exercises[index].hourLeft = _hourLeft.text;
+                                            }
+                                            if (_description.text.isNotEmpty) {
+                                              User.exercises[index].description = _description.text;
+                                            }
+                                            if (_tDescription.text.isNotEmpty) {
+                                              User.exercises[index].tDescription = _tDescription.text;
+                                            }
                                             _hourLeft.text = "";
                                             _description.text = "";
                                             _tDescription.text = "";
+
+                                            await User.exeRecord(User.exercises[index]);
 
                                             Navigator.of(context)
                                                 .pop();
@@ -534,13 +530,14 @@ class _ExercisesPageState extends State<ExercisesPage> {
                                               color: Colors.pink,
                                             ),
                                             child: const Center(
-                                                child: Text("ثبت",
+                                                child: Text("Record",
                                                     style:
                                                     TextStyle(
                                                       fontFamily:
                                                       "Vazir",
                                                       color: Colors
                                                           .white,
+                                                      fontWeight: FontWeight.bold,
                                                       fontSize: 14,
 
                                                     ))),
@@ -562,7 +559,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                     ),
                     Icon(
                       Icons.circle_outlined,
-                      color: Colors.white,
+                      color: Colors.pink,
                     ),
                   ],
                 ),
@@ -570,11 +567,12 @@ class _ExercisesPageState extends State<ExercisesPage> {
             ],
           ),
           subtitle: Text(
-            User.exercises[index].deadLine.toString(),                          
+            "${User.exercises[index].deadLine2}  left",
             style: const TextStyle(
                 fontFamily: "Vazir",
                 fontSize: 11,
-                color: Colors.white
+                color: Colors.black,
+                fontWeight: FontWeight.bold
             ),
           ),
         ),
@@ -583,7 +581,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.grey,
+        color: Colors.white,
       ),
       child: ListTile(
         title: Row(
@@ -595,7 +593,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
               style: const TextStyle(
                 fontFamily: "Vazir",
                 fontSize: 13,
-                color: Colors.white,
+                color: Colors.pink,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -610,7 +608,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                   ),
                   Icon(
                     Icons.add_task,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ],
               ),
@@ -618,11 +616,12 @@ class _ExercisesPageState extends State<ExercisesPage> {
           ],
         ),
         subtitle: Text(
-          User.exercises[index].deadLine.toString(),
+          "${User.exercises[index].deadLine2}  left",
           style: const TextStyle(
               fontFamily: "Vazir",
               fontSize: 11,
-              color: Colors.white
+              fontWeight: FontWeight.bold,
+              color: Colors.black
           ),
         ),
       ),

@@ -16,6 +16,13 @@ class Assignment {
 
   String tDescription = "";
 
-  Assignment(this.title, this.course, this.deadLine);
+  String deadLine2 = "";
 
+  Assignment(this.title, this.course, this.deadLine) {
+   deadLine2 += "${(deadLine / 1440).floor()} : ";
+   deadLine %= 1440;
+   deadLine2 += (deadLine / 60 >= 10) ? "${(deadLine /60).floor()} : " : "0${(deadLine /60).floor()} : ";
+   deadLine %= 60;
+   deadLine2 += (deadLine >= 10) ? "$deadLine" : "0$deadLine";
+  }
 }

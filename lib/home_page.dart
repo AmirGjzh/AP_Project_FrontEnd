@@ -2,6 +2,7 @@ import 'package:ap_project_frontend/classes/course.dart';
 import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
+import 'package:ap_project_frontend/news_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +17,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String _today = "20 خرداد 1402";
-
   @override
   Widget build(BuildContext context) {
+    String _today = User.today;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -46,7 +47,8 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                          },
                           icon: const Icon(
                             Icons.home,
                             color: Colors.pink,
@@ -61,8 +63,8 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getTasks();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Todo()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const Todo()));
                           },
                           icon: const Icon(
                             Icons.dashboard_customize_outlined,
@@ -78,8 +80,8 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getClasses();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ClassesPage()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ClassesPage()));
                           },
                           icon: const Icon(
                             Icons.school_outlined,
@@ -93,9 +95,12 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.sensors,
-                              color: Colors.pink, size: 33)),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const NewsPage()));
+                          },
+                          icon: const Icon(Icons.feedback_outlined,
+                              color: Colors.pink, size: 30)),
                     ),
                     const Spacer(),
                     Container(
@@ -104,8 +109,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: IconButton(
                           onPressed: () async {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ExercisesPage()));
+                            await User.getExercises();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ExercisesPage()));
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -129,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         const Spacer(),
                         Directionality(
-                          textDirection: TextDirection.ltr,
+                          textDirection: TextDirection.rtl,
                           child: Material(
                             elevation: 4,
                             borderRadius: BorderRadius.circular(35),
@@ -146,12 +152,12 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) =>
                                           const Information()));
                                 },
-                                label: const Text("اطلاعات کاربری",
+                                label: const Text("User Info",
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontFamily: "Vazir",
-                                    )),
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontFamily: "Vazir",
+                                        fontWeight: FontWeight.bold)),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.pink,
                                 ),
@@ -172,10 +178,10 @@ class _HomePageState extends State<HomePage> {
                           width: 10,
                         ),
                         Text(
-                          "خلاصه",
+                          "Summery",
                           style: TextStyle(
                             fontFamily: "Vazir",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -200,10 +206,10 @@ class _HomePageState extends State<HomePage> {
                           width: 10,
                         ),
                         const Text(
-                          "تمرین های جاری",
+                          "Current exercises",
                           style: TextStyle(
                             fontFamily: "Vazir",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -238,10 +244,10 @@ class _HomePageState extends State<HomePage> {
                           width: 10,
                         ),
                         const Text(
-                          "تمرین های انجام شده",
+                          "Done exercises",
                           style: TextStyle(
                             fontFamily: "Vazir",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -294,18 +300,18 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Icon(
                         Icons.timelapse,
-                        color: Colors.black,
+                        color: Colors.pink,
                       ),
                       const SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "${User.exercises.where((e) => e.isActive == true).length} تا تمرین داری",
+                        "Have ${User.exercises.where((e) => e.isActive == true).length} exercises",
                         style: const TextStyle(
-                          //color: Colors.white,
-                          fontSize: 11,
-                          fontFamily: "Vazir",
-                        ),
+                            //color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -322,22 +328,22 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.heart_broken,
-                        color: Colors.black,
+                        color: Colors.pink,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "0 تا امتحان داری",
-                        style: TextStyle(
-                          //color: Colors.white,
-                          fontSize: 11,
-                          fontFamily: "Vazir",
-                        ),
+                        "Have ${User.exams} exams",
+                        style: const TextStyle(
+                            //color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -358,18 +364,18 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(
                         Icons.access_alarms_sharp,
-                        color: Colors.black,
+                        color: Colors.pink,
                       ),
                       SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "0 تا تمرین پرید",
+                        "Lost 0 exercises",
                         style: TextStyle(
-                          //color: Colors.white,
-                          fontSize: 11,
-                          fontFamily: "Vazir",
-                        ),
+                            //color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -396,18 +402,18 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Icon(
                         Icons.add_task,
-                        color: Colors.black,
+                        color: Colors.pink,
                       ),
                       const SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "بهترین نمرت ${User.bestScore} عه",
+                        "Best score is ${User.bestScore}",
                         style: const TextStyle(
-                          //color: Colors.white,
-                          fontSize: 11,
-                          fontFamily: "Vazir",
-                        ),
+                            //color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -428,18 +434,18 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Icon(
                         Icons.mood_bad,
-                        color: Colors.black,
+                        color: Colors.pink,
                       ),
                       const SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "بدترین نمرت ${User.worstScore} عه",
+                        "Worst score is ${User.worstScore}",
                         style: const TextStyle(
-                          //color: Colors.white,
-                          fontSize: 11,
-                          fontFamily: "Vazir",
-                        ),
+                            //color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -454,7 +460,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _exercisesPart(BuildContext context) {
-    if (User.exercises.where((e) => e.isActive == true).isEmpty) {
+    if (User.exercises.where((e) => e.isActive == true).where((e) => e.deadLine >= 0).isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
@@ -463,7 +469,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: const Center(
           child: Text(
-            "هیچ تمرینی وجود ندارد!",
+            "There is no exercises!",
             style: TextStyle(
               fontFamily: "Vazir",
               fontSize: 12,
@@ -481,7 +487,7 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: User.exercises.where((e) => e.isActive == true).length,
+          itemCount: User.exercises.where((e) => e.isActive == true).where((e) => e.deadLine >= 0).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -500,14 +506,14 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               User.exercises
-                                  .where((e) => e.isActive == true)
+                                  .where((e) => e.isActive == true).where((e) => e.deadLine >= 0)
                                   .toList()[index]
                                   .course
                                   .name,
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                //color: Colors.white,
+                                color: Colors.pink,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -522,11 +528,12 @@ class _HomePageState extends State<HomePage> {
                                               height: 50,
                                               child: Center(
                                                 child: Text(
-                                                  "آیا تمرین را انجام داده اید؟",
+                                                  "Did you finish the exercise?",
                                                   style: TextStyle(
-                                                    fontFamily: "Vazir",
-                                                    fontSize: 12,
-                                                  ),
+                                                      fontFamily: "Vazir",
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ),
@@ -557,15 +564,17 @@ class _HomePageState extends State<HomePage> {
                                                             const EdgeInsets
                                                                 .all(10),
                                                         child: const Center(
-                                                            child: Text("خیر",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      "Vazir",
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 12,
-                                                                ))),
+                                                            child: Text("No",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        "Vazir",
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold))),
                                                       ),
                                                     ),
                                                   ),
@@ -608,15 +617,17 @@ class _HomePageState extends State<HomePage> {
                                                             const EdgeInsets
                                                                 .all(10),
                                                         child: const Center(
-                                                            child: Text("بله",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      "Vazir",
-                                                                  color: Colors
-                                                                      .pink,
-                                                                  fontSize: 12,
-                                                                ))),
+                                                            child: Text("Yes",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        "Vazir",
+                                                                    color: Colors
+                                                                        .pink,
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold))),
                                                       ),
                                                     ),
                                                   ),
@@ -632,7 +643,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 18,
                                   ),
                                   Icon(
-                                    Icons.check_box_outlined,
+                                    Icons.edit_notifications_outlined,
                                     color: Colors.pink,
                                   ),
                                 ],
@@ -642,14 +653,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         subtitle: Text(
                           User.exercises
-                              .where((e) => e.isActive == true)
+                              .where((e) => e.isActive == true).where((e) => e.deadLine >= 0)
                               .toList()[index]
                               .title,
                           style: const TextStyle(
-                            fontFamily: "Vazir",
-                            //color: Colors.white,
-                            fontSize: 11,
-                          ),
+                              fontFamily: "Vazir",
+                              //color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -665,7 +676,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _doneExercises(BuildContext context) {
-    if (User.exercises.where((e) => e.isActive == false).isEmpty) {
+    if (User.exercises.where((e) => e.isActive == false).where((e) => e.deadLine >= 0).isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
@@ -674,7 +685,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: const Center(
           child: Text(
-            "هیچ تمرینی انجام نشده!",
+            "No exercise finished!",
             style: TextStyle(
               fontFamily: "Vazir",
               fontSize: 12,
@@ -692,7 +703,7 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: User.exercises.where((e) => e.isActive == false).length,
+          itemCount: User.exercises.where((e) => e.isActive == false).where((e) => e.deadLine >= 0).length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -711,14 +722,14 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               User.exercises
-                                  .where((e) => e.isActive == false)
+                                  .where((e) => e.isActive == false).where((e) => e.deadLine >= 0)
                                   .toList()[index]
                                   .course
                                   .name,
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 13,
-                                //color: Colors.white,
+                                color: Colors.pink,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -730,10 +741,13 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(
                                     height: 18,
                                   ),
-                                  Icon(
-                                    Icons.check_box,
+                                  Text("Done",
+                                  style: TextStyle(
+                                      fontFamily: "Vazir",
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
                                     color: Colors.pink,
-                                  ),
+                                  ),)
                                 ],
                               ),
                             ),
@@ -741,14 +755,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                         subtitle: Text(
                           User.exercises
-                              .where((e) => e.isActive == false)
+                              .where((e) => e.isActive == false).where((e) => e.deadLine >= 0)
                               .toList()[index]
                               .title,
                           style: const TextStyle(
-                            fontFamily: "Vazir",
-                            fontSize: 11,
-                            //color: Colors.white,
-                          ),
+                              fontFamily: "Vazir",
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold
+                              //color: Colors.white,
+                              ),
                         ),
                       ),
                     ),

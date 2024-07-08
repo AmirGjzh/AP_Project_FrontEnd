@@ -20,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController2 = TextEditingController();
   final _nameController = TextEditingController();
   final _lastnameController = TextEditingController();
+  final _dateController = TextEditingController();
 
   bool _obscured1 = true;
   bool _obscured2 = true;
@@ -36,10 +37,10 @@ class _SignupPageState extends State<SignupPage> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(builder: (context) {
           return Scaffold(
             body: SingleChildScrollView(
@@ -75,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
           height: 30,
         ),
         const Text(
-          "ثبت نام",
+          "Signup",
           style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -96,7 +97,7 @@ class _SignupPageState extends State<SignupPage> {
           child: TextField(
             controller: _idController,
             decoration: InputDecoration(
-                hintText: "شماره دانشجویی",
+                hintText: "Student ID",
                 hintStyle: const TextStyle(
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.bold,
@@ -117,7 +118,7 @@ class _SignupPageState extends State<SignupPage> {
           child: TextField(
             controller: _passwordController1,
             decoration: InputDecoration(
-                hintText: "کلمه عبور",
+                hintText: "Password",
                 hintStyle: const TextStyle(
                     fontFamily: "Vazir",
                     fontWeight: FontWeight.bold,
@@ -129,7 +130,7 @@ class _SignupPageState extends State<SignupPage> {
                 filled: true,
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: GestureDetector(
                     onTap: _toggleObscured1,
                     child: Icon(_obscured1
@@ -147,7 +148,7 @@ class _SignupPageState extends State<SignupPage> {
           child: TextField(
             controller: _passwordController2,
             decoration: InputDecoration(
-                hintText: "تکرار کلمه عبور",
+                hintText: "Confirm password",
                 hintStyle: const TextStyle(
                     fontFamily: "Vazir",
                     fontWeight: FontWeight.bold,
@@ -159,7 +160,7 @@ class _SignupPageState extends State<SignupPage> {
                 filled: true,
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: GestureDetector(
                     onTap: _toggleObscured2,
                     child: Icon(_obscured2
@@ -177,22 +178,22 @@ class _SignupPageState extends State<SignupPage> {
           child: ElevatedButton(
             onPressed: () async {
               if (_idController.text.isEmpty) {
-                _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
+                _showSnackBar(context, "Please enter you're ID!");
               } else if (_passwordController1.text.isEmpty) {
-                _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
+                _showSnackBar(context, "Please enter you're password!");
               } else if (_passwordController2.text.isEmpty) {
-                _showSnackBar(context, "تکرار کلمه عبور خود را وارد کنید!");
+                _showSnackBar(context, "Please confirm you're ID!");
               } else {
                 String validation = await _idValidation(_idController.text);
                 if (validation == "invalid" || validation == "nvalid") {
                   _showSnackBar(
-                      context, "این شماره دانشجویی قبلا ثبت شده است!");
+                      context, "This ID has already been registered!");
                 } else if (!_passValidation(
                     _passwordController1.text, _idController.text)) {
-                  _showSnackBar(context, "کلمه عبور بهتری انتخاب کنید!");
+                  _showSnackBar(context, "Choose a better password!");
                 } else if (_passwordController1.text !=
                     _passwordController2.text) {
-                  _showSnackBar(context, "کلمه عبور ها مطابقت ندارند!");
+                  _showSnackBar(context, "Passwords don't match!");
                 } else {
                   showModalBottomSheet(
                       isScrollControlled: true,
@@ -210,7 +211,7 @@ class _SignupPageState extends State<SignupPage> {
                 backgroundColor: Colors.pink,
                 foregroundColor: Colors.white),
             child: const Text(
-              "ثبت نام",
+              "Signup",
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: "Vazir",
@@ -233,25 +234,27 @@ class _SignupPageState extends State<SignupPage> {
           color: Colors.pink.shade50,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             const Text(
-              "حساب کاربری دارید؟ ",
+              "Already have an account?  ",
               style: TextStyle(
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.w600,
-                  fontSize: 17),
+                  fontSize: 14),
             ),
+            const Spacer(),
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const LoginPage()));
                 },
-                child: const Text("ورود",
+                child: const Text("Login",
                     style: TextStyle(
                         color: Colors.pink,
                         fontWeight: FontWeight.w600,
-                        fontSize: 17)))
+                        fontSize: 14))),
+            const Spacer(),
           ],
         ),
       ),
@@ -284,7 +287,7 @@ class _SignupPageState extends State<SignupPage> {
         ),
         action: SnackBarAction(
           onPressed: () {},
-          label: "تایید",
+          label: "Ok",
           textColor: Colors.pink,
         ),
       ),
@@ -306,7 +309,7 @@ class _SignupPageState extends State<SignupPage> {
         margin: const EdgeInsets.only(bottom: 300, right: 20, left: 20),
         action: SnackBarAction(
           onPressed: () {},
-          label: "تایید",
+          label: "Ok",
           textColor: Colors.pink,
         ),
       ),
@@ -320,7 +323,8 @@ class _SignupPageState extends State<SignupPage> {
     socket.flush();
     await socket.listen((answer) async {
       setState(() {
-        validation = const Utf8Decoder().convert(answer);
+        validation = utf8.decode(answer.sublist(2));
+        print("---- $validation ----");
       });
     }).asFuture();
     return validation;
@@ -333,7 +337,7 @@ class _SignupPageState extends State<SignupPage> {
 
   _nameLastnameInput(BuildContext context) {
     return Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(
@@ -344,11 +348,11 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   children: [
                     const Text(
-                      "نام :",
+                      "Name :",
                       style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Vazir",
-                      ),
+                          fontSize: 14,
+                          fontFamily: "Vazir",
+                          fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Material(
@@ -377,11 +381,11 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   children: [
                     const Text(
-                      "نام خانوادگی :",
+                      "Lastname :",
                       style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Vazir",
-                      ),
+                          fontSize: 14,
+                          fontFamily: "Vazir",
+                          fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Material(
@@ -407,6 +411,39 @@ class _SignupPageState extends State<SignupPage> {
                   ],
                 ),
                 const SizedBox(height: 25),
+                Row(
+                  children: [
+                    const Text(
+                      "BirthDate(D/M) :",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "Vazir",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    Material(
+                      elevation: 4,
+                      borderRadius: BorderRadius.circular(20),
+                      child: SizedBox(
+                        width: 200,
+                        height: 60,
+                        child: Stack(children: [
+                          TextField(
+                            controller: _dateController,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide:
+                                    const BorderSide(color: Colors.teal)),
+                                fillColor: Colors.white,
+                                filled: true),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 25),
                 Material(
                   elevation: 10,
                   borderRadius: BorderRadius.circular(35),
@@ -415,16 +452,19 @@ class _SignupPageState extends State<SignupPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_nameController.text.isEmpty) {
-                          _showTopSnackBar(context, "نام خود را وارد کنید!");
+                          _showTopSnackBar(
+                              context, "Please enter you're name!");
                         } else if (_lastnameController.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "نام خانوادگی خود را وارد کنید!");
+                              context, "Please enter you're lastname!");
                         } else {
                           String info = await _signup(
                               _idController.text,
                               _passwordController1.text,
                               _nameController.text,
-                              _lastnameController.text);
+                              _lastnameController.text,
+                            _dateController.text
+                          );
 
                           await User.setUser(
                               info.split("-")[0],
@@ -432,8 +472,9 @@ class _SignupPageState extends State<SignupPage> {
                               _idController.text,
                               _passwordController1.text);
 
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (context) => const Information()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const Information()));
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -442,11 +483,11 @@ class _SignupPageState extends State<SignupPage> {
                           backgroundColor: Colors.pink,
                           foregroundColor: Colors.white),
                       child: const Text(
-                        "ثبت نام",
+                        "Signup",
                         style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: "Vazir",
-                        ),
+                            fontSize: 14,
+                            fontFamily: "Vazir",
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -458,14 +499,14 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Future<String> _signup(
-      String id, String password, String name, String lastname) async {
+      String id, String password, String name, String lastname, String date) async {
     String info = "";
     Socket socket = await Socket.connect(User.IP, 1384);
-    socket.write("signup-$id-$password-$name-$lastname\u0000");
+    socket.write("signup-$id-$password-$name-$lastname-$date\u0000");
     socket.flush();
     await socket.listen((answer) async {
       setState(() {
-        info = const Utf8Decoder().convert(answer);
+        info = utf8.decode(answer.sublist(2));
       });
     }).asFuture();
     return info;

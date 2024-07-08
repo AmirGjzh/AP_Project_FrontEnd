@@ -23,10 +23,10 @@ class _ClassesPageState extends State<ClassesPage> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(
           builder: (context) {
             return Scaffold(
@@ -46,11 +46,10 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.homePageReady();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const HomePage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.home_outlined,
@@ -64,11 +63,10 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getTasks();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const Todo()));
-                            });
                           },
                           icon: const Icon(
                             Icons.dashboard_customize_outlined,
@@ -105,11 +103,10 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            setState(() {
+                          onPressed: () async {
+                            await User.getExercises();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const ExercisesPage()));
-                            });
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -138,16 +135,16 @@ class _ClassesPageState extends State<ClassesPage> {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text("کلاس ها",
+                      const Text("Courses",
                           style: TextStyle(
                             fontFamily: "Vazir",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           )),
                       const Spacer(),
                       Directionality(
-                        textDirection: TextDirection.ltr,
+                        textDirection: TextDirection.rtl,
                         child: Material(
                           elevation: 4,
                           borderRadius: BorderRadius.circular(35),
@@ -165,7 +162,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Directionality(
-                                            textDirection: TextDirection.rtl,
+                                            textDirection: TextDirection.ltr,
                                             child: SingleChildScrollView(
                                               child: Container(
                                                 color: Colors.pink
@@ -185,9 +182,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                                     Row(
                                                       children: [
                                                         const Text(
-                                                          "نام درس :",
+                                                          "Course : ",
                                                           style: TextStyle(
-                                                            fontSize: 15,
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.bold,
                                                             fontFamily: "Vazir",
                                                           ),
                                                         ),
@@ -248,12 +246,13 @@ class _ClassesPageState extends State<ClassesPage> {
                                                                     "invalid") {
                                                                   _showTopSnackBar(
                                                                       context,
-                                                                      "کلاسی با این نام وجود ندارد!");
+                                                                      "There is no course with this name!");
                                                                 } else {
                                                                   _showTopSnackBar(
                                                                       context,
-                                                                      "با موفقیت اضافه شد!");
+                                                                      "Added successfully!");
                                                                 }
+                                                                _classCodeController.text = "";
                                                               },
                                                               child: const Icon(
                                                                 Icons.add,
@@ -273,10 +272,11 @@ class _ClassesPageState extends State<ClassesPage> {
                                       });
                                 });
                               },
-                              label: const Text("افزودن کلاس",
+                              label: const Text("Add course",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
+                                    fontWeight: FontWeight.bold,
                                     fontFamily: "Vazir",
                                   )),
                               style: ElevatedButton.styleFrom(
@@ -302,6 +302,22 @@ class _ClassesPageState extends State<ClassesPage> {
   }
 
   _classes(BuildContext context) {
+    if (User.classes.isEmpty) {
+      return const SizedBox(
+        height: 665,
+        child: Center(
+          child: Text(
+            "You are not in any courses!",
+            style: TextStyle(
+              fontFamily: "Vazir",
+              fontSize: 12,
+              color: Colors.pink,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
     return SizedBox(
       height: 665,
       child: ListView.builder(
@@ -324,7 +340,7 @@ class _ClassesPageState extends State<ClassesPage> {
                         children: [
                           const Icon(
                             Icons.school,
-                            color: Colors.black,
+                            color: Colors.pink,
                             size: 35,
                           ),
                           const SizedBox(
@@ -335,15 +351,23 @@ class _ClassesPageState extends State<ClassesPage> {
                                 fontFamily: "Vazir",
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: Colors.pink,
                               )),
                           const Spacer(),
-                          Text(
-                              "استاد : ${User.classes[index].teacher!.name} ${User.classes[index].teacher!.lastname}",
+                          const Text(
+                              "Teacher : ",
+                              style: TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          Text("${User.classes[index].teacher!.name} ${User.classes[index].teacher!.lastname}",
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
-                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
                               )),
                         ],
                       ),
@@ -358,17 +382,20 @@ class _ClassesPageState extends State<ClassesPage> {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.numbers,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          Text(" تعداد واحد : ${User.classes[index].units}",
+                          const Text("Units : ",
+                              style: TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          Text("${User.classes[index].units}",
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
-                                color: Colors.black,
-                              ))
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              )),
                         ],
                       ),
                       const SizedBox(
@@ -376,18 +403,21 @@ class _ClassesPageState extends State<ClassesPage> {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.task_outlined,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          Text(
-                              " تکالیف باقی مانده : ${User.classes[index].exeLeft}",
-                              style: const TextStyle(
+                          const Text(
+                              "Exercises left : ",
+                              style: TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                              ))
+                              )),
+                        Text(User.classes[index].exeLeft,
+                            style: const TextStyle(
+                              fontFamily: "Vazir",
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.pink,
+                            )),
                         ],
                       ),
                       const SizedBox(
@@ -395,18 +425,21 @@ class _ClassesPageState extends State<ClassesPage> {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.add_reaction_outlined,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          Text(
-                              " دانشجوی ممتاز : ${User.classes[index].topName}",
+                          const Text(
+                              "Top student : ",
+                              style: TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          Text(User.classes[index].topName,
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
-                                color: Colors.black,
-                              ))
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              )),
                         ],
                       )
                     ],
@@ -418,7 +451,7 @@ class _ClassesPageState extends State<ClassesPage> {
     );
   }
 
-  void _showTopSnackBar(BuildContext context, String message) {
+  _showTopSnackBar(BuildContext context, String message) {
     _messengerKey.currentState!.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -433,7 +466,7 @@ class _ClassesPageState extends State<ClassesPage> {
         margin: const EdgeInsets.only(bottom: 70, right: 20, left: 20),
         action: SnackBarAction(
           onPressed: () {},
-          label: "تایید",
+          label: "Ok",
           textColor: Colors.pink,
         ),
       ),

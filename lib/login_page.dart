@@ -33,10 +33,10 @@ class _LoginPageState extends State<LoginPage> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15))),
+              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Builder(builder: (context) {
           return Scaffold(
             body: SingleChildScrollView(
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 30,
         ),
         const Text(
-          "ورود به پنل کاربری",
+          "Login",
           style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             controller: _idController,
             decoration: InputDecoration(
-                hintText: "شماره دانشجویی",
+                hintText: "Student ID",
                 hintStyle: const TextStyle(
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.bold,
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             controller: _passwordController,
             decoration: InputDecoration(
-                hintText: "کلمه عبور",
+                hintText: "Password",
                 hintStyle: const TextStyle(
                     fontFamily: "Vazir",
                     fontWeight: FontWeight.bold,
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                 filled: true,
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: GestureDetector(
                     onTap: _toggleObscured,
                     child: Icon(_obscured
@@ -144,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
           child: ElevatedButton(
             onPressed: () async {
               if (_idController.text.isEmpty) {
-                _showSnackBar(context, "شماره دانشجویی خود را وارد کنید!");
+                _showSnackBar(context, "Please enter you're ID!");
               } else if (_passwordController.text.isEmpty) {
-                _showSnackBar(context, "کلمه عبور خود را وارد کنید!");
+                _showSnackBar(context, "Please enter you're password!");
               } else {
                 await _loginState(_idController.text, _passwordController.text);
                 switch (state.split("-")[0]) {
@@ -157,10 +157,10 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context) => const Information()));
                     break;
                   case "2":
-                    _showSnackBar(context, "کلمه عبور اشتباه است!");
+                    _showSnackBar(context, "Wrong password!");
                     break;
                   case "3":
-                    _showSnackBar(context, "شماره دانشجویی یافت نشد!");
+                    _showSnackBar(context, "ID not found!");
                     break;
                   case "":
                     break;
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: Colors.pink,
                 foregroundColor: Colors.white),
             child: const Text(
-              "ورود",
+              "Login",
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: "Vazir",
@@ -196,25 +196,27 @@ class _LoginPageState extends State<LoginPage> {
           color: Colors.pink.shade50,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             const Text(
-              "حساب کاربری ندارید؟ ",
+              "Don't have an account?  ",
               style: TextStyle(
                   fontFamily: "Vazir",
                   fontWeight: FontWeight.w600,
-                  fontSize: 17),
+                  fontSize: 14),
             ),
+            const Spacer(),
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const SignupPage()));
                 },
-                child: const Text("ثبت نام",
+                child: const Text("Signup",
                     style: TextStyle(
                         color: Colors.pink,
                         fontWeight: FontWeight.w600,
-                        fontSize: 17)))
+                        fontSize: 14))),
+            const Spacer(),
           ],
         ),
       ),
@@ -241,7 +243,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         action: SnackBarAction(
           onPressed: () {},
-          label: "تایید",
+          label: "Ok",
           textColor: Colors.pink,
         ),
       ),
@@ -254,7 +256,8 @@ class _LoginPageState extends State<LoginPage> {
     socket.flush();
     await socket.listen((answer) async {
       setState(() {
-        state = const Utf8Decoder().convert(answer);
+        state = utf8.decode(answer.sublist(2));
+        print("---- $state ----");
       });
     }).asFuture();
   }
