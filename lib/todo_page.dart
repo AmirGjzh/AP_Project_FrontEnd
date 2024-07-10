@@ -1,14 +1,11 @@
-import 'package:ap_project_frontend/classes/course.dart';
 import 'package:ap_project_frontend/classes/task.dart';
 import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
-import 'package:ap_project_frontend/information_page.dart';
+import 'package:ap_project_frontend/news_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
-import 'classes/assignment.dart';
-import 'classes/task.dart';
 
 class Todo extends StatefulWidget {
   const Todo({super.key});
@@ -22,7 +19,7 @@ class _TodoState extends State<Todo> {
   int _minute = 0;
   int _hour = 12;
   int _isMorning = 0;
-  String _today = User.today;
+  final String _today = User.today;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,10 @@ class _TodoState extends State<Todo> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       home: Directionality(
         textDirection: TextDirection.ltr,
         child: Builder(
@@ -54,8 +54,9 @@ class _TodoState extends State<Todo> {
                       child: IconButton(
                           onPressed: () async {
                             await User.homePageReady();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()));
                           },
                           icon: const Icon(
                             Icons.home_outlined,
@@ -69,7 +70,12 @@ class _TodoState extends State<Todo> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await User.getTasks();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const Todo()));
+                          },
                           icon: const Icon(
                             Icons.dashboard_customize,
                             color: Colors.pink,
@@ -84,8 +90,9 @@ class _TodoState extends State<Todo> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getClasses();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ClassesPage()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const ClassesPage()));
                           },
                           icon: const Icon(
                             Icons.school_outlined,
@@ -99,9 +106,14 @@ class _TodoState extends State<Todo> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.sensors,
-                              color: Colors.pink, size: 33)),
+                          onPressed: () async {
+                            await User.newsPageReady();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const NewsPage()));
+                          },
+                          icon: const Icon(Icons.feedback_outlined,
+                              color: Colors.pink, size: 30)),
                     ),
                     const Spacer(),
                     Container(
@@ -111,8 +123,10 @@ class _TodoState extends State<Todo> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getExercises();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ExercisesPage()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ExercisesPage()));
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -124,6 +138,7 @@ class _TodoState extends State<Todo> {
                   ],
                 ),
               ),
+
               body: Container(
                 color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
@@ -178,11 +193,12 @@ class _TodoState extends State<Todo> {
                                                       30,
                                                       30,
                                                       MediaQuery.of(context)
-                                                          .viewInsets
-                                                          .bottom +
+                                                              .viewInsets
+                                                              .bottom +
                                                           25),
                                                   child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
                                                       Row(
                                                         children: [
@@ -190,43 +206,42 @@ class _TodoState extends State<Todo> {
                                                             "Title :",
                                                             style: TextStyle(
                                                               fontSize: 15,
-                                                              fontWeight: FontWeight.bold,
-                                                              fontFamily: "Vazir",
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontFamily:
+                                                                  "Vazir",
                                                             ),
                                                           ),
                                                           const Spacer(),
                                                           Material(
                                                             elevation: 4,
                                                             borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
                                                             child: SizedBox(
                                                               width: 250,
                                                               height: 60,
-                                                              child:
-                                                              Stack(children: [
-                                                                TextField(
-                                                                  controller:
-                                                                  _title,
-                                                                  decoration: InputDecoration(
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                          borderSide: const BorderSide(
-                                                                              color: Colors
-                                                                                  .teal)),
-                                                                      fillColor:
-                                                                      Colors
-                                                                          .white,
-                                                                      filled: true),
-                                                                ),
-                                                              ]),
+                                                              child: Stack(
+                                                                  children: [
+                                                                    TextField(
+                                                                      controller:
+                                                                          _title,
+                                                                      decoration: InputDecoration(
+                                                                          border: OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(20),
+                                                                              borderSide: const BorderSide(color: Colors.teal)),
+                                                                          fillColor: Colors.white,
+                                                                          filled: true),
+                                                                    ),
+                                                                  ]),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                      const SizedBox(height: 25),
+                                                      const SizedBox(
+                                                          height: 25),
                                                       Row(
                                                         children: [
                                                           Column(
@@ -235,42 +250,44 @@ class _TodoState extends State<Todo> {
                                                                 child: Material(
                                                                   elevation: 10,
                                                                   borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                      35),
-                                                                  child: Container(
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              35),
+                                                                  child:
+                                                                      Container(
                                                                     height: 40,
                                                                     width: 80,
                                                                     decoration: BoxDecoration(
                                                                         color: (_isMorning ==
-                                                                            1)
+                                                                                1)
                                                                             ? Colors
-                                                                            .pink
+                                                                                .pink
                                                                             : Colors
-                                                                            .pink
-                                                                            .shade200,
+                                                                                .pink.shade200,
                                                                         borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10)),
+                                                                            BorderRadius.circular(10)),
                                                                     child:
-                                                                    const Center(
-                                                                      child: Text(
+                                                                        const Center(
+                                                                      child:
+                                                                          Text(
                                                                         "AM",
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                            "Vazir",
-                                                                            fontWeight: FontWeight.bold,
+                                                                                "Vazir",
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
                                                                             fontSize:
-                                                                            13,
-                                                                            color: Colors
-                                                                                .white),
+                                                                                13,
+                                                                            color:
+                                                                                Colors.white),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                                 onTap: () {
                                                                   setState(() {
-                                                                    _isMorning = 1;
+                                                                    _isMorning =
+                                                                        1;
                                                                   });
                                                                 },
                                                               ),
@@ -281,42 +298,44 @@ class _TodoState extends State<Todo> {
                                                                 child: Material(
                                                                   elevation: 10,
                                                                   borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                      35),
-                                                                  child: Container(
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              35),
+                                                                  child:
+                                                                      Container(
                                                                     height: 40,
                                                                     width: 80,
                                                                     decoration: BoxDecoration(
                                                                         color: (_isMorning ==
-                                                                            2)
+                                                                                2)
                                                                             ? Colors
-                                                                            .pink
+                                                                                .pink
                                                                             : Colors
-                                                                            .pink
-                                                                            .shade200,
+                                                                                .pink.shade200,
                                                                         borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10)),
+                                                                            BorderRadius.circular(10)),
                                                                     child:
-                                                                    const Center(
-                                                                      child: Text(
+                                                                        const Center(
+                                                                      child:
+                                                                          Text(
                                                                         "PM",
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                            "Vazir",
-                                                                            fontWeight: FontWeight.bold,
+                                                                                "Vazir",
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
                                                                             fontSize:
-                                                                            13,
-                                                                            color: Colors
-                                                                                .white),
+                                                                                13,
+                                                                            color:
+                                                                                Colors.white),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                                 onTap: () {
                                                                   setState(() {
-                                                                    _isMorning = 2;
+                                                                    _isMorning =
+                                                                        2;
                                                                   });
                                                                 },
                                                               )
@@ -326,11 +345,12 @@ class _TodoState extends State<Todo> {
                                                           Column(
                                                             children: [
                                                               InkWell(
-                                                                child: const Icon(
+                                                                child:
+                                                                    const Icon(
                                                                   Icons
                                                                       .keyboard_arrow_up,
-                                                                  color:
-                                                                  Colors.pink,
+                                                                  color: Colors
+                                                                      .pink,
                                                                   size: 35,
                                                                 ),
                                                                 onTap: () {
@@ -350,33 +370,34 @@ class _TodoState extends State<Todo> {
                                                               Material(
                                                                 elevation: 10,
                                                                 borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                    35),
-                                                                child: Container(
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            35),
+                                                                child:
+                                                                    Container(
                                                                   height: 50,
                                                                   width: 70,
                                                                   decoration: BoxDecoration(
                                                                       color: Colors
                                                                           .white,
                                                                       borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                          10)),
+                                                                          BorderRadius.circular(
+                                                                              10)),
                                                                   child: Center(
                                                                     child: Text(
                                                                       (_hour.toString().length ==
-                                                                          2)
+                                                                              2)
                                                                           ? _hour
-                                                                          .toString()
+                                                                              .toString()
                                                                           : "0$_hour",
                                                                       style:
-                                                                      const TextStyle(
+                                                                          const TextStyle(
                                                                         fontFamily:
-                                                                        "Vazir",
-                                                                        fontWeight: FontWeight.bold,
+                                                                            "Vazir",
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
                                                                         fontSize:
-                                                                        16,
+                                                                            16,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -386,18 +407,20 @@ class _TodoState extends State<Todo> {
                                                                 height: 5,
                                                               ),
                                                               InkWell(
-                                                                child: const Icon(
+                                                                child:
+                                                                    const Icon(
                                                                   Icons
                                                                       .keyboard_arrow_down,
-                                                                  color:
-                                                                  Colors.pink,
+                                                                  color: Colors
+                                                                      .pink,
                                                                   size: 35,
                                                                 ),
                                                                 onTap: () {
                                                                   setState(() {
                                                                     if (_hour ==
                                                                         1) {
-                                                                      _hour = 12;
+                                                                      _hour =
+                                                                          12;
                                                                     } else {
                                                                       _hour--;
                                                                     }
@@ -415,8 +438,9 @@ class _TodoState extends State<Todo> {
                                                                 ":",
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                    "Vazir",
-                                                                    fontSize: 18),
+                                                                        "Vazir",
+                                                                    fontSize:
+                                                                        18),
                                                               ),
                                                             ],
                                                           ),
@@ -426,18 +450,20 @@ class _TodoState extends State<Todo> {
                                                           Column(
                                                             children: [
                                                               InkWell(
-                                                                child: const Icon(
+                                                                child:
+                                                                    const Icon(
                                                                   Icons
                                                                       .keyboard_arrow_up,
-                                                                  color:
-                                                                  Colors.pink,
+                                                                  color: Colors
+                                                                      .pink,
                                                                   size: 35,
                                                                 ),
                                                                 onTap: () {
                                                                   setState(() {
                                                                     if (_minute ==
                                                                         59) {
-                                                                      _minute = 0;
+                                                                      _minute =
+                                                                          0;
                                                                     } else {
                                                                       _minute++;
                                                                     }
@@ -450,33 +476,34 @@ class _TodoState extends State<Todo> {
                                                               Material(
                                                                 elevation: 10,
                                                                 borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                    35),
-                                                                child: Container(
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            35),
+                                                                child:
+                                                                    Container(
                                                                   height: 50,
                                                                   width: 70,
                                                                   decoration: BoxDecoration(
                                                                       color: Colors
                                                                           .white,
                                                                       borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                          10)),
+                                                                          BorderRadius.circular(
+                                                                              10)),
                                                                   child: Center(
                                                                     child: Text(
                                                                       (_minute.toString().length ==
-                                                                          2)
+                                                                              2)
                                                                           ? _minute
-                                                                          .toString()
+                                                                              .toString()
                                                                           : "0$_minute",
                                                                       style:
-                                                                      const TextStyle(
+                                                                          const TextStyle(
                                                                         fontFamily:
-                                                                        "Vazir",
-                                                                        fontWeight: FontWeight.bold,
+                                                                            "Vazir",
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
                                                                         fontSize:
-                                                                        16,
+                                                                            16,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -486,18 +513,20 @@ class _TodoState extends State<Todo> {
                                                                 height: 5,
                                                               ),
                                                               InkWell(
-                                                                child: const Icon(
+                                                                child:
+                                                                    const Icon(
                                                                   Icons
                                                                       .keyboard_arrow_down,
-                                                                  color:
-                                                                  Colors.pink,
+                                                                  color: Colors
+                                                                      .pink,
                                                                   size: 35,
                                                                 ),
                                                                 onTap: () {
                                                                   setState(() {
                                                                     if (_minute ==
                                                                         0) {
-                                                                      _minute = 59;
+                                                                      _minute =
+                                                                          59;
                                                                     } else {
                                                                       _minute--;
                                                                     }
@@ -508,49 +537,55 @@ class _TodoState extends State<Todo> {
                                                           ),
                                                         ],
                                                       ),
-                                                      const SizedBox(height: 25),
+                                                      const SizedBox(
+                                                          height: 25),
                                                       Material(
                                                         elevation: 10,
                                                         borderRadius:
-                                                        BorderRadius.circular(
-                                                            35),
+                                                            BorderRadius
+                                                                .circular(35),
                                                         child: SizedBox(
                                                           width: 350,
                                                           child: ElevatedButton(
-                                                            onPressed: () async {
-                                                                await User.addTask(Task(
-                                                                    _title.text,
-                                                                    _hour
-                                                                        .toString(),
-                                                                    _minute
-                                                                        .toString(),
-                                                                    (_isMorning ==
-                                                                        1)
-                                                                        ? true
-                                                                        : false));
-                                                                _title.text = "";
-                                                                _minute = 0;
-                                                                _hour = 12;
-                                                                _isMorning = 0;
+                                                            onPressed:
+                                                                () async {
+                                                              await User.addTask(Task(
+                                                                  _title.text,
+                                                                  _hour
+                                                                      .toString(),
+                                                                  _minute
+                                                                      .toString(),
+                                                                  (_isMorning ==
+                                                                          1)
+                                                                      ? true
+                                                                      : false));
+                                                              _title.text = "";
+                                                              _minute = 0;
+                                                              _hour = 12;
+                                                              _isMorning = 0;
                                                             },
                                                             style: ElevatedButton.styleFrom(
                                                                 shape:
-                                                                const StadiumBorder(),
+                                                                    const StadiumBorder(),
                                                                 padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                    16),
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                        vertical:
+                                                                            16),
                                                                 backgroundColor:
-                                                                Colors.pink,
+                                                                    Colors.pink,
                                                                 foregroundColor:
-                                                                Colors.white),
+                                                                    Colors
+                                                                        .white),
                                                             child: const Text(
                                                               "Add",
                                                               style: TextStyle(
                                                                 fontSize: 15,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontFamily: "Vazir",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    "Vazir",
                                                               ),
                                                             ),
                                                           ),
@@ -569,7 +604,6 @@ class _TodoState extends State<Todo> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: "Vazir",
-
                                     )),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.pink,
@@ -742,7 +776,9 @@ class _TodoState extends State<Todo> {
                                                                     TextStyle(
                                                                   fontFamily:
                                                                       "Vazir",
-                                                                  fontWeight: FontWeight.bold,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 12,
@@ -758,19 +794,20 @@ class _TodoState extends State<Todo> {
                                                             10),
                                                     child: TextButton(
                                                       onPressed: () async {
-                                                        await User.taskDone(User.tasks
+                                                        await User.taskDone(User
+                                                            .tasks
                                                             .where((t) =>
-                                                        t.isDone ==
-                                                            false)
+                                                                t.isDone ==
+                                                                false)
                                                             .toList()[index]);
-                                                          User.tasks
-                                                              .where((t) =>
-                                                                  t.isDone ==
-                                                                  false)
-                                                              .toList()[index]
-                                                              .isDone = true;
-                                                          Navigator.of(context)
-                                                              .pop();
+                                                        User.tasks
+                                                            .where((t) =>
+                                                                t.isDone ==
+                                                                false)
+                                                            .toList()[index]
+                                                            .isDone = true;
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                       child: Container(
                                                         height: 40,
@@ -793,7 +830,9 @@ class _TodoState extends State<Todo> {
                                                                       "Vazir",
                                                                   color: Colors
                                                                       .pink,
-                                                                  fontWeight: FontWeight.bold,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
                                                                   fontSize: 12,
                                                                 ))),
                                                       ),
@@ -822,10 +861,9 @@ class _TodoState extends State<Todo> {
                         subtitle: Text(
                           "${User.tasks.where((t) => t.isDone == false).toList()[index].hour}:${User.tasks.where((t) => t.isDone == false).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == false).toList()[index].isMorning) ? "AM" : "PM"}",
                           style: const TextStyle(
-                            fontFamily: "Vazir",
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontFamily: "Vazir",
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -917,10 +955,9 @@ class _TodoState extends State<Todo> {
                         subtitle: Text(
                           "${User.tasks.where((t) => t.isDone == true).toList()[index].hour}:${User.tasks.where((t) => t.isDone == true).toList()[index].minute} ${(User.tasks.where((t) => t.isDone == true).toList()[index].isMorning) ? "AM" : "PM"}",
                           style: const TextStyle(
-                            fontFamily: "Vazir",
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontFamily: "Vazir",
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

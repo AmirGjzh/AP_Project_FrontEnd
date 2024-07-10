@@ -21,6 +21,8 @@ class User {
   static List<Assignment> exercises = [];
   static List<Course> classes = [];
   static List<Task> tasks = [];
+  static List<String> dates = [];
+  static List<String> changes = [];
 
   static setUser(String name, String lastname, String id, String password) async {
     user = Student(name, lastname, id, password);
@@ -220,6 +222,9 @@ class User {
 
   static addTask(Task task) async {
     tasks.add(task);
+    if (task.minute.length == 1) {
+      task.minute = "0${task.minute}";
+    }
     Socket socket = await Socket.connect(IP, 1384);
     socket.write("addTask-${user!.id}-${task.title}-${task.hour}-${task.minute}-${task.isMorning}-${task.isDone}\u0000");
     socket.flush();
@@ -230,5 +235,44 @@ class User {
     Socket socket = await Socket.connect(IP, 1384);
     socket.write("taskDone-${user!.id}-${task.title}\u0000");
     socket.flush();
+  }
+
+  //----------------------------------------------------------------------------
+
+  static newsPageReady() async {
+    await getDates();
+    await getChanges();
+  }
+
+  static getDates() async {
+    String temp;
+    Socket socket = await Socket.connect(IP, 1384);
+    socket.write("getDates\u0000");
+    socket.flush();
+    await socket.listen((answer) async {
+      temp = utf8.decode(answer.sublist(2));
+      dates.clear();
+      if (temp != "Empty" && temp != "mpty") {
+        for (String parts in temp.split("\$")) {
+          dates.add(parts);
+        }
+      }
+    }).asFuture();
+  }
+
+  static getChanges() async {
+    String temp;
+    Socket socket = await Socket.connect(IP, 1384);
+    socket.write("getChanges-${user!.id}\u0000");
+    socket.flush();
+    await socket.listen((answer) async {
+      temp = utf8.decode(answer.sublist(2));
+      changes.clear();
+      if (temp != "Empty" && temp != "mpty") {
+        for (String parts in temp.split("\$")) {
+          changes.add(parts);
+        }
+      }
+    }).asFuture();
   }
 }

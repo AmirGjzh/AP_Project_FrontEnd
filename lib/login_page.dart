@@ -5,7 +5,6 @@ import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/signup_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,16 +23,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
         textDirection: TextDirection.ltr,
@@ -153,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                   case "1":
                     await User.setUser(state.split("-")[1], state.split("-")[2],
                         _idController.text, _passwordController.text);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const Information()));
                     break;
                   case "2":

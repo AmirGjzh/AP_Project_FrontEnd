@@ -5,7 +5,6 @@ import 'package:ap_project_frontend/login_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -28,16 +27,14 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
         textDirection: TextDirection.ltr,
@@ -178,9 +175,9 @@ class _SignupPageState extends State<SignupPage> {
           child: ElevatedButton(
             onPressed: () async {
               if (_idController.text.isEmpty) {
-                _showSnackBar(context, "Please enter you're ID!");
+                _showSnackBar(context, "Please enter your ID!");
               } else if (_passwordController1.text.isEmpty) {
-                _showSnackBar(context, "Please enter you're password!");
+                _showSnackBar(context, "Please enter your password!");
               } else if (_passwordController2.text.isEmpty) {
                 _showSnackBar(context, "Please confirm you're ID!");
               } else {
@@ -324,7 +321,6 @@ class _SignupPageState extends State<SignupPage> {
     await socket.listen((answer) async {
       setState(() {
         validation = utf8.decode(answer.sublist(2));
-        print("---- $validation ----");
       });
     }).asFuture();
     return validation;
@@ -434,7 +430,7 @@ class _SignupPageState extends State<SignupPage> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
                                     borderSide:
-                                    const BorderSide(color: Colors.teal)),
+                                        const BorderSide(color: Colors.teal)),
                                 fillColor: Colors.white,
                                 filled: true),
                           ),
@@ -453,18 +449,20 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: () async {
                         if (_nameController.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "Please enter you're name!");
+                              context, "Please enter your name!");
                         } else if (_lastnameController.text.isEmpty) {
                           _showTopSnackBar(
-                              context, "Please enter you're lastname!");
+                              context, "Please enter your lastname!");
+                        } else if (_dateController.text.isEmpty) {
+                          _showTopSnackBar(
+                              context, "Please enter your birthdate!");
                         } else {
                           String info = await _signup(
                               _idController.text,
                               _passwordController1.text,
                               _nameController.text,
                               _lastnameController.text,
-                            _dateController.text
-                          );
+                              _dateController.text);
 
                           await User.setUser(
                               info.split("-")[0],
@@ -472,7 +470,7 @@ class _SignupPageState extends State<SignupPage> {
                               _idController.text,
                               _passwordController1.text);
 
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) => const Information()));
                         }
@@ -498,8 +496,8 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
-  Future<String> _signup(
-      String id, String password, String name, String lastname, String date) async {
+  Future<String> _signup(String id, String password, String name,
+      String lastname, String date) async {
     String info = "";
     Socket socket = await Socket.connect(User.IP, 1384);
     socket.write("signup-$id-$password-$name-$lastname-$date\u0000");

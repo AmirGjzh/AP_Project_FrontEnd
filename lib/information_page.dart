@@ -28,7 +28,10 @@ class _InformationState extends State<Information> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
         textDirection: TextDirection.ltr,

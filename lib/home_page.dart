@@ -1,4 +1,3 @@
-import 'package:ap_project_frontend/classes/course.dart';
 import 'package:ap_project_frontend/classes_page.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/information_page.dart';
@@ -7,7 +6,6 @@ import 'package:ap_project_frontend/todo_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
 
-import 'classes/assignment.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,13 +17,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    String _today = User.today;
+    String today = User.today;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       home: Directionality(
         textDirection: TextDirection.ltr,
         child: Builder(
@@ -48,6 +49,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: IconButton(
                           onPressed: () async {
+                            await User.homePageReady();
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                builder: (context) => const HomePage()));
                           },
                           icon: const Icon(
                             Icons.home,
@@ -63,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getTasks();
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const Todo()));
                           },
                           icon: const Icon(
@@ -80,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getClasses();
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const ClassesPage()));
                           },
                           icon: const Icon(
@@ -95,8 +99,9 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                          onPressed: () async {
+                            await User.newsPageReady();
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const NewsPage()));
                           },
                           icon: const Icon(Icons.feedback_outlined,
@@ -110,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getExercises();
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => const ExercisesPage()));
                           },
                           icon: const Icon(
@@ -123,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+
               body: Container(
                 color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
@@ -216,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const Spacer(),
                         Text(
-                          _today,
+                          today,
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 10,
@@ -254,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const Spacer(),
                         Text(
-                          _today,
+                          today,
                           style: const TextStyle(
                             fontFamily: "Vazir",
                             fontSize: 10,
@@ -360,18 +366,18 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.access_alarms_sharp,
                         color: Colors.pink,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 6,
                       ),
                       Text(
-                        "Lost 0 exercises",
-                        style: TextStyle(
+                        "Lost ${User.exercises.where((e) => e.deadLine <= 0).length} exercises",
+                        style: const TextStyle(
                             //color: Colors.white,
                             fontSize: 10,
                             fontFamily: "Vazir",
@@ -460,7 +466,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _exercisesPart(BuildContext context) {
-    if (User.exercises.where((e) => e.isActive == true).where((e) => e.deadLine >= 0).isEmpty) {
+    if (User.exercises
+        .where((e) => e.isActive == true)
+        .where((e) => e.deadLine >= 0)
+        .isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
@@ -487,7 +496,10 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: User.exercises.where((e) => e.isActive == true).where((e) => e.deadLine >= 0).length,
+          itemCount: User.exercises
+              .where((e) => e.isActive == true)
+              .where((e) => e.deadLine >= 0)
+              .length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -506,7 +518,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               User.exercises
-                                  .where((e) => e.isActive == true).where((e) => e.deadLine >= 0)
+                                  .where((e) => e.isActive == true)
+                                  .where((e) => e.deadLine >= 0)
                                   .toList()[index]
                                   .course
                                   .name,
@@ -653,7 +666,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         subtitle: Text(
                           User.exercises
-                              .where((e) => e.isActive == true).where((e) => e.deadLine >= 0)
+                              .where((e) => e.isActive == true)
+                              .where((e) => e.deadLine >= 0)
                               .toList()[index]
                               .title,
                           style: const TextStyle(
@@ -676,7 +690,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _doneExercises(BuildContext context) {
-    if (User.exercises.where((e) => e.isActive == false).where((e) => e.deadLine >= 0).isEmpty) {
+    if (User.exercises
+        .where((e) => e.isActive == false)
+        .where((e) => e.deadLine >= 0)
+        .isEmpty) {
       return Container(
         height: 184,
         padding: const EdgeInsets.all(10),
@@ -703,7 +720,10 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListView.builder(
-          itemCount: User.exercises.where((e) => e.isActive == false).where((e) => e.deadLine >= 0).length,
+          itemCount: User.exercises
+              .where((e) => e.isActive == false)
+              .where((e) => e.deadLine >= 0)
+              .length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -722,7 +742,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               User.exercises
-                                  .where((e) => e.isActive == false).where((e) => e.deadLine >= 0)
+                                  .where((e) => e.isActive == false)
+                                  .where((e) => e.deadLine >= 0)
                                   .toList()[index]
                                   .course
                                   .name,
@@ -741,13 +762,15 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(
                                     height: 18,
                                   ),
-                                  Text("Done",
-                                  style: TextStyle(
+                                  Text(
+                                    "Done",
+                                    style: TextStyle(
                                       fontFamily: "Vazir",
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
-                                    color: Colors.pink,
-                                  ),)
+                                      color: Colors.pink,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -755,7 +778,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         subtitle: Text(
                           User.exercises
-                              .where((e) => e.isActive == false).where((e) => e.deadLine >= 0)
+                              .where((e) => e.isActive == false)
+                              .where((e) => e.deadLine >= 0)
                               .toList()[index]
                               .title,
                           style: const TextStyle(

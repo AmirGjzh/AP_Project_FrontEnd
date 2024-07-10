@@ -1,7 +1,6 @@
-import 'package:ap_project_frontend/classes/course.dart';
-import 'package:ap_project_frontend/classes/teacher.dart';
 import 'package:ap_project_frontend/exercises_page.dart';
 import 'package:ap_project_frontend/home_page.dart';
+import 'package:ap_project_frontend/news_page.dart';
 import 'package:ap_project_frontend/todo_page.dart';
 import 'package:ap_project_frontend/user.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,10 @@ class _ClassesPageState extends State<ClassesPage> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: const TextTheme(
-              button: TextStyle(fontFamily: "Vazir", fontSize: 15, fontWeight: FontWeight.bold))),
+              button: TextStyle(
+                  fontFamily: "Vazir",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold))),
       scaffoldMessengerKey: _messengerKey,
       home: Directionality(
         textDirection: TextDirection.ltr,
@@ -48,8 +50,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.homePageReady();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()));
                           },
                           icon: const Icon(
                             Icons.home_outlined,
@@ -65,8 +68,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getTasks();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Todo()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const Todo()));
                           },
                           icon: const Icon(
                             Icons.dashboard_customize_outlined,
@@ -80,7 +84,12 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await User.getClasses();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const ClassesPage()));
+                          },
                           icon: const Icon(
                             Icons.school,
                             color: Colors.pink,
@@ -93,9 +102,14 @@ class _ClassesPageState extends State<ClassesPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.sensors,
-                              color: Colors.pink, size: 33)),
+                          onPressed: () async {
+                            await User.newsPageReady();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const NewsPage()));
+                          },
+                          icon: const Icon(Icons.feedback_outlined,
+                              color: Colors.pink, size: 30)),
                     ),
                     const Spacer(),
                     Container(
@@ -105,8 +119,10 @@ class _ClassesPageState extends State<ClassesPage> {
                       child: IconButton(
                           onPressed: () async {
                             await User.getExercises();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ExercisesPage()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ExercisesPage()));
                           },
                           icon: const Icon(
                             Icons.work_history_outlined,
@@ -118,6 +134,7 @@ class _ClassesPageState extends State<ClassesPage> {
                   ],
                 ),
               ),
+
               body: Container(
                 color: Colors.pink.withOpacity(0.03),
                 padding: const EdgeInsets.all(15),
@@ -185,7 +202,8 @@ class _ClassesPageState extends State<ClassesPage> {
                                                           "Course : ",
                                                           style: TextStyle(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             fontFamily: "Vazir",
                                                           ),
                                                         ),
@@ -252,7 +270,8 @@ class _ClassesPageState extends State<ClassesPage> {
                                                                       context,
                                                                       "Added successfully!");
                                                                 }
-                                                                _classCodeController.text = "";
+                                                                _classCodeController
+                                                                    .text = "";
                                                               },
                                                               child: const Icon(
                                                                 Icons.add,
@@ -354,15 +373,15 @@ class _ClassesPageState extends State<ClassesPage> {
                                 color: Colors.pink,
                               )),
                           const Spacer(),
-                          const Text(
-                              "Teacher : ",
+                          const Text("Teacher : ",
                               style: TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               )),
-                          Text("${User.classes[index].teacher!.name} ${User.classes[index].teacher!.lastname}",
+                          Text(
+                              "${User.classes[index].teacher!.name} ${User.classes[index].teacher!.lastname}",
                               style: const TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
@@ -403,21 +422,20 @@ class _ClassesPageState extends State<ClassesPage> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                              "Exercises left : ",
+                          const Text("Exercises left : ",
                               style: TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               )),
-                        Text(User.classes[index].exeLeft,
-                            style: const TextStyle(
-                              fontFamily: "Vazir",
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.pink,
-                            )),
+                          Text(User.classes[index].exeLeft,
+                              style: const TextStyle(
+                                fontFamily: "Vazir",
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              )),
                         ],
                       ),
                       const SizedBox(
@@ -425,8 +443,7 @@ class _ClassesPageState extends State<ClassesPage> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                              "Top student : ",
+                          const Text("Top student : ",
                               style: TextStyle(
                                 fontFamily: "Vazir",
                                 fontSize: 12,
